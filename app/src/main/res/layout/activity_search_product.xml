@@ -1,57 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.runfastshop.activity.SearchProductActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.example.runfastshop.activity.SearchProductActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
         android:background="@drawable/title_background"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
+
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:layout_height="30dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search_background_scroll"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:background="@drawable/shape_search_background_scroll"
-            android:layout_height="30dp">
+            android:gravity="center_vertical">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/icon_search" />
+                android:src="@drawable/icon_search"/>
+
             <EditText
                 android:id="@+id/et_search_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="输入商家、商品名称"
-                android:textSize="14sp"
-                android:background="@null"
-                android:singleLine="true"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:textColorHint="@color/color_text_gray"
+                android:background="@null"
+                android:hint="输入商家、商品名称"
+                android:singleLine="true"
                 android:textColor="@color/color_text_gray"
+                android:textColorHint="@color/color_text_gray"
+                android:textSize="14sp"
                 />
         </LinearLayout>
+
         <TextView
             android:id="@+id/tv_cancel_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="取消"
-            android:textSize="15sp"
-            android:textColor="@color/color_address_black"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="15dp"
+            android:text="取消"
+            android:textColor="@color/color_address_black"
+            android:textSize="15sp"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -60,18 +63,20 @@
         android:background="@color/color_white">
 
         <LinearLayout
+            android:id="@+id/ll_search_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:layout_marginTop="25dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="历史搜索"
-                android:textSize="14sp"
-                android:textColor="@color/color_address_black"/>
+                android:textColor="@color/color_address_black"
+                android:textSize="14sp"/>
 
             <com.example.runfastshop.view.ZFlowLayout
                 android:id="@+id/flow_layout"
@@ -79,11 +84,18 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="13dp"/>
         </LinearLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_search"
+
+        <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+            android:id="@+id/rl_search_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:background="@color/color_white"/>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/view_search_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_line_back"/>
+        </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
     </RelativeLayout>
+
 </LinearLayout>

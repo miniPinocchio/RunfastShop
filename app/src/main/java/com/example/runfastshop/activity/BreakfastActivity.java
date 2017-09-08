@@ -156,7 +156,7 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
      */
     private void searchGoods(String name) {
         netType = 1;
-        CustomApplication.getRetrofit().searchGoods(name).enqueue(this);
+        CustomApplication.getRetrofit().searchGoodsType(name).enqueue(this);
     }
 
     /**
@@ -165,7 +165,7 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
     private void searchGoodsType(int page, int raw, int sorting, String name) {
         netType = 2;
         LogUtil.d("", page + raw + lon + lat + name + sorting);
-        CustomApplication.getRetrofit().searchGoodsType(page, raw, lon, lat, name, sorting, mSort.getAgentId()).enqueue(this);
+        CustomApplication.getRetrofit().searchGoods(page, raw, lon, lat, name, sorting, mSort.getAgentId()).enqueue(this);
     }
 
     /**

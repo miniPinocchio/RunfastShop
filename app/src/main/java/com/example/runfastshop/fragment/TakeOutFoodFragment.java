@@ -116,6 +116,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
     private static final int MROWS = 2;//行数
     private static final int MCOLUMNS = 4;//列数
     private BottomPageAdapter mBottomPageAdapter;
+    private Intent mIntent;
 
 
     public TakeOutFoodFragment() {
@@ -339,7 +340,10 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_search_product:
-                startActivity(new Intent(getActivity(), SearchProductActivity.class));
+                mIntent = new Intent(getActivity(), SearchProductActivity.class);
+                mIntent.putExtra("pointLat", pointLat);
+                mIntent.putExtra("pointLon", pointLon);
+                startActivity(mIntent);
                 break;
             case R.id.tv_search_name_two:
                 startActivity(new Intent(getActivity(), SearchProductActivity.class));

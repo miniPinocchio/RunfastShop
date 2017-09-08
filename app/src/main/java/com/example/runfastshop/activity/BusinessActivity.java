@@ -48,7 +48,6 @@ import com.example.runfastshop.bean.OptionBean;
 import com.example.runfastshop.bean.SpecBean;
 import com.example.runfastshop.bean.SubOptionBean;
 import com.example.runfastshop.bean.TypeBean;
-import com.example.runfastshop.bean.User;
 import com.example.runfastshop.bean.business.BusinessDetail;
 import com.example.runfastshop.bean.business.BusinessDetails;
 import com.example.runfastshop.bean.maintop.TopImage;
@@ -392,6 +391,9 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
         } else if (flags == 2) {
             businessId = getIntent().getIntExtra("orderInfo", 0);
             getBusinessDetailFromOrder(businessId);
+        }else if (flags == 3){
+            businessId = getIntent().getIntExtra("search", 0);
+            getBusinessDetailFromOrder(businessId);
         }
         setTitle();
         BusinessFragment businessFragment = new BusinessFragment();
@@ -521,7 +523,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
 
                 break;
             case R.id.car_limit:
-                User userInfo = UserService.getUserInfo();
+                Integer userId = UserService.getUserId(getApplicationContext());
 //                if (userInfo == null || userInfo.getId() == null){
 //                    startActivity(new Intent(this,LoginActivity.class));
 //                    return;
@@ -537,7 +539,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
      */
     private void saveFavorite() {
         netType = 5;
-        Integer id = UserService.getUserInfo().getId();
+        Integer id = UserService.getUserId(getApplicationContext());
         CustomApplication.getRetrofit().postSaveShop(businessId, 1, id).enqueue(this);
     }
 

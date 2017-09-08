@@ -1,9 +1,11 @@
 package com.example.runfastshop.config;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.example.runfastshop.bean.User;
 import com.example.runfastshop.impl.constant.CustomConstant;
+import com.example.runfastshop.util.CustomToast;
 import com.example.supportv1.app.BaseApplication;
 import com.example.supportv1.utils.SharedPreferencesUtil;
 import com.google.gson.Gson;
@@ -75,9 +77,7 @@ public class UserService {
         if (user == null) {
             return;
         }
-
         //CustomConstant.TOKEN = user.token;
-
         Gson gson = new Gson();
         String userJson = gson.toJson(user);
 
@@ -85,7 +85,21 @@ public class UserService {
         sharedPreferencesUtil.setData(USER_INFO, userJson);
 
     }
+    /**
+     * 获取用户id
+     *
+     * @param
+     */
+    public static Integer getUserId(Context context) {
+        User userInfo = getUserInfo();
+        if (userInfo == null) {
+            CustomToast.INSTANCE.showToast(context,"请先登录");
+            return -1;
+        }else {
+            return userInfo.getId();
+        }
 
+    }
 
     /**
      * 获取用户信息

@@ -54,14 +54,18 @@ public class NormalAdapter extends StaticPagerAdapter {
                 //广告类型0外卖1商城2一元购
                 switch (topImage.getType()) {
                     case 0://外卖
-                        CustomToast.INSTANCE.showToast(mContext,"外卖");
-                        break;
-                    case 1://商家
                         Intent intent = new Intent(mContext, BusinessActivity.class);
                         intent.setFlags(IntentFlag.MAIN_TOP_PAGE);
                         intent.putExtra("business", topImage);
                         mContext.startActivity(intent);
-
+                        break;
+                    //TODO 待处理
+                    case 1://商家
+                        CustomToast.INSTANCE.showToast(mContext,"商家");
+                        break;
+                    case 2://一元购
+                        CustomToast.INSTANCE.showToast(mContext,"一元购");
+                        break;
                 }
             }
         });

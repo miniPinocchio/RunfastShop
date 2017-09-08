@@ -190,7 +190,7 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
             return;
         }
         netType = 2;
-        Integer id = UserService.getUserInfo().getId();
+        Integer id = UserService.getUserId(getApplicationContext());
         CustomApplication.getRetrofit().updatePassword(id,oldPwd, newPwd,1,newPwdAgain).enqueue(this);
     }
 

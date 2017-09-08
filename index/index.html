@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>电科红云</title>
+<link rel="stylesheet" href="./swiper.min.css">
+<link rel="stylesheet" href="./main.css">
+<style type="text/css">
+  *{
+    margin:0;
+    padding:0;
+  }
+  body{
+    background-color:#e1e1e1;
+  }
+  .swiper-wrapper{
+    height:auto;
+
+  }
+  .prev-button,.next-button{
+    display: block;
+    padding:10px;
+    width: 150px;
+    height: 50px;
+    border-radius:50px;
+    float:left;
+    margin-left:30px;
+    border:none;
+    border:1px solid #717171;
+    font-size: 16px;
+  }
+  .next-button{
+    float: right;
+    margin-right:30px;
+  }
+</style>
+</head>
+<body>
+<div class="mind">
+  <div class="swiper-container">
+    <div class="mindtop">
+      <!-- <span class="swiper-button-prev "></span> -->
+      <!-- <span class="swiper-button-next "></span> -->
+    </div>
+    <div class="swiper-wrapper">
+      <dl class="swiper-slide">
+        <dt>1.今天下午在西区二层报告厅提出举行“两学一做”专题讲座，提出了很多重要问题，在工作和生活中，希望每个党员都严以律己，(   )。</dt>
+        <dd>A 示例题</dd>
+        <dd>B 示例题</dd>
+        <dd>C 示例题</dd>
+        <dd>D 示例题</dd>
+      </dl>
+      <dl class="swiper-slide">
+        <dt>2. 今天下午在西区二层报告厅提出举行“两学一做”专题讲座，提出了很多重要问题，在工作和生活中，希望每个党员都严以律己，(   )。</dt>
+        <dd>A 示例题</dd>
+        <dd>B 示例题</dd>
+        <dd>C 示例题</dd>
+        <dd>D 示例题</dd>
+      </dl>
+      <dl class="swiper-slide">
+        <dt>3. 今天下午在西区二层报告厅提出举行“两学一做”专题讲座，提出了很多重要问题，在工作和生活中，希望每个党员都严以律己，(   )。</dt>
+        <dd>A 示例题</dd>
+        <dd>B 示例题</dd>
+        <dd>C 示例题</dd>
+        <dd>D 示例题</dd>
+      </dl>
+      <dl class="swiper-slide">
+        <dt>4、今天下午在西区二层报告厅提出举行“两学一做”专题讲座，提出了很多重要问题，在工作和生活中，希望每个党员都严以律己，(   )。</dt>
+        <dd>A 示例题</dd>
+        <dd>B 示例题</dd>
+        <dd>C 示例题</dd>
+        <dd>D 示例题</dd>
+      </dl>
+      <dl class="swiper-slide">
+        <dt>5. 今天下午在西区二层报告厅提出举行“两学一做”专题讲座，提出了很多重要问题，在工作和生活中，希望每个党员都严以律己，(   )。</dt>
+        <dd>A 示例题</dd>
+        <dd>B 示例题</dd>
+        <dd>C 示例题</dd>
+        <dd>D 示例题</dd>
+      </dl>
+    </div>
+
+    <button class="prev-button">上一题</button>
+    <button class="next-button">下一题</button>
+
+
+    <div class="swiper-pagination"></div>
+    <div class="mindfot">
+      <div class="fl-left" id="numok"><img src="./mindok.png"><span>交卷</span></div>
+      <div class="fl-right" id="showall"><img src="./mindnum.png"><span id="curnum">1</span>/<span id="totnum"></span></div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="maskwhite"></div>
+    <div class="subjuan">
+      <p>提示</p>
+      <p>您已经回答了<span id="subnum"></span>题，确定要交卷么？</p>
+      <div class="subyn">
+        <div class="fl-left" id="subno">取消</div>
+        <div class="fl-right" id="subyes">交卷</div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="./swiper.min.js"></script>
+<script type="text/javascript">
+
+//题目轮播
+var swiper = new Swiper('.swiper-container', {
+
+        pagination: '.swiper-pagination',
+
+        prevButton:'.prev-button',
+        nextButton:'.next-button',
+
+        paginationClickable: true,
+
+
+
+        paginationBulletRender: function (index, className) {
+            $("#totnum").text(index+1);//总页码
+            return '<span class="' + className + '">' + (index + 1) + '</span>';
+
+
+        },
+
+        onSlideChangeEnd: function(swiper){
+            $("#curnum").text(swiper.activeIndex+1);//当前页
+        }
+
+  });
+
+
+
+//点击底部出现题目数
+$("#showall").click(function(){
+    $(".maskwhite").toggle();
+    $(".swiper-pagination").toggle();
+});
+
+//选择答案
+$("dl.swiper-slide dd").click(function(){
+    $(this).parent("dl").find("dd").removeClass("chance");
+    $(this).addClass("chance");
+    var indexnum = $(this).parent("dl").index();
+    $(".swiper-pagination span").eq(indexnum).addClass("curr");
+});
+
+//交卷
+$("#numok").click(function(){
+
+    $(".swiper-pagination").hide();
+
+    var allnum = $("#totnum").text();
+    $("#subnum").text(allnum);
+    var lengths = $(".swiper-pagination span.curr").length;
+
+    if(lengths==allnum){
+        $(".maskwhite").show();
+        $(".subjuan").show();
+        $("#subno").click(function(){//取消
+            $(".maskwhite").hide();
+            $(".subjuan").hide();
+        });
+        $("#subyes").click(function(){//取消
+            $(".maskwhite").hide();
+            $(".subjuan").hide();
+            window.location.href="#"
+        });
+    }
+
+    else{
+        $(".maskwhite").hide();
+    }
+
+});
+
+</script>
+</html>

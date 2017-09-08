@@ -148,7 +148,7 @@ public class UpdateOldPwdActivity extends ToolBarActivity implements Callback<St
             CustomToast.INSTANCE.showToast(this,"两次新密码输入不一致");
             return;
         }
-        Integer id = UserService.getUserInfo().getId();
+        Integer id = UserService.getUserId(getApplicationContext());
         CustomApplication.getRetrofit().updatePassword(id,oldPwd, newPwd,0,newPwdAgain).enqueue(this);
     }
 

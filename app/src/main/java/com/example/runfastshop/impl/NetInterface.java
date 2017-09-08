@@ -98,7 +98,7 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.SEARCH_GOODS)
-    Call<String> searchGoods(@Field("name") String name);
+    Call<String> searchGoodsType(@Field("name") String name);
 
     /**
      * 分类查询商家商品
@@ -106,8 +106,8 @@ public interface NetInterface {
      * @return
      */
     @FormUrlEncoded
-    @POST("search/list.do")
-    Call<String> searchGoodsType(@Field("page") Integer page,
+    @POST(UrlConstant.SEARCH_GOODS_TYPE)
+    Call<String> searchGoods(@Field("page") Integer page,
                                  @Field("rows") Integer rows,
                                  @Field("longitude") Double longitude,
                                  @Field("latitude") Double latitude,
