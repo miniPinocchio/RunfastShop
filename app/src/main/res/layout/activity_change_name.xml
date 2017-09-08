@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/layout_title"/>
+
+    <EditText
+        android:id="@+id/et_change_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_30_dp"
+        android:layout_marginLeft="@dimen/dimen_20_dp"
+        android:layout_marginRight="@dimen/dimen_20_dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_change_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_30_dp"
+        android:layout_marginLeft="@dimen/dimen_20_dp"
+        android:layout_marginRight="@dimen/dimen_20_dp"/>
+
+    <Button
+        android:id="@+id/btn_save_name"
+        style="@style/save_button"
+        android:text="保存"/>
+
+</LinearLayout>

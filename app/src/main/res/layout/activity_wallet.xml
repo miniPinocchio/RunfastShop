@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_food_gray"
+    android:orientation="vertical"
+
+    tools:context="com.example.runfastshop.activity.usercenter.WalletActivity">
+    <include layout="@layout/layout_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_my_wallet"
+                android:layout_marginTop="55dp"
+                android:layout_marginBottom="25dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账户余额"
+                android:textSize="16sp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/color_address_black"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥"
+                    android:textColor="@color/color_address_black"
+                    android:textSize="33sp"/>
+                <TextView
+                    android:id="@+id/tv_wallet_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/color_address_black"
+                    android:textSize="33sp"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_wallet_recharge"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_button_pay"
+                android:text="充值"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btn_wallet_withdrawals"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/address_background"
+                android:text="提现"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
+
+            <LinearLayout
+                android:id="@+id/layout_withdrawals_record"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginTop="35dp"
+                android:background="@color/color_white"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="提现记录"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_text_gray_two"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_right"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:background="@color/color_line_back"/>
+            <LinearLayout
+                android:id="@+id/layout_withdrawals_account"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/color_white"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="提现账号"
+                    android:textSize="15sp"
+                    android:textColor="@color/color_text_gray_two"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_right"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

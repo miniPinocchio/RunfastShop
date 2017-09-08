@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.example.runfastshop.activity.ordercenter.OrderRemarkActivity">
+
+    <include layout="@layout/layout_title"/>
+
+    <EditText
+        android:id="@+id/et_order_remark"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/color_title"
+        android:hint="@string/order_remark_content"
+        android:gravity="left|top"
+        android:layout_margin="@dimen/dimen_15_dp"
+        android:paddingTop="@dimen/dimen_8_dp"
+        android:paddingLeft="@dimen/dimen_5_dp"
+        android:textSize="@dimen/textsize_xxl"/>
+
+    <Button
+        android:id="@+id/btn_order_remark_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_commit_darkgray"
+        android:text="@string/order_remark_commit"
+        android:textColor="@color/color_title"
+        android:textSize="@dimen/dimen_18_dp"
+        android:layout_marginLeft="@dimen/dimen_15_dp"
+        android:layout_marginRight="@dimen/dimen_15_dp"
+        android:layout_marginTop="@dimen/_10dp"/>
+
+</LinearLayout>

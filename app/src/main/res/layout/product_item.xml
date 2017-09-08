@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/mainitem_layout"
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:src="@drawable/icon_default_head"
+            android:id="@+id/head"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_12_dp"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10_dp"
+            android:layout_toLeftOf="@+id/action"
+            android:layout_toRightOf="@+id/head"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="劲辣鸡腿堡"
+                android:textSize="15sp"
+                android:textColor="@color/color_address_black" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="销量10"
+                android:textSize="10sp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/color_text_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="7折 每单限1份"
+                android:textSize="10sp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/color_product_red" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_3_dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥"
+                    android:textColor="@color/color_price_red"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/prise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_5_dp"
+                    android:text="17"
+                    android:textColor="@color/color_price_red"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/份"
+                    android:textColor="@color/color_text_gray"
+                    android:textSize="@dimen/dimen_13_dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_12_dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/reduce"
+                android:layout_width="@dimen/dimen_0_dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/icon_delete_product" />
+
+            <TextView
+                android:id="@+id/shoppingNum"
+                android:layout_width="@dimen/dimen_0_dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:maxLength="10"
+                android:textColor="@color/color_text_gray_two"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/increase"
+                android:layout_width="@dimen/dimen_0_dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/icon_add_product"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

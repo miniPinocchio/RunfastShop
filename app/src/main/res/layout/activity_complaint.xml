@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.runfastshop.activity.usercenter.ComplaintActivity">
+
+    <include layout="@layout/layout_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_bank_back"
+            android:scaleType="centerCrop"/>
+        <EditText
+            android:id="@+id/et_complaint_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textSize="14sp"
+            android:lineSpacingExtra="3dp"
+            android:hint="请留下您的宝贵意见或建议，我们将努力改进（不少于五个字）"
+            android:textColorHint="@color/color_text_gray"
+            android:textColor="@color/color_address_black"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_bank_back"
+            android:scaleType="centerCrop"/>
+        <EditText
+            android:id="@+id/et_complaint_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:inputType="phone"
+            android:textSize="14sp"
+            android:singleLine="true"
+            android:hint="请留下手机号码，以便我们回复您"
+            android:textColorHint="@color/color_text_gray"
+            android:textColor="@color/color_address_black"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_commit_info"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_button_pay"
+        android:text="提交"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"/>
+</LinearLayout>

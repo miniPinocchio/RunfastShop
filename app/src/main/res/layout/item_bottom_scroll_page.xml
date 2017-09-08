@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_bottom_scroll_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="营养早餐"
+        android:textColor="@color/color_address_black"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_bottom_scroll_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_background"
+        android:text="海量美食任选"
+        android:textColor="@color/color_text_gray_two"
+        android:layout_gravity="center_horizontal"
+        android:textSize="14sp"/>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_bottom_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/dimen_5_dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_5_dp"
+        />
+</LinearLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_food_gray"
+    tools:context="com.example.runfastshop.activity.usercenter.UpdateAddressActivity">
+
+    <include layout="@layout/layout_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="联系人"
+            android:textSize="14sp"
+            android:textColor="@color/color_text_gray_two"/>
+
+        <EditText
+            android:id="@+id/et_user_name"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:inputType="text"
+            android:textSize="14sp"
+            android:hint="请填写收货人的姓名"
+            android:singleLine="true"
+            android:textColorHint="#CCCCCC"
+            android:textColor="@color/color_address_black"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/color_line_back"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="手机号"
+            android:textSize="14sp"
+            android:textColor="@color/color_text_gray_two"/>
+
+        <EditText
+            android:id="@+id/et_user_phone"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:inputType="phone"
+            android:textSize="14sp"
+            android:hint="请填写手机号"
+            android:singleLine="true"
+            android:textColorHint="#CCCCCC"
+            android:textColor="@color/color_address_black"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/color_line_back"/>
+    <LinearLayout
+        android:id="@+id/layout_select_address"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="收货地址"
+            android:textSize="14sp"
+            android:textColor="@color/color_text_gray_two"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/icon_address"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="光谷国际总部"
+            android:textColor="@color/color_address_black"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_right"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/color_line_back"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="门牌号"
+            android:textSize="14sp"
+            android:textColor="@color/color_text_gray_two"/>
+
+        <EditText
+            android:id="@+id/et_house_number"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:inputType="phone"
+            android:textSize="14sp"
+            android:hint="例:16号楼1602室"
+            android:singleLine="true"
+            android:textColorHint="#CCCCCC"
+            android:textColor="@color/color_address_black"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_save_address"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_button_pay"
+        android:text="保存"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/btn_delete_address"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:background="@drawable/delete_address_background"
+        android:text="删除该地址"
+        android:textSize="18sp"
+        android:textColor="@color/color_address_black"/>
+
+</LinearLayout>

@@ -1,0 +1,231 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/color_food_gray"
+             tools:context="com.example.runfastshop.fragment.TakeOutFoodFragment">
+
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/rl_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.runfastshop.view.CustomScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.jude.rollviewpager.RollPagerView
+                    android:id="@+id/roll_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:rollviewpager_play_delay="3000"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@color/color_white"
+                    android:orientation="vertical"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="17dp"
+                    android:paddingRight="17dp"
+                    android:paddingTop="8dp">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_home_middle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <!--<com.example.runfastshop.view.recyclerview.PageIndicatorView-->
+                        <!--android:id="@+id/pi_home_middle"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_gravity="bottom"-->
+                        <!--android:layout_marginBottom="20dp"/>-->
+
+                </LinearLayout>
+
+               <android.support.v7.widget.RecyclerView
+                   android:id="@+id/rv_home_bottom"
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/dimen_200_dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_white"
+                    android:padding="10dp"
+                    android:src="@drawable/icon_banner"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_white"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="1dp"
+                        android:background="@color/color_address_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:text="附近商家"
+                        android:textColor="@color/color_address_black"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="1dp"
+                        android:background="@color/color_address_black"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_line_back"/>
+            </LinearLayout>
+        </com.example.runfastshop.view.CustomScrollView>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout_search_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.5"
+                    android:background="@drawable/shape_address_background"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_select_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/icon_location"/>
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="南国大厦"
+                        android:textColor="@color/color_white"
+                        android:textSize="14sp"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/icon_bottom"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_search_product"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="2"
+                android:background="@drawable/shape_search_background"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/icon_search"/>
+
+                <TextView
+                    android:id="@+id/tv_search_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:singleLine="true"
+                    android:text="输入商家、商品名称"
+                    android:textColor="@color/color_text_gray"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_search_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_search_background_scroll"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/icon_search"/>
+
+                <TextView
+                    android:id="@+id/tv_search_name_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:singleLine="true"
+                    android:text="输入商家、商品名称"
+                    android:textColor="@color/color_text_gray"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>

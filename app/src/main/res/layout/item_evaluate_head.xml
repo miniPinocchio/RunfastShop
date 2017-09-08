@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/color_white"
+        android:gravity="center_vertical">
+
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="76"
+                android:textColor="@color/color_orange_select"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_score"
+                android:text="用户满意度"
+                android:textColor="@color/color_text_gray_two"
+                android:textSize="15sp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="0.5dp"
+            android:layout_height="45dp"
+            android:background="@color/color_line_back"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="25dp"
+            android:paddingLeft="45dp">
+            <TextView
+                android:id="@+id/tv_user_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="购买此产品的用户满意度为76%"
+                android:textSize="13sp"
+                android:textColor="@color/color_text_gray_two"/>
+            <TextView
+                android:id="@+id/tv_user_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="已有17人点评"
+                android:textSize="13sp"
+                android:textColor="@color/color_text_gray_two"/>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_line_back"
+        />
+</LinearLayout>

@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">跑腿快车</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="please_waite_to_refresh">正在加载，请稍后&#8230;</string>
+    <string name="refresh_failed">加载失败，请点击重试</string>
+    <string name="data_loaded">数据已全部加载</string>
+    <string name="no_data">暂时没有数据</string>
+
+    <string name="text_commodity">商品</string>
+    <string name="text_evaluate">评价</string>
+    <string name="text_business">商家</string>
+
+    <string name="pay_all">全部</string>
+    <string name="pay_income">收入</string>
+    <string name="pay_expenditure">支出</string>
+
+    <string name="coupons_selected">精选</string>
+    <string name="coupons_tea">茶饮</string>
+    <string name="coupons_supermarket">超市</string>
+    <string name="coupons_fresh">生鲜</string>
+
+    <string name="shopping_cart">购物车</string>
+    <string name="clear_shopping_cart">清空购物车</string>
+
+    <string name="please_input_correct_phone">请输入正确的手机号</string>
+
+    <string name="prompt">提示</string>
+    <string name="update_tip_confrim">确定</string>
+
+
+    <string name="scroll_behavior">com.example.runfastshop.behaviors.ScrollBehavior</string>
+    <string name="order_remark_content">请输入备注内容</string>
+    <string name="order_remark_commit">确定</string>
+    <string name="sure">确定</string>
+</resources>

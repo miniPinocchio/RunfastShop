@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_food_gray"
+    tools:context="com.example.runfastshop.activity.usercenter.ConsultationActivity">
+
+    <include layout="@layout/layout_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="137dp"
+        android:layout_marginTop="8dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_bank_back"
+            android:scaleType="centerCrop"/>
+        <LinearLayout
+            android:id="@+id/layout_call_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_call"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="咨询热线：0775-2995588"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/color_address_black"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_call"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/text_button_register"
+            android:text="联系客服"
+            android:layout_below="@+id/layout_call_phone"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:textSize="18sp"
+            android:textColor="@color/color_not_order_black"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_height="317dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_bank_back"
+            android:scaleType="centerCrop"/>
+        <LinearLayout
+            android:id="@+id/layout_scan_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_scan_code"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="扫码添加微信客服"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/color_address_black"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_code"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:background="@color/color_line_back"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫一扫上面的二维码，添加微信"
+            android:textSize="11sp"
+            android:layout_below="@+id/iv_code"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/color_text_gray"/>
+
+    </RelativeLayout>
+</LinearLayout>

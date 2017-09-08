@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">SupportV1</string>
+
+    <!-- net start -->
+    <string name="of_start_connect">开始与服务器通讯</string>
+    <string name="of_connect_analysising">通讯分析中…</string>
+    <string name="of_connect_success">通讯成功，分析数据</string>
+    <string name="of_connect_failed">通讯失败</string>
+    <string name="of_unsupported_encoding">通讯失败，请求参数的编码不支持</string>
+    <string name="of_client_protocol">通讯失败，http协议错误</string>
+    <string name="of_connect_err">无网络连接或与服务器通信失败</string>
+    <string name="of_connect_timeout">通讯失败，与服务器建立连接超时</string>
+    <string name="of_socket_timeout">通讯失败，从服务器读取数据超时</string>
+    <string name="of_unknow_host">通讯失败，服务器域名解析故障</string>
+    <string name="of_other_exception">通讯失败，发生未识别的网络异常</string>
+    <string name="of_json_bean_error">数据解析错误</string>
+    <string name="of_json_error">服务器返回数据错误</string>
+    <!-- net end -->
+    <string name="xlistview_header_hint_normal">下拉刷新&#8230;</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确认</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+    <string name="time_picker_separator">:</string>
+
+    <string name="pickerview_cancel">cancel</string>
+    <string name="pickerview_submit">submit</string>
+    <string name="pickerview_year">y</string>
+    <string name="pickerview_month">m</string>
+    <string name="pickerview_day">day</string>
+    <string name="pickerview_hours">h</string>
+    <string name="pickerview_minutes">m</string>
+    <string name="pickerview_seconds">s</string>
+    <string name="pickerview_ampm"></string>
+
+</resources>

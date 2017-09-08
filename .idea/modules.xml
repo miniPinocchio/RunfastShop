@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/RunfastShop.iml" filepath="$PROJECT_DIR$/RunfastShop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/citypickerview/citypickerview.iml" filepath="$PROJECT_DIR$/citypickerview/citypickerview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/master/master.iml" filepath="$PROJECT_DIR$/master/master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/supportv1/supportv1.iml" filepath="$PROJECT_DIR$/supportv1/supportv1.iml" />
+    </modules>
+  </component>
+</project>

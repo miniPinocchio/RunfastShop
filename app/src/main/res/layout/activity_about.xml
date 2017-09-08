@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/shallowgrey"
+    tools:context="com.example.runfastshop.activity.usercenter.AboutActivity">
+
+    <include layout="@layout/layout_title"/>
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跑腿快车"
+        android:textSize="25sp"
+        android:layout_marginTop="17dp"
+        android:textColor="@color/color_address_black"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="v1.0.0.1"
+        android:textSize="11sp"
+        android:layout_marginTop="11dp"
+        android:textColor="@color/color_text_gray"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跑腿快车商城，是一个由微信公众号和APP组成的移动端购物系统，跑腿快车商城总部位于广西南宁，也是立足广西本土面向全国的网上购物、美食、外卖等一体化网上商城！让您享受“足不出户 一站服务”"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="37dp"
+        android:textSize="16sp"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/color_text_gray_two"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/color_line_back"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系电话："
+            android:textSize="14sp"
+            android:textColor="@color/color_address_black"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="400-0775-248"
+            android:textSize="14sp"
+            android:textColor="@color/color_orange_select"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总公司地址："
+            android:textSize="14sp"
+            android:textColor="@color/color_address_black"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="广西南宁市竹溪大道南国大厦B座5楼"
+            android:textSize="14sp"
+            android:textColor="@color/color_orange_select"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分公司地址："
+            android:textSize="14sp"
+            android:textColor="@color/color_address_black"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="广西桂平市西山镇桂江西路2号"
+            android:textSize="14sp"
+            android:textColor="@color/color_orange_select"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+</LinearLayout>

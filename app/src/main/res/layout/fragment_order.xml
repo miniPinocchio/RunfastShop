@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.runfastshop.fragment.OrderFragment">
+
+    <include layout="@layout/layout_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_food_gray"/>
+        <RelativeLayout
+            android:id="@+id/layout_not_order"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_not_order"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="300dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="您还没有订单记录～"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_text_gray_two"
+                    />
+                <TextView
+                    android:id="@+id/tv_place_order"
+                    android:layout_width="106dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="23dp"
+                    android:background="@drawable/shape_not_order_background"
+                    android:text="立即下订单"
+                    android:gravity="center"
+                    android:textColor="@color/color_white"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

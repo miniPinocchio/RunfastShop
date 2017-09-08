@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="75dp">
+
+    <LinearLayout
+        android:id="@+id/layout_bank_select"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_bank_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="农业银行(1234)"
+            android:textColor="@color/color_address_black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_bank_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:visibility="gone"
+            android:src="@drawable/icon_breakfast_check" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/color_line_gray"/>
+</LinearLayout>

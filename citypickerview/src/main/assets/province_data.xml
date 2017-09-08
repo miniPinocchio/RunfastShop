@@ -1,0 +1,14 @@
+<root>
+  <province name="微信支付">
+    <city name="安庆市">
+      <district name="枞阳县" zipcode="246000" />
+    </city>
+
+  </province>
+  <province name="支付宝支付">
+    <city name="北京市">
+      <district name="昌平区" zipcode="100000" />
+    </city>
+  </province>
+
+</root>
