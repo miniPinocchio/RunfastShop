@@ -133,6 +133,8 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     AddWidget addWidgetDetail;
     @BindView(R.id.iv_title_bg)
     ImageView ivTitleBg;
+    @BindView(R.id.iv_collection)
+    ImageView mIvCollection;
     private boolean isShowBottom;
 
     private TextView car_badge, car_limit, tv_amount;
@@ -377,7 +379,6 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
             TopImage business = (TopImage) getIntent().getSerializableExtra("business");
             if (business != null) {
                 String[] split = business.getLinkAddr().split("=");
-                LogUtil.d("轮播", split[1]);
                 businessId = Integer.parseInt(split[1]);
                 getBusinessDetailFromBanner(businessId);
             }
@@ -391,7 +392,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
         } else if (flags == 2) {
             businessId = getIntent().getIntExtra("orderInfo", 0);
             getBusinessDetailFromOrder(businessId);
-        }else if (flags == 3){
+        } else if (flags == 3) {
             businessId = getIntent().getIntExtra("search", 0);
             getBusinessDetailFromOrder(businessId);
         }
@@ -926,6 +927,8 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
 
                         onAddClickSpec(tvAdd, foodBeanTwo);
                     }
+                    isShowDetail = false;
+                    specDialog.dismiss();
                     break;
                 case R.id.iv_close_spec:
                     isShowDetail = false;
@@ -1113,7 +1116,6 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
-        Log.d("params", "response = " + response.isSuccessful() + ",data = " + data);
         if (response.isSuccessful()) {
             ResolveData(data);
         }
@@ -1160,7 +1162,8 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                             foodBean.setIsonly(jsonObject.optInt("isonly"));
                             foodBean.setPrice(BigDecimal.valueOf(jsonObject.optDouble("price")).setScale(1, BigDecimal.ROUND_HALF_DOWN));
                             foodBean.setSale(String.valueOf(jsonObject.optInt("salesnum")));
-
+                            foodBean.setBusinessId(jsonObject.optInt("businessId"));
+                            foodBean.setAgentId(jsonObject.optInt("agentId"));
                             foodBeens.add(foodBean);
                             fragment.getFoodBeanList().add(foodBean);
                         }
@@ -1222,7 +1225,13 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                 }
             }
             if (netType == 5) {
+                if (object.optString("succ").equals("收藏成功！")) {
+                    mIvCollection.setImageResource(R.drawable.icon_collection_yes);
+                } else if (object.optString("succ").equals("已取消收藏！")) {
+                    mIvCollection.setImageResource(R.drawable.icon_collection_no);
+                }
                 CustomToast.INSTANCE.showToast(this, object.getString("succ"));
+
             }
 
             if (netType == 6 || netType == 7) {

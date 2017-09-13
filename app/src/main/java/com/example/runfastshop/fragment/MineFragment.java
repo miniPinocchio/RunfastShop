@@ -23,9 +23,12 @@ import com.example.runfastshop.activity.usercenter.IntegralActivity;
 import com.example.runfastshop.activity.usercenter.JoinBusinessActivity;
 import com.example.runfastshop.activity.usercenter.UserInfoActivity;
 import com.example.runfastshop.activity.usercenter.WalletActivity;
-import com.example.runfastshop.bean.User;
+import com.example.runfastshop.bean.user.User;
+import com.example.runfastshop.bean.user.Users;
 import com.example.runfastshop.config.NetConfig;
 import com.example.runfastshop.config.UserService;
+import com.example.runfastshop.util.CustomToast;
+import com.example.runfastshop.util.GsonUtil;
 
 import org.xutils.x;
 
@@ -33,11 +36,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MineFragment extends Fragment {
+public class MineFragment extends Fragment implements Callback<String> {
 
     @BindView(R.id.iv_head)
     ImageView ivHead;
@@ -51,6 +57,7 @@ public class MineFragment extends Fragment {
     @BindView(R.id.tv_integral_num)
     TextView tvIntegralNum;
     private User userInfo;
+    private int mNetType;
 
     public MineFragment() {
         // Required empty public constructor
@@ -73,7 +80,16 @@ public class MineFragment extends Fragment {
             return;
         }
         updateUi();
+//        else {
+//            mNetType = 1;
+//            CustomApplication.getRetrofit().postUserInfo(String.valueOf(userInfo.getId())).enqueue(this);
+//        }
     }
+
+    /**
+     * 请求用户中心
+     */
+
 
     /**
      * 重置页面
@@ -154,4 +170,27 @@ public class MineFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResponse(Call<String> call, Response<String> response) {
+        String data = response.body();
+        if (response.isSuccessful()) {
+            ResolveData(data);
+        }
+    }
+
+    @Override
+    public void onFailure(Call<String> call, Throwable t) {
+        CustomToast.INSTANCE.showToast(getActivity(),"网络错误");
+    }
+
+
+    /**
+     * 解析数据
+     *
+     * @param data
+     */
+    private void ResolveData(String data) {
+        Users users = GsonUtil.parseJsonWithGson(data,Users.class);
+        UserService.saveUserInfo(users.getUser());
+    }
 }

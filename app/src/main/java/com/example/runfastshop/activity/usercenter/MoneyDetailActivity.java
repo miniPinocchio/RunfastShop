@@ -8,9 +8,14 @@ import android.support.v4.view.ViewPager;
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ToolBarActivity;
 import com.example.runfastshop.adapter.BusinessAdapter;
+import com.example.runfastshop.application.CustomApplication;
+import com.example.runfastshop.bean.spend.AccountRecords;
+import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.fragment.walletfragmnet.MoneyAllFragment;
 import com.example.runfastshop.fragment.walletfragmnet.MoneyExpenditureFragment;
 import com.example.runfastshop.fragment.walletfragmnet.MoneyIncomeFragment;
+import com.example.runfastshop.util.CustomToast;
+import com.example.runfastshop.util.GsonUtil;
 import com.example.runfastshop.util.ViewUtils;
 
 import java.util.ArrayList;
@@ -18,11 +23,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 收支明细
  */
-public class MoneyDetailActivity extends ToolBarActivity {
+public class MoneyDetailActivity extends ToolBarActivity implements Callback<String> {
 
     @BindView(R.id.tl_list_tab)
     TabLayout mTabLayout;
@@ -33,6 +41,9 @@ public class MoneyDetailActivity extends ToolBarActivity {
 
     private List<String> mStringList = new ArrayList<>();
     private BusinessAdapter mAdapter;
+    private MoneyAllFragment mMoneyAllFragment;
+    private MoneyIncomeFragment mMoneyIncomeFragment;
+    private MoneyExpenditureFragment mMoneyExpenditureFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +52,18 @@ public class MoneyDetailActivity extends ToolBarActivity {
         ButterKnife.bind(this);
         initData();
         setData();
+        getNetData();
     }
 
     private void initData() {
         setTitle();
-        mFragments.add(new MoneyAllFragment());
-        mFragments.add(new MoneyIncomeFragment());
-        mFragments.add(new MoneyExpenditureFragment());
+
+        mMoneyAllFragment = new MoneyAllFragment();
+        mMoneyIncomeFragment = new MoneyIncomeFragment();
+        mMoneyExpenditureFragment = new MoneyExpenditureFragment();
+        mFragments.add(mMoneyAllFragment);
+        mFragments.add(mMoneyIncomeFragment);
+        mFragments.add(mMoneyExpenditureFragment);
 
         mAdapter = new BusinessAdapter(getSupportFragmentManager(), mFragments, mStringList);
     }
@@ -69,6 +85,41 @@ public class MoneyDetailActivity extends ToolBarActivity {
         mStringList.add(getResources().getString(R.string.pay_expenditure));
     }
 
+    private void getNetData() {
+        Integer id = UserService.getUserInfo().getId();
+        CustomApplication.getRetrofit().getListConsume(id).enqueue(this);
+    }
+
+    @Override
+    public void onResponse(Call<String> call, Response<String> response) {
+        String data = response.body();
+        if (response.isSuccessful()) {
+            ResolveData(data);
+        }
+    }
+
+    @Override
+    public void onFailure(Call<String> call, Throwable t) {
+        CustomToast.INSTANCE.showToast(this, "网络错误");
+    }
+
+
+    /**
+     * 解析数据
+     *
+     * @param data
+     */
+    private void ResolveData(String data) {
+        AccountRecords accountRecords = GsonUtil.parseJsonWithGson(data, AccountRecords.class);
+        if (accountRecords != null && accountRecords.getRows().size() > 0) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("record", accountRecords);
+            mMoneyAllFragment.setArguments(bundle);
+            mMoneyExpenditureFragment.setArguments(bundle);
+            mMoneyIncomeFragment.setArguments(bundle);
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -79,6 +130,5 @@ public class MoneyDetailActivity extends ToolBarActivity {
             }
         });
     }
-
 
 }

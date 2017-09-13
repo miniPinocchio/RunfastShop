@@ -16,12 +16,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_make_money_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="肯德基宅急送"
                 android:textSize="15sp"
                 android:textColor="@color/color_address_black"/>
             <TextView
+                android:id="@+id/tv_make_money_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -30,7 +32,7 @@
                 android:textColor="@color/color_text_gray"/>
         </LinearLayout>
         <TextView
-            android:id="@+id/tv_money"
+            android:id="@+id/tv_make_money_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

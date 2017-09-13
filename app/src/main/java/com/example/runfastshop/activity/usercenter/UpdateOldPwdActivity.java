@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -161,7 +160,6 @@ public class UpdateOldPwdActivity extends ToolBarActivity implements Callback<St
     public void onResponse(Call<String> call, Response<String> response) {
         if (response.isSuccessful()){
             String data = response.body();
-            Log.d("params", "response = " + data);
             ResolveData(data);
         }else {
             CustomToast.INSTANCE.showToast(this,"请求失败");

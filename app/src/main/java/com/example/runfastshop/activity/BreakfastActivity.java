@@ -2,6 +2,7 @@ package com.example.runfastshop.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -98,7 +99,8 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
     private MiddleSort mSort;
     private Integer mPosition;
     private Integer mPositionSort = 1;
-    private String mName = "早餐";
+    private String mName;
+    private int mTotalpage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,12 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
         setData();
     }
 
+    @Override
+    protected void onTitleChanged(CharSequence title, int color) {
+        super.onTitleChanged(title, color);
+        tvToolbarTitle.setText(mSort.getTypename());
+    }
+
     private void setData() {
         recyclerViewClass.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewSort.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -118,6 +126,7 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
         recyclerViewSort.setAdapter(adapterSort);
         recyclerViewList.setAdapter(loadMoreAdapter);
     }
+
 
     /**
      * 初始化数据
@@ -130,6 +139,8 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
         lat = 110.3;
         lon = 23.3;
         mSort = getIntent().getParcelableExtra("middleData");
+        mName = mSort.getTypename();
+
         getSortInfo();
 
         adapterType = new BreakfastClassAdapter(typeInfos, this, this);
@@ -335,7 +346,6 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
-        Log.d("params", "response = " + response.isSuccessful() + ",data = " + data);
         if (response.isSuccessful()) {
             ResolveData(data);
         }
@@ -373,6 +383,7 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
                 return;
             } else if (netType == 2) {
                 JSONArray bus = object.getJSONArray("bus");
+                mTotalpage = object.optInt("totalpage");
                 if (bus == null || bus.length() <= 0) {
                     mRefreshLayout.endRefreshing();
                     loadMoreAdapter.loadAllDataCompleted();
@@ -425,8 +436,19 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
 
     @Override
     public void loadMore() {
-        page += 1;
-        searchGoodsType(1, 10, mPositionSort, mName);
+        if (page < mTotalpage) {
+            page += 1;
+            searchGoodsType(1, 10, mPositionSort, mName);
+        } else {
+            Handler handler = new Handler();
+            final Runnable r = new Runnable() {
+                public void run() {
+                    loadMoreAdapter.loadAllDataCompleted();
+                }
+            };
+            handler.post(r);
+
+        }
     }
 
     @Override

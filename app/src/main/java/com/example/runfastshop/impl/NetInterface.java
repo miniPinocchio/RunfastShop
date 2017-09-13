@@ -204,6 +204,17 @@ public interface NetInterface {
                                 @Field("code") String code);
 
     /**
+     * 修改密码
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.FORGOT_PWD)
+    Call<String> updateForgotPwd(@Field("mobile") String mobile,
+                                @Field("xcode") String xcode,
+                                @Field("pwd") String pwd);
+
+    /**
      * 获取修改密码验证码
      *
      * @return
@@ -220,6 +231,15 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST(UrlConstant.QUERY_AUTH_CODE)
     Call<String> getCode(@Field("mobile") String mobile);
+
+    /**
+     * 获取注册验证码
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.FORGET_PASSWORD)
+    Call<String> getForgetCode(@Field("mobile") String mobile);
 
     /**
      * 登录请求
@@ -249,10 +269,14 @@ public interface NetInterface {
                               @Field("password") String password,
                               @Field("code") String code);
 
+    @FormUrlEncoded
+    @POST(UrlConstant.USER_INFO)
+    Call<String> postUserInfo(@Field("uId") String uId);
+
     /**
      * 用户投诉
      *
-     * @param businessId
+     * aram businessId
      * @param id
      * @param email
      * @param content
@@ -440,5 +464,55 @@ public interface NetInterface {
     @POST(UrlConstant.CHANGE_EMAIL)
     Call<String> postChangeEmail(@Field("id") Integer id,
                                  @Field("email") String email);
+
+    /**
+     * 红包
+     * @param uId
+     * @param businessId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.RED_PACKAGE)
+    Call<String> postRedPackage(@Field("uId") Integer uId,
+                                 @Field("businessId") Integer businessId);
+
+    /**
+     * 优惠券
+     * @param uId
+     * @param agentId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.GET_COUPON)
+    Call<String> GetCoupan(@Field("uId") Integer uId,
+                                 @Field("agentId") Integer agentId);
+    /**
+     * 我的优惠券
+     * @param uId
+     * @param type
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.MY_CONPON)
+    Call<String> GetMyCoupan(@Field("uId") Integer uId,
+                               @Field("type") Integer type);
+
+    /**
+     * 积分明细
+     * @param uId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.LIST_SCORE)
+    Call<String> getListScore(@Field("uId") Integer uId);
+
+    /**
+     * 收支明细
+     * @param uId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.LIST_CONSUME)
+    Call<String> getListConsume(@Field("uId") Integer uId);
 
 }

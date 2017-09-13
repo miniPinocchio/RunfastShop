@@ -1,12 +1,12 @@
 package com.example.runfastshop.activity.usercenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ToolBarActivity;
 import com.example.runfastshop.application.CustomApplication;
-import com.example.runfastshop.bean.User;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.VaUtils;
@@ -51,6 +51,9 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
     private boolean newAgainIsEmpty;
     private User userInfo;
     private int netType;
+    private int mFlags;
+    private String mPhone;
+    private String mCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,15 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
     }
 
     private void initData() {
-        userInfo = UserService.getUserInfo();
+        Intent intent = getIntent();
+        if (intent != null) {
+            mFlags = intent.getFlags();
+            if (mFlags != 0) {
+                mPhone = intent.getStringExtra("phone");
+            }
+        } else {
+            userInfo = UserService.getUserInfo();
+        }
     }
 
     private void setListener() {
@@ -79,14 +90,14 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!TextUtils.isEmpty(s.toString())){
+                if (!TextUtils.isEmpty(s.toString())) {
                     codeIsEmpty = true;
-                }else {
+                } else {
                     codeIsEmpty = false;
                 }
-                if (codeIsEmpty && newIsEmpty && newAgainIsEmpty){
+                if (codeIsEmpty && newIsEmpty && newAgainIsEmpty) {
                     btnSavePassword.setBackgroundResource(R.drawable.shape_button_pay);
-                }else {
+                } else {
                     btnSavePassword.setBackgroundResource(R.drawable.shape_button_pay_gary);
                 }
             }
@@ -104,14 +115,14 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!TextUtils.isEmpty(s.toString())){
+                if (!TextUtils.isEmpty(s.toString())) {
                     newIsEmpty = true;
-                }else {
+                } else {
                     newIsEmpty = false;
                 }
-                if (codeIsEmpty && newIsEmpty && newAgainIsEmpty){
+                if (codeIsEmpty && newIsEmpty && newAgainIsEmpty) {
                     btnSavePassword.setBackgroundResource(R.drawable.shape_button_pay);
-                }else {
+                } else {
                     btnSavePassword.setBackgroundResource(R.drawable.shape_button_pay_gary);
                 }
             }
@@ -129,14 +140,14 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!TextUtils.isEmpty(s.toString())){
+                if (!TextUtils.isEmpty(s.toString())) {
                     newAgainIsEmpty = true;
-                }else {
+                } else {
                     newAgainIsEmpty = false;
                 }
-                if (codeIsEmpty && newIsEmpty && newAgainIsEmpty){
+                if (codeIsEmpty && newIsEmpty && newAgainIsEmpty) {
                     btnSavePassword.setBackgroundResource(R.drawable.shape_button_pay);
-                }else {
+                } else {
                     btnSavePassword.setBackgroundResource(R.drawable.shape_button_pay_gary);
                 }
             }
@@ -159,14 +170,24 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
      * 获取验证码
      */
     private void getAuthCode() {
-        String accountName = userInfo.getMobile();
-        //|| !VaUtils.isMobileNo(accountName) 手机号正则验证
-        if (TextUtils.isEmpty(accountName) || !VaUtils.isMobileNo(accountName)) {
-            CustomToast.INSTANCE.showToast(this, getString(R.string.please_input_correct_phone));
-            return;
+        if (mFlags != 1) {
+            String accountName = userInfo.getMobile();
+            //|| !VaUtils.isMobileNo(accountName) 手机号正则验证
+            if (TextUtils.isEmpty(accountName) || !VaUtils.isMobileNo(accountName)) {
+                CustomToast.INSTANCE.showToast(this, getString(R.string.please_input_correct_phone));
+                return;
+            }
+            netType = 1;
+            CustomApplication.getRetrofit().getEditPwdCode(accountName).enqueue(this);
+        } else {
+            //|| !VaUtils.isMobileNo(accountName) 手机号正则验证
+            if (TextUtils.isEmpty(mPhone) || !VaUtils.isMobileNo(mPhone)) {
+                CustomToast.INSTANCE.showToast(this, getString(R.string.please_input_correct_phone));
+                return;
+            }
+            netType = 1;
+            CustomApplication.getRetrofit().getForgetCode(mPhone).enqueue(this);
         }
-        netType = 1;
-        CustomApplication.getRetrofit().getEditPwdCode(accountName).enqueue(this);
     }
 
     /**
@@ -177,21 +198,26 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
         String newPwd = etNewPassword.getText().toString().trim();
         String newPwdAgain = etNewPasswordAgain.getText().toString().trim();
 
-        if (TextUtils.isEmpty(oldPwd)){
-            CustomToast.INSTANCE.showToast(this,"旧密码不能为空");
+        if (TextUtils.isEmpty(oldPwd)) {
+            CustomToast.INSTANCE.showToast(this, "旧密码不能为空");
             return;
         }
-        if (TextUtils.isEmpty(newPwd)){
-            CustomToast.INSTANCE.showToast(this,"旧密码不能为空");
+        if (TextUtils.isEmpty(newPwd)) {
+            CustomToast.INSTANCE.showToast(this, "旧密码不能为空");
             return;
         }
-        if (!TextUtils.equals(newPwd,newPwdAgain)){
-            CustomToast.INSTANCE.showToast(this,"两次新密码输入不一致");
+        if (!TextUtils.equals(newPwd, newPwdAgain)) {
+            CustomToast.INSTANCE.showToast(this, "两次新密码输入不一致");
             return;
         }
-        netType = 2;
-        Integer id = UserService.getUserId(getApplicationContext());
-        CustomApplication.getRetrofit().updatePassword(id,oldPwd, newPwd,1,newPwdAgain).enqueue(this);
+        if (mFlags == 1) {
+            netType = 3;
+            CustomApplication.getRetrofit().updateForgotPwd(mPhone, oldPwd, newPwd);
+        } else {
+            netType = 2;
+            Integer id = UserService.getUserId(getApplicationContext());
+            CustomApplication.getRetrofit().updatePassword(id, oldPwd, newPwd, 1, newPwdAgain).enqueue(this);
+        }
     }
 
 
@@ -223,18 +249,17 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
-        if (response.isSuccessful()){
+        if (response.isSuccessful()) {
             String data = response.body();
-            Log.d("params", "response = " + data);
             ResolveData(data);
-        }else {
-            CustomToast.INSTANCE.showToast(this,"请求失败");
+        } else {
+            CustomToast.INSTANCE.showToast(this, "请求失败");
         }
     }
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
-        CustomToast.INSTANCE.showToast(this,"网络异常");
+        CustomToast.INSTANCE.showToast(this, "网络异常");
     }
 
     /**
@@ -247,18 +272,16 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
             JSONObject object = new JSONObject(data);
             boolean success = object.optBoolean("success");
             String msg = object.optString("msg");
-            if (!success){
-                CustomToast.INSTANCE.showToast(this, msg);
-                return;
-            }
-            if (netType == 1){
+            if (netType == 1) {
                 Message message = handler.obtainMessage();
                 message.what = 1002;
                 message.arg1 = 59;
                 message.sendToTarget();
-            }
-            if (netType == 2){
-
+            } else if (netType == 2 || netType == 3) {
+                CustomToast.INSTANCE.showToast(this, msg);
+                if (success) {
+                    finish();
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

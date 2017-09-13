@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,22 +12,15 @@ import android.widget.TextView;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.application.CustomApplication;
-import com.example.runfastshop.impl.NetResultThread;
 import com.example.runfastshop.util.CustomToast;
-import com.example.runfastshop.util.CustomUtils;
 import com.example.runfastshop.util.VaUtils;
-import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -184,7 +176,6 @@ public class RegisterActivity extends ToolBarActivity implements Callback<String
     public void onResponse(Call<String> call, Response<String> response) {
         if (response.isSuccessful()){
             String data = response.body();
-            Log.d("params", "response = " + data);
             ResolveData(data);
         }else {
             CustomToast.INSTANCE.showToast(this,"请求失败");

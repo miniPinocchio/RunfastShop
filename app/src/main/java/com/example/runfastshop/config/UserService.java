@@ -3,7 +3,7 @@ package com.example.runfastshop.config;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.example.runfastshop.bean.User;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.impl.constant.CustomConstant;
 import com.example.runfastshop.util.CustomToast;
 import com.example.supportv1.app.BaseApplication;

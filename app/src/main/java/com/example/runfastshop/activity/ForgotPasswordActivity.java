@@ -1,16 +1,25 @@
 package com.example.runfastshop.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.runfastshop.R;
+import com.example.runfastshop.activity.usercenter.UpdateMessageActivity;
 import com.example.runfastshop.application.CustomApplication;
+import com.example.runfastshop.data.IntentFlag;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.VaUtils;
+import com.example.supportv1.utils.ValidateUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,13 +38,64 @@ public class ForgotPasswordActivity extends ToolBarActivity implements Callback<
     TextView mTvCode;
     @BindView(R.id.btn_ok)
     Button mBtnOk;
-    private int netType;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
         ButterKnife.bind(this);
+        setListener();
+    }
+
+    private void setListener() {
+        mEtUserName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(s.toString()) && ValidateUtil.isMobileNo(s.toString())) {
+                    mBtnOk.setBackgroundResource(R.drawable.shape_button_pay);
+                } else {
+                    mBtnOk.setBackgroundResource(R.drawable.shape_button_pay_gary);
+                }
+
+            }
+        });
+
+//        mEtCode.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (TextUtils.isEmpty(s.toString())) {
+//                    mCode = true;
+//                } else {
+//                    mCode = false;
+//                }
+//                if (mPhone && mCode) {
+//                    mBtnOk.setBackgroundResource(R.drawable.shape_button_pay);
+//                } else {
+//                    mBtnOk.setBackgroundResource(R.drawable.shape_button_pay_gary);
+//                }
+//            }
+//        });
     }
 
     @OnClick({R.id.tv_code, R.id.btn_ok})
@@ -60,12 +120,11 @@ public class ForgotPasswordActivity extends ToolBarActivity implements Callback<
             CustomToast.INSTANCE.showToast(this, getString(R.string.please_input_correct_phone));
             return;
         }
-        netType = 1;
-        CustomApplication.getRetrofit().getCode(accountName).enqueue(this);
+        CustomApplication.getRetrofit().getForgetCode(accountName).enqueue(this);
     }
 
     /**
-     * 账号注册
+     * 重置密码
      */
     private void resetPassword() {
         String phone = mEtUserName.getText().toString().trim();
@@ -75,21 +134,42 @@ public class ForgotPasswordActivity extends ToolBarActivity implements Callback<
             CustomToast.INSTANCE.showToast(this, "请输入手机号");
             return;
         }
-        if (TextUtils.isEmpty(code)) {
-            CustomToast.INSTANCE.showToast(this, "请输入验证码");
-            return;
-        }
-        netType = 2;
-//        CustomApplication.getRetrofit().postRegister(phone, password, code).enqueue(this);
+//        if (TextUtils.isEmpty(code)) {
+//            CustomToast.INSTANCE.showToast(this, "请输入验证码");
+//            return;
+//        }
+        mIntent = new Intent(this, UpdateMessageActivity.class);
+        mIntent.setFlags(IntentFlag.FORGOT_PWD);
+        mIntent.putExtra("phone", phone);
+        startActivity(mIntent);
     }
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
-
+        String data = response.body();
+        if (response.isSuccessful()) {
+            ResolveData(data);
+        }
     }
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
+        CustomToast.INSTANCE.showToast(this, "网络异常");
+    }
+
+    private void ResolveData(String data) {
+        //验证码
+        try {
+            JSONObject object = new JSONObject(data);
+            boolean success = object.getBoolean("success");
+            String msg = object.getString("msg");
+            if (success) {
+                CustomToast.INSTANCE.showToast(this, msg);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
+
 }

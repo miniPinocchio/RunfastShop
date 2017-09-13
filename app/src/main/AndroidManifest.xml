@@ -41,7 +41,7 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"/>
 
-        <meta-data
+        <meta-mScoreList
             android:name="com.amap.api.v2.apikey"
             android:value="8ce45bcbc60d5e1a26515c6df303af70"/>
 

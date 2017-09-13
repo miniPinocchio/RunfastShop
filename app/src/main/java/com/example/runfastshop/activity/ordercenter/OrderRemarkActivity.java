@@ -34,20 +34,25 @@ public class OrderRemarkActivity extends ToolBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_remark);
         ButterKnife.bind(this);
-
+        Intent intent = getIntent();
+        if (intent != null) {
+            String remark_data = intent.getStringExtra("remark_data");
+            if (!TextUtils.isEmpty(remark_data))
+                mEtOrderRemark.setText(remark_data);
+        }
     }
 
     @OnClick(R.id.btn_order_remark_commit)
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_order_remark_commit:
                 if (!TextUtils.isEmpty(mEtOrderRemark.getText())) {
                     Intent intent = new Intent();
-                    intent.putExtra("order_remark", mEtOrderRemark.getText());
+                    intent.putExtra("order_remark", mEtOrderRemark.getText().toString());
                     setResult(IntentConfig.REMARK_RESULT_CODE, intent);
                     finish();
-                }else {
-                    ToastUtils.showShortToast(this,"请填写备注内容");
+                } else {
+                    ToastUtils.showShortToast(this, "请填写备注内容");
                 }
         }
     }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.example.runfastshop.R;
@@ -76,7 +75,6 @@ public class AddressSelectActivity extends ToolBarActivity implements Callback<S
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
-        Log.d("params", "response = " + response.isSuccessful() + ",mData = " + data);
         if (response.isSuccessful()) {
             ResolveData(data);
         }

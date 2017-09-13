@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,7 +157,6 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
-        Log.d("params", "response = " + response.isSuccessful() + ",data = " + data);
         if (response.isSuccessful()) {
             ResolveData(data);
         }

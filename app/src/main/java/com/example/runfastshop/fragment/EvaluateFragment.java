@@ -6,9 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.BusinessActivity;
@@ -16,24 +13,16 @@ import com.example.runfastshop.adapter.LoadMoreAdapter;
 import com.example.runfastshop.adapter.shopcaradater.EvaluateAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.EvaluateInfo;
-import com.example.runfastshop.bean.FoodBean;
-import com.example.runfastshop.bean.TypeBean;
-import com.example.runfastshop.config.NetConfig;
-import com.example.runfastshop.impl.constant.UrlConstant;
 import com.example.runfastshop.util.GsonUtil;
 import com.shizhefei.fragment.LazyFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xutils.x;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +58,6 @@ public class EvaluateFragment extends LazyFragment implements Callback<String>,L
     private void initView() {
         Log.d("initView","EvaluateFragment");
         recycler = (RecyclerView) findViewById(R.id.recycler);
-
     }
 
     private void initData() {
@@ -92,7 +80,6 @@ public class EvaluateFragment extends LazyFragment implements Callback<String>,L
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
-        Log.d("params", "response = " + response.isSuccessful() + ",data = " + data);
         if (response.isSuccessful()) {
             ResolveData(data);
         }

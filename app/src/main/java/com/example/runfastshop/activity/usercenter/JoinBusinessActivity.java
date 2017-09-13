@@ -2,7 +2,6 @@ package com.example.runfastshop.activity.usercenter;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -89,11 +88,8 @@ public class JoinBusinessActivity extends ToolBarActivity implements Callback<St
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
-        Log.d("params", "response = " + response.body());
-
         if (response.isSuccessful()){
             String data = response.body();
-            Log.d("params", "response = " + data);
             ResolveData(data);
         }else {
             CustomToast.INSTANCE.showToast(this,"请求失败");

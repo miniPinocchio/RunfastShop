@@ -52,6 +52,11 @@ public class UrlConstant {
     public static final String REGISTER = "register.do";
 
     /**
+     * 个人中心
+     */
+    public static final String USER_INFO = "user/index.do";
+
+    /**
      * 找回密码
      */
     public static final String FORGET_PASSWORD = "findpwd.do";
@@ -136,9 +141,14 @@ public class UrlConstant {
     public static final String SEARCH_GOODS_TYPE = "search/list.do";
 
     /**
+     * 忘记密码
+     */
+    public static final String FORGOT_PWD =  "sendpwd.do";
+    /**
      * 修改密码
      */
     public static final String EDIT_PASSWORD =  "user/editPassword.do";
+
 
     /***
      * 获取规格数据
@@ -240,4 +250,21 @@ public class UrlConstant {
      * 绑定邮箱
      */
     public static final String CHANGE_EMAIL = "user/editEmail.do";
+    /**
+     * 获取红包
+     */
+    public static final String RED_PACKAGE = "pay/getConpon.do";
+    /**
+     * 我的优惠券
+     */
+    public static final String MY_CONPON = "coupon/mycoupon.do";
+    /**
+     * 积分明细
+     */
+    public static final String LIST_SCORE = "userScore/getdate.do";
+    /**
+     * 收支明细
+     */
+    public static final String LIST_CONSUME = "wallet/record.do";
+
 }

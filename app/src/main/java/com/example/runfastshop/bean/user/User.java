@@ -1,9 +1,13 @@
-package com.example.runfastshop.bean;
+package com.example.runfastshop.bean.user;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by 天上白玉京 on 2017/8/21.
@@ -64,50 +68,60 @@ public class User implements Parcelable{
      */
 
     private Integer id;
-    private String code;
-    private String areaName;
-    private String orgType;
-    private String mobile;
-    private String name;
-    private String nickname;
-    private String password;
-    private Integer gender;
-    private String logTime;
-    private String qq;
-    private String xinl;
-    private String email;
-    private Double score;
-    private String pic;
-    private String openid;
-    private BigDecimal remainder;
-    private BigDecimal totalremainder;
-    private String card;
-    private String byRoles;
-    private String createTime;
-    private String provinceId;
-    private String cityId;
+    private String code;//区域编码
+    private String areaName;//区域名称
+    private String orgType;//所属层级
+    private String mobile;//电话号码
+    private String name;//名称
+    private String nickname;//昵称
+    private String password;//密码
+    private Integer gender;//性别 0:男  ,1:女
+
+    private String logTime;//最后登陆时间
+    private String qq;//qq号
+    private String xinl;//新浪微博
+    private String email;//邮箱
+    private Double score;//用户积分
+
+    private String pic;//头像地址
+    private String openid;//微信openid
+    private BigDecimal remainder;//可用余额
+    private BigDecimal totalremainder;//账号余额
+    private String card;//会员卡
+    private String byRoles;//所属角色
+
+    private String createTime;//注册时间
+
+    //层级字段
+    private String provinceId;//省级id,区公司
+    private String cityId;//城市
     private String cityName;
-    private String countyId;
+    private String countyId;//县份
     private String countyName;
-    private String townId;
+    private String townId;//乡镇
     private String townName;
-    private Integer rnum;
-    private BigDecimal consume;
-    private Integer bptype;
-    private String bdpushChannelId;
+    private Integer rnum;//红包个数
+    private BigDecimal consume;//累计消费金额
+
+    private Integer bptype;//0或空  Android用户  1 ios用户
+    private String bdpushChannelId;//推送的渠道id
     private String bdpushUserId;
-    private Integer pushType;
-    private String otherId;
-    private Integer purviewLevel;
-    private String startTime;
-    private String endTime;
-    private String keyword;
-    private BigDecimal showremainder;
-    private BigDecimal minmonety;
-    private String addrName;
-    private String addrContent;
-    private String addrLog;
-    private String addrLat;
+    private Integer pushType;//push类型0百度推送1小米推送2华为推送
+    private String otherId;//push类型对应的用户标识
+
+    private Integer purviewLevel;//4省级,3,市级2，县级，1乡镇
+    private Set<Integer> pids = new HashSet<Integer>();//用户权限ID
+    private List<Integer> orgIds = new ArrayList<Integer>();//用户所在组织的orgid,存储用户所在的orgid及对应的下级 orgid
+    private List<Integer> roleIdList;
+    private String startTime;//查询时使用
+    private String endTime;//查询时使用
+    private String keyword;//查询时使用
+    private BigDecimal showremainder;//账号余额
+    private BigDecimal minmonety;//最低提现金额
+    private String addrName;//地址
+    private String addrContent;//地址详细
+    private String addrLog;//地址经度
+    private String addrLat;//地址纬度
 
     public Integer getId() {
         return id;

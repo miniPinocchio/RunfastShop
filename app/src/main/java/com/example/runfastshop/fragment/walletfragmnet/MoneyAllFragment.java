@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.runfastshop.R;
-import com.example.runfastshop.adapter.moneyadapter.MoneyAllAdapter;
+import com.example.runfastshop.adapter.CashRecordAdapter;
+import com.example.runfastshop.bean.spend.AccountRecord;
+import com.example.runfastshop.bean.spend.AccountRecords;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +25,15 @@ import butterknife.Unbinder;
  * 全部
  * A simple {@link Fragment} subclass.
  */
-public class MoneyAllFragment extends Fragment {
+public class MoneyAllFragment extends Fragment implements View.OnClickListener {
 
 
     @BindView(R.id.view_money_list)
     RecyclerView recyclerView;
     Unbinder unbinder;
 
-    private List<String> data = new ArrayList<>();
+    private List<AccountRecord> data;
+    private AccountRecords mRecords;
 
     public MoneyAllFragment() {
         // Required empty public constructor
@@ -48,11 +51,19 @@ public class MoneyAllFragment extends Fragment {
     }
 
     private void initData() {
-        for (int i = 0; i < 10; i++) {
-            data.add("1");
+        data = new ArrayList<>();
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mRecords = arguments.getParcelable("record");
+            if (mRecords.getRows() != null) {
+                // TODO 处理是收入还是开支
+                data.addAll(mRecords.getRows());
+            }
+        } else {
+            recyclerView.setVisibility(View.GONE);
         }
-        MoneyAllAdapter allAdapter = new MoneyAllAdapter(data,getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        CashRecordAdapter allAdapter = new CashRecordAdapter(data, getActivity(), this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(allAdapter);
     }
 
@@ -60,5 +71,10 @@ public class MoneyAllFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

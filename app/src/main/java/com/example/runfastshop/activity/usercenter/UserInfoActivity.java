@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ToolBarActivity;
-import com.example.runfastshop.bean.User;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.data.IntentFlag;
 

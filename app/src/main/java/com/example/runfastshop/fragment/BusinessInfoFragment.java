@@ -3,7 +3,6 @@ package com.example.runfastshop.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.runfastshop.R;
@@ -66,7 +65,6 @@ public class BusinessInfoFragment extends LazyFragment implements Callback<Strin
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
-        Log.d("params", "response = " + response.isSuccessful() + ",data = " + data);
         if (response.isSuccessful()) {
             ResolveData(data);
         }

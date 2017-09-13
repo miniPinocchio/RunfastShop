@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.runfastshop.R;
-import com.example.runfastshop.fragment.EvaluateFragment;
 
 
 /**

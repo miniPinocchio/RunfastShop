@@ -307,7 +307,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right|center_vertical"
                             android:layout_marginRight="15dp"
-                            android:src="@drawable/icon_collection_business"/>
+                            android:src="@drawable/icon_collection_no"/>
                     </LinearLayout>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>

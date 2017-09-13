@@ -3,7 +3,6 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentRight="true"
-              android:layout_alignTop="@id/tv_price"
               android:gravity="center"
               android:orientation="horizontal">
 

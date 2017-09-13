@@ -20,4 +20,9 @@ public class IntentFlag {
     public static final int EDIT_EMAIL = 1;//修改邮箱
 
 
+    public static final int FORGOT_PWD = 1;//忘记密码
+
+
+
+
 }

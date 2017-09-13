@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.BreakfastActivity;
@@ -50,7 +49,6 @@ public class PageScrollAdapter extends RecyclerView.Adapter<PageScrollAdapter.My
                 Intent intent = new Intent(mContext, BreakfastActivity.class);
                 intent.putExtra("middleData",middleSort);
                 mContext.startActivity(intent);
-                Toast.makeText(v.getContext(), "item" + middleSort.getTypename() + " 被点击了", Toast.LENGTH_SHORT).show();
             }
         });
     }

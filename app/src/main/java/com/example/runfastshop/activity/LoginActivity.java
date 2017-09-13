@@ -3,13 +3,12 @@ package com.example.runfastshop.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.application.CustomApplication;
-import com.example.runfastshop.bean.User;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
@@ -80,7 +79,6 @@ public class LoginActivity extends ToolBarActivity implements Callback<String> {
     public void onResponse(Call<String> call, Response<String> response) {
         if (response.isSuccessful()) {
             String data = response.body();
-            Log.d("params", "response = " + data);
             ResolveData(data);
         } else {
             CustomToast.INSTANCE.showToast(this, "请求失败");
