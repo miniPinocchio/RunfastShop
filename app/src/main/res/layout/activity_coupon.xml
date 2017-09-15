@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,39 +13,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="36dp"
+        android:background="@color/color_coupon"
+        android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:gravity="center_vertical"
-        android:background="@color/color_coupon"
         >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="有"
-            android:textSize="14sp"
-            android:textColor="@color/color_text_gray_two"/>
+            android:textColor="@color/color_text_gray_two"
+            android:textSize="14sp"/>
+
         <TextView
+            android:id="@+id/tv_use_coupon_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            android:textSize="14sp"
-            android:textColor="@color/color_orange_select"/>
+            android:textColor="@color/color_orange_select"
+            android:textSize="14sp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="个优惠券可用"
-            android:textSize="14sp"
-            android:textColor="@color/color_text_gray_two"/>
+            android:textColor="@color/color_text_gray_two"
+            android:textSize="14sp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end|center_vertical">
+
             <TextView
+                android:id="@+id/tv_get_coupon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="领取优惠券"
-                android:textSize="14sp"
-                android:textColor="@color/color_orange_select"/>
+                android:textColor="@color/color_orange_select"
+                android:textSize="14sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"

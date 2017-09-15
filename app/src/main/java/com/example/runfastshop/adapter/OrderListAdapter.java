@@ -97,6 +97,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
                 Intent intent = new Intent(context, BusinessActivity.class);
                 intent.setFlags(IntentFlag.ORDER_LIST);
                 intent.putExtra("orderInfo",orderInfo.getBusinessId());
+                intent.putExtra("orderInfos",orderInfo);
                 context.startActivity(intent);
             }
         });

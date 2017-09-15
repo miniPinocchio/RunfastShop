@@ -63,23 +63,19 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
         unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText("订单");
         initData();
-        setData();
         initEvent();
         getOrderList();
         return view;
     }
 
-    private void setData() {
+    private void initData() {
+        if (mOrderInfos.size() <= 0) {
+            layoutNotOrder.setVisibility(View.VISIBLE);
+        }
+        adapter = new OrderListAdapter(mOrderInfos, getActivity(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         recyclerView.setAdapter(adapter);
-    }
-
-    private void initData() {
-        if (mOrderInfos.size() <= 0){
-            layoutNotOrder.setVisibility(View.VISIBLE);
-        }
-        adapter = new OrderListAdapter(mOrderInfos,getActivity(),this);
     }
 
 
@@ -92,7 +88,7 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
      */
     private void getOrderList() {
 //        UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().postOrderList(1,1,10).enqueue(this);
+        CustomApplication.getRetrofit().postOrderList(1, 1, 10).enqueue(this);
     }
 
     @Override
@@ -109,7 +105,7 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
     @Override
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
-        intent.putExtra("orderInfo",mOrderInfos.get(position));
+        intent.putExtra("orderInfo", mOrderInfos.get(position));
         startActivity(intent);
     }
 
@@ -129,7 +125,7 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
 
     private void ResolveData(String data) {
         OrderInfos orderInfos = GsonUtil.parseJsonWithGson(data, OrderInfos.class);
-        if (orderInfos.getRows().size() > 0){
+        if (orderInfos.getRows().size() > 0) {
             layoutNotOrder.setVisibility(View.GONE);
         }
         mOrderInfos.addAll(orderInfos.getRows());

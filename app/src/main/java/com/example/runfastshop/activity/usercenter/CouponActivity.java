@@ -1,11 +1,14 @@
 package com.example.runfastshop.activity.usercenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.runfastshop.R;
+import com.example.runfastshop.activity.CashCouponActivity;
 import com.example.runfastshop.activity.ToolBarActivity;
 import com.example.runfastshop.adapter.moneyadapter.CouponsAdapter;
 import com.example.runfastshop.application.CustomApplication;
@@ -20,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +35,10 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
 
     @BindView(R.id.view_coupon_list)
     RecyclerView recyclerView;
+    @BindView(R.id.tv_use_coupon_num)
+    TextView mTvUseCouponNum;
+    @BindView(R.id.tv_get_coupon)
+    TextView mTvGetCoupon;
 
     private List<CouponBean> mCouponBeanList;
     private CouponsAdapter mAllAdapter;
@@ -86,8 +94,17 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
     private void ResolveData(String data) {
         CouponBeans couponBeans = GsonUtil.parseJsonWithGson(data, CouponBeans.class);
         if (couponBeans.getRows().size() > 0) {
+            mTvUseCouponNum.setText(String.valueOf(couponBeans.getRows().size()));
             mCouponBeanList.addAll(couponBeans.getRows());
             mAllAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @OnClick(R.id.tv_get_coupon)
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.tv_get_coupon:
+                startActivity(new Intent(this, CashCouponActivity.class));
         }
     }
 }

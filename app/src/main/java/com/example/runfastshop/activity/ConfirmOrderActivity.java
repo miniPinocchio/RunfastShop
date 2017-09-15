@@ -15,13 +15,19 @@ import com.example.runfastshop.adapter.moneyadapter.BalanceProductAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.BalanceInfo;
 import com.example.runfastshop.bean.FoodBean;
+import com.example.runfastshop.bean.address.AddressInfo;
+import com.example.runfastshop.bean.address.AddressInfos;
 import com.example.runfastshop.bean.coupon.MerchantCoupons;
+import com.example.runfastshop.bean.order.GoodsSellRecordChildren;
 import com.example.runfastshop.bean.redpackage.RedPackages;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.IntentConfig;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
 import com.example.runfastshop.view.MaxHeightRecyclerView;
+import com.example.supportv1.utils.LogUtil;
+import com.google.gson.Gson;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -66,6 +72,11 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
     private Integer mAgentId;
     private Integer mBusinessId;
     private int mNetType;
+    private Integer mAddressId;
+    private BigDecimal mPrice;
+    private BigDecimal mDecimalCoupon;
+    private GoodsSellRecordChildren mChildren;
+    private List<GoodsSellRecordChildren> mGoodsSellRecordChildrens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +88,11 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
     }
 
     private void initData() {
+        mChildren = new GoodsSellRecordChildren();
+        mGoodsSellRecordChildrens = new ArrayList<>();
         List<FoodBean> flist = (List<FoodBean>) getIntent().getSerializableExtra("foodBean");
         if (flist != null) {
+            List<Integer> optsubids = new ArrayList<>();
             for (int i = 0; i < flist.size(); i++) {
                 BalanceInfo info = new BalanceInfo();
                 info.name = flist.get(i).getName();
@@ -87,8 +101,9 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
                 data.add(info);
                 mAgentId = flist.get(i).getAgentId();
                 mBusinessId = flist.get(i).getBusinessId();
+                optsubids.add(flist.get(i).getId());
             }
-
+            mChildren.setOptsubids(optsubids);
             BalanceInfo info = new BalanceInfo();
             info.name = "配送费";
             info.number = "";
@@ -106,13 +121,13 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             info.isDelete = true;
             data.add(info);
         }
-        BigDecimal price = (BigDecimal) getIntent().getSerializableExtra("price");
-        BigDecimal decimalCoupon = new BigDecimal("6");
-        Log.d("price", "price =" + price);
-        if (price != null) {
-            tvOrderPrice.setText(price + "");
-            tvCouponPrice.setText("" + decimalCoupon);
-            tvSubPrice.setText("" + price.subtract(decimalCoupon));
+        mPrice = (BigDecimal) getIntent().getSerializableExtra("price");
+        mDecimalCoupon = new BigDecimal("6");
+        Log.d("price", "price =" + mPrice);
+        if (mPrice != null) {
+            tvOrderPrice.setText(String.valueOf(mPrice));
+            tvCouponPrice.setText(String.valueOf(mDecimalCoupon));
+            tvSubPrice.setText(String.valueOf(mPrice.subtract(mDecimalCoupon)));//减掉优惠券
             tvTotalPrice.setText(tvSubPrice.getText().toString().trim());
         }
         BalanceProductAdapter adapter = new BalanceProductAdapter(data, this);
@@ -133,13 +148,21 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
         CustomApplication.getRetrofit().GetCoupan(1, mAgentId).enqueue(this);
     }
 
+    private void getAddressData() {
+//        Integer id = UserService.getUserInfo().getId();
+        mNetType = 3;
+        //TODO 用户id
+        CustomApplication.getRetrofit().postListAddress(1).enqueue(this);
+    }
+
     @OnClick({R.id.layout_user_address, R.id.layout_pay_mode, R.id.layout_red_packet, R.id.layout_cash_coupon, R.id.layout_flavor, R.id.tv_pay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_user_address:
-                startActivity(new Intent(this, AddressSelectActivity.class));
+                startActivityForResult(new Intent(this, AddressSelectActivity.class), IntentConfig.REQUEST_CODE);
                 break;
             case R.id.layout_pay_mode:
+
                 break;
             case R.id.layout_red_packet:
                 break;
@@ -150,13 +173,46 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
                 Intent mIntent = new Intent(this, OrderRemarkActivity.class);
                 if (mTvOrderRemark.getText().toString().equals("口味备注等要求（选填）")) {
                     startActivityForResult(mIntent, IntentConfig.REQUEST_CODE);
-                }else {
-                    mIntent.putExtra("remark_data",mTvOrderRemark.getText().toString());
+                } else {
+                    mIntent.putExtra("remark_data", mTvOrderRemark.getText().toString());
                     startActivityForResult(mIntent, IntentConfig.REQUEST_CODE);
                 }
                 break;
             case R.id.tv_pay:
+                toPay();
                 break;
+        }
+    }
+
+    /**
+     *
+     */
+    private void toPay() {
+        User userInfo = UserService.getUserInfo();
+        if (userInfo != null) {
+            mNetType = 4;
+            mGoodsSellRecordChildrens.add(mChildren);
+            Gson gson = new Gson();
+            String goodsJson = gson.toJson(mGoodsSellRecordChildrens);
+            BigDecimal subtract = mPrice.subtract(mDecimalCoupon);
+            CustomApplication.getRetrofit().createOrder(userInfo.getId(), mBusinessId, mAddressId, 0, 0,
+                    subtract.doubleValue(), subtract.doubleValue(), "", goodsJson).enqueue(this);
+        } else {
+            CustomToast.INSTANCE.showToast(this, "请先登录");
+        }
+    }
+
+    /**
+     * @param addr
+     * @param isShow 是否有地址
+     */
+    private void updateAddr(AddressInfo addr, boolean isShow) {
+        if (isShow) {
+            tvUserAddress.setText(addr.getAddress());
+            tvUserName.setText(addr.getName());
+            tvUserPhone.setText(addr.getPhone());
+        } else {
+            tvUserAddress.setText("还没有地址，点击添加");
         }
     }
 
@@ -168,6 +224,9 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             if (data != null)
                 mTvOrderRemark.setText(data.getStringExtra("order_remark"));
         }
+//        else if (requestCode == IntentConfig.REQUEST_CODE&& resultCode == IntentConfig.REMARK_RESULT_CODE){
+//
+//        }
     }
 
     @Override
@@ -192,9 +251,12 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
         if (mNetType == 1) {
             if (!TextUtils.isEmpty(data)) {
                 RedPackages redPackages = GsonUtil.parseJsonWithGson(data, RedPackages.class);
-                int mSize = redPackages.getRedPackets().size();
-                int number = mSize > 0 ? mSize : 0;
-                tvRedPacket.setText("可用红包" + number + "个");
+                if (redPackages.getRedPackets() != null) {
+                    int mSize = redPackages.getRedPackets().size();
+                    int number = mSize > 0 ? mSize : 0;
+                    tvRedPacket.setText("可用红包" + number + "个");
+                }
+                tvRedPacket.setText("暂无可用红包");
             } else {
                 tvRedPacket.setText("暂无可用红包");
             }
@@ -203,11 +265,30 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
         if (mNetType == 2) {
             if (!TextUtils.isEmpty(data)) {
                 MerchantCoupons merchantCoupons = GsonUtil.parseJsonWithGson(data, MerchantCoupons.class);
-                int number = merchantCoupons.getRows().size() > 0 ? merchantCoupons.getRows().size() : 0;
-                tvRedPacket.setText("可用优惠券" + number + "个");
-            }else {
-                tvRedPacket.setText("暂无可用优惠券");
+                if (merchantCoupons.getRows() != null) {
+                    int number = merchantCoupons.getRows().size() > 0 ? merchantCoupons.getRows().size() : 0;
+                    tvCashCoupon.setText("可用优惠券" + number + "个");
+                }
+                tvCashCoupon.setText("暂无可用优惠券");
+            } else {
+                tvCashCoupon.setText("暂无可用优惠券");
             }
+            getAddressData();
+        }
+
+        if (mNetType == 3) {
+            AddressInfos addressInfos = GsonUtil.parseJsonWithGson(data, AddressInfos.class);
+            if (addressInfos != null) {
+                if (addressInfos.getRows() != null && addressInfos.getRows().size() > 0) {
+                    updateAddr(addressInfos.getRows().get(0), true);
+                    mAddressId = addressInfos.getRows().get(0).getId();
+                } else {
+                    updateAddr(new AddressInfo(), false);
+                }
+            }
+        }
+        if (mNetType == 4) {
+            LogUtil.d("订单", data);
         }
     }
 }

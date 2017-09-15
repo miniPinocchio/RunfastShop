@@ -266,5 +266,21 @@ public class UrlConstant {
      * 收支明细
      */
     public static final String LIST_CONSUME = "wallet/record.do";
+    /**
+     * 订单详情
+     */
+    public static final String ORDER_DETAIL = "userOrder/getGoodsSellRecord.do";
+    /**
+     * 我的收藏
+     */
+    public static final String MY_ENSHRINE = "myenshrine/index.do";
+    /**
+     * 生成订单
+     */
+    public static final String CREATE_ORDER = "pay/addGoodsSellRecord.do";
+  /**
+     * 添加购物车
+     */
+    public static final String ORDER_CAR = "shopping/addShopping.do";
 
 }

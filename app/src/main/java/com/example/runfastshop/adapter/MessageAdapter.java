@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.runfastshop.R;
@@ -35,12 +36,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_message_list, parent, false);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, DiscountActivity.class));
-            }
-        });
         return new MessageViewHolder(view);
     }
 
@@ -53,16 +48,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             case 1:
                 holder.iv_message_notice.setImageResource(R.drawable.icon_promotion);
                 break;
+            case 4:
+                break;
             case 2:
             case 3:
-            case 4:
             case 5:
                 holder.iv_message_notice.setImageResource(R.drawable.icon_message_notice);
+                holder.ll_message_content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mContext.startActivity(new Intent(mContext, DiscountActivity.class));
+                    }
+                });
                 break;
         }
         holder.tv_message_name.setText(messageInfo.getTitle());
         holder.tv_message_date.setText(messageInfo.getCreateTime());
         holder.tv_message_content.setText(messageInfo.getContent());
+
     }
 
     @Override
@@ -73,6 +76,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     class MessageViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_message_notice;
         TextView tv_message_name, tv_message_content, tv_message_date;
+        LinearLayout ll_message_content;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +84,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             tv_message_name = (TextView) itemView.findViewById(R.id.tv_message_name);
             tv_message_content = (TextView) itemView.findViewById(R.id.tv_message_content);
             tv_message_date = (TextView) itemView.findViewById(R.id.tv_message_date);
+            ll_message_content = (LinearLayout) itemView.findViewById(R.id.ll_message_content);
         }
     }
 }

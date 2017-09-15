@@ -4,30 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_food_gray"
     android:orientation="vertical"
     tools:context="com.example.runfastshop.activity.ordercenter.OrderDetailActivity">
 
     <include layout="@layout/layout_title"/>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_order_detail"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:orientation="vertical">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_height="130dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/icon_bank_back"/>
-    </RelativeLayout>
+            <include layout="@layout/item_order_detail_header"/>
+
+            <include layout="@layout/item_order_detail_middle"/>
+
+            <include layout="@layout/item_order_detail_bottom"/>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

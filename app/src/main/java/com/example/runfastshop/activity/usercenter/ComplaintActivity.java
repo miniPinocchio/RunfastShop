@@ -38,8 +38,6 @@ public class ComplaintActivity extends ToolBarActivity implements Callback<Strin
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint);
         ButterKnife.bind(this);
-
-
     }
 
     @OnClick({R.id.layout_right_title, R.id.btn_commit_info})

@@ -21,6 +21,7 @@ import com.example.runfastshop.activity.usercenter.CouponActivity;
 import com.example.runfastshop.activity.usercenter.HelpCenterActivity;
 import com.example.runfastshop.activity.usercenter.IntegralActivity;
 import com.example.runfastshop.activity.usercenter.JoinBusinessActivity;
+import com.example.runfastshop.activity.usercenter.MyEnshrineActivity;
 import com.example.runfastshop.activity.usercenter.UserInfoActivity;
 import com.example.runfastshop.activity.usercenter.WalletActivity;
 import com.example.runfastshop.bean.user.User;
@@ -141,19 +142,25 @@ public class MineFragment extends Fragment implements Callback<String> {
                 startActivity(new Intent(getContext(), HelpCenterActivity.class));
                 break;
             case R.id.layout_my_wallet://我的钱包余额
-                startActivity(new Intent(getContext(), WalletActivity.class));
+                if (isLogin()) {
+                    startActivity(new Intent(getContext(), WalletActivity.class));
+                }
                 break;
             case R.id.layout_coupons://优惠券
-                startActivity(new Intent(getContext(), CouponActivity.class));
+                if (isLogin()) {
+                    startActivity(new Intent(getContext(), CouponActivity.class));
+                }
                 break;
             case R.id.layout_integral://积分
-                startActivity(new Intent(getContext(), IntegralActivity.class));
+                if (isLogin()) {
+                    startActivity(new Intent(getContext(), IntegralActivity.class));
+                }
                 break;
             case R.id.layout_address://地址管理
                 startActivity(new Intent(getContext(), AddressSelectActivity.class));
                 break;
             case R.id.layout_collection://收藏
-
+                startActivity(new Intent(getContext(), MyEnshrineActivity.class));
                 break;
             case R.id.layout_join://加盟
                 startActivity(new Intent(getContext(), JoinBusinessActivity.class));
@@ -170,6 +177,14 @@ public class MineFragment extends Fragment implements Callback<String> {
         }
     }
 
+    private boolean isLogin() {
+        if (UserService.getUserInfo()!=null) {
+            return true;
+        }else {
+            CustomToast.INSTANCE.showToast(getActivity(),"请先登录");
+            return false;
+        }
+    }
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();

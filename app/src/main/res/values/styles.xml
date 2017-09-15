@@ -72,5 +72,17 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+    <style name="order_detail_left">
+        <item name="android:textSize">@dimen/dimen_14_dp</item>
+        <item name="android:textColor">@color/order_detail_state</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_15_dp</item>
+        <item name="android:layout_marginTop">@dimen/dimen_19_dp</item>
+    </style>
 
+    <style name="order_detail_right">
+        <item name="android:textSize">@dimen/dimen_14_dp</item>
+        <item name="android:textColor">@color/order_detail_text_right</item>
+        <item name="android:layout_marginRight">@dimen/dimen_15_dp</item>
+        <item name="android:layout_marginTop">@dimen/dimen_19_dp</item>
+    </style>
 </resources>

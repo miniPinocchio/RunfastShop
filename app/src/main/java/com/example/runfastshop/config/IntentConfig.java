@@ -9,4 +9,7 @@ package com.example.runfastshop.config;
 public class IntentConfig {
     public static final int REMARK_RESULT_CODE = 20;//
     public static final int REQUEST_CODE = 10;//
+
+
+
 }

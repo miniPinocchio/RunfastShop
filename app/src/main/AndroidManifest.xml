@@ -203,10 +203,14 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
-        <activity android:name=".activity.ordercenter.OrderComplainActivity"
+        <activity
+            android:name=".activity.ordercenter.OrderComplainActivity"
             android:label="投诉"/>
-        <activity android:name=".activity.usercenter.ChangeNameActivity"
+        <activity
+            android:name=".activity.usercenter.ChangeNameActivity"
             android:label="修改信息"/>
+        <activity android:name=".activity.usercenter.MyEnshrineActivity">
+        </activity>
     </application>
 
 </manifest>

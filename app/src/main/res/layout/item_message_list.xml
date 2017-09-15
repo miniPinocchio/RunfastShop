@@ -3,6 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="90dp"
               android:layout_margin="@dimen/dimen_1_dp"
+              android:id="@+id/ll_message_content"
               android:gravity="center_vertical"
               android:background="@color/white"
               android:orientation="horizontal">

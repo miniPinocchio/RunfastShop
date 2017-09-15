@@ -529,6 +529,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
 //                    startActivity(new Intent(this,LoginActivity.class));
 //                    return;
 //                }
+
                 List<FoodBean> flist = carFoods;
                 startActivity(new Intent(this, ConfirmOrderActivity.class).putExtra("foodBean", (Serializable) flist).putExtra("price", decimal));
                 break;
@@ -542,6 +543,16 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
         netType = 5;
         Integer id = UserService.getUserId(getApplicationContext());
         CustomApplication.getRetrofit().postSaveShop(businessId, 1, id).enqueue(this);
+    }
+
+    /**
+     * 购物车
+     */
+    private void saveOrderCar() {
+        netType = 8;
+        Integer id = UserService.getUserId(getApplicationContext());
+//        CustomApplication.getRetrofit().OrderCar(id,businessId,businessId,
+//                1,1,1,1,).enqueue(this);
     }
 
     @Override

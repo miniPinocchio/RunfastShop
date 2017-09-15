@@ -3,6 +3,8 @@ package com.example.runfastshop.bean.order;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by huiliu on 2017/9/6.
  *
@@ -10,6 +12,29 @@ import android.os.Parcelable;
  * @introduce
  */
 public class OrderInfo implements Parcelable{
+
+    /**
+     * 外卖商品订单记录
+     *管理查看外卖订单信息，每个商家可管理自己的的订单，可根据订单进行商品准备、配送等。
+     *订单流程如下：
+     *客户下单 - 商家接单（确认是否有货，如无货则联系客户进行退单或换同等价值商品） -
+     *配送员接单（配送员接单后则提示商家，商家开始准备商品） -
+     *配送员到商家处领取货物（需和商家确认订单内容，确认后订单状态变为配送中） -
+     *配送员配送到达（配送到达，配送员点击确认货物送达） -
+     *客户确认收货 - 商家收到订单完成信息 - 订单完成。
+     *订单取消：
+     *用户在未配送时可申请取消订单，申请后需商家确认， 。
+     */
+    private static final long serialVersionUID = -6006044978031361105L;
+
+
+    private String startDate;//送达时间
+    private String endDate;//送达时间
+
+    private List<GoodsSellRecordChildren> goodsSellRecordChildren;
+    private String showacctdate;
+    private List<GoodsSellOutStatus> goodsSellOutStatus;
+
     private Integer id;
     private String businessName;//商家名称
     private Integer businessId;//商家id
@@ -125,6 +150,8 @@ public class OrderInfo implements Parcelable{
     private String showacctString;
     private String logo;
     private String showcode;
+
+
 
     public Integer getId() {
         return id;
@@ -998,119 +1025,48 @@ public class OrderInfo implements Parcelable{
         this.showcode = showcode;
     }
 
-    @Override
-    public String toString() {
-        return "OrderInfo{" +
-                "id=" + id +
-                ", businessName='" + businessName + '\'' +
-                ", businessId=" + businessId +
-                ", businessAddr='" + businessAddr + '\'' +
-                ", businessAddressLat='" + businessAddressLat + '\'' +
-                ", businessAddressLng='" + businessAddressLng + '\'' +
-                ", goodsSellName='" + goodsSellName + '\'' +
-                ", goodsSellId=" + goodsSellId +
-                ", businessMobile='" + businessMobile + '\'' +
-                ", shopperSign=" + shopperSign +
-                ", ismute=" + ismute +
-                ", userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", userMobile='" + userMobile + '\'' +
-                ", userPhone='" + userPhone + '\'' +
-                ", userAddress='" + userAddress + '\'' +
-                ", address='" + address + '\'' +
-                ", userAddressId=" + userAddressId +
-                ", userAddressLat='" + userAddressLat + '\'' +
-                ", userAddressLng='" + userAddressLng + '\'' +
-                ", distance=" + distance +
-                ", oldShopper='" + oldShopper + '\'' +
-                ", oldShopperId=" + oldShopperId +
-                ", oldShopperMobile='" + oldShopperMobile + '\'' +
-                ", shopper='" + shopper + '\'' +
-                ", shopperId=" + shopperId +
-                ", shopperMobile='" + shopperMobile + '\'' +
-                ", goodsTotal=" + goodsTotal +
-                ", isDeliver=" + isDeliver +
-                ", shopperMoney=" + shopperMoney +
-                ", orderCode='" + orderCode + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", commisson=" + commisson +
-                ", status=" + status +
-                ", statStr='" + statStr + '\'' +
-                ", content='" + content + '\'' +
-                ", price=" + price +
-                ", yhprice=" + yhprice +
-                ", disprice=" + disprice +
-                ", packing=" + packing +
-                ", showps=" + showps +
-                ", rid=" + rid +
-                ", range1=" + range1 +
-                ", startString='" + startString + '\'' +
-                ", endString='" + endString + '\'' +
-                ", totalpay=" + totalpay +
-                ", iswithdraw=" + iswithdraw +
-                ", businesspay=" + businesspay +
-                ", businessget=" + businessget +
-                ", agentget=" + agentget +
-                ", agentBusget=" + agentBusget +
-                ", agentBusget2=" + agentBusget2 +
-                ", isfirst=" + isfirst +
-                ", userDel=" + userDel +
-                ", businessDel=" + businessDel +
-                ", isReceive=" + isReceive +
-                ", isPay=" + isPay +
-                ", isRefund=" + isRefund +
-                ", refundType=" + refundType +
-                ", refundTime='" + refundTime + '\'' +
-                ", isComent=" + isComent +
-                ", isCancel=" + isCancel +
-                ", refund=" + refund +
-                ", refundcontext='" + refundcontext + '\'' +
-                ", cityId='" + cityId + '\'' +
-                ", cityName='" + cityName + '\'' +
-                ", countyId='" + countyId + '\'' +
-                ", countyName='" + countyName + '\'' +
-                ", townId='" + townId + '\'' +
-                ", townName='" + townName + '\'' +
-                ", noCharge=" + noCharge +
-                ", activityprice=" + activityprice +
-                ", activityId=" + activityId +
-                ", activityname='" + activityname + '\'' +
-                ", agentName='" + agentName + '\'' +
-                ", agentId=" + agentId +
-                ", distributionTime=" + distributionTime +
-                ", disTime='" + disTime + '\'' +
-                ", payTime='" + payTime + '\'' +
-                ", aceptTime='" + aceptTime + '\'' +
-                ", isClearing=" + isClearing +
-                ", coefficient=" + coefficient +
-                ", acoefficient=" + acoefficient +
-                ", acoefficient2=" + acoefficient2 +
-                ", zjzd=" + zjzd +
-                ", ptype=" + ptype +
-                ", stype=" + stype +
-                ", couponname='" + couponname + '\'' +
-                ", payType=" + payType +
-                ", orderNumber=" + orderNumber +
-                ", isaccpt=" + isaccpt +
-                ", pushType=" + pushType +
-                ", accptTime='" + accptTime + '\'' +
-                ", appOrwx=" + appOrwx +
-                ", readyTime='" + readyTime + '\'' +
-                ", errend=" + errend +
-                ", teamid=" + teamid +
-                ", teamname='" + teamname + '\'' +
-                ", isTimeRefund=" + isTimeRefund +
-                ", issubsidy=" + issubsidy +
-                ", subsidy=" + subsidy +
-                ", lessps=" + lessps +
-                ", qrcode='" + qrcode + '\'' +
-                ", us=" + us +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", showacctString='" + showacctString + '\'' +
-                ", logo='" + logo + '\'' +
-                ", showcode='" + showcode + '\'' +
-                '}';
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public List<GoodsSellRecordChildren> getGoodsSellRecordChildren() {
+        return goodsSellRecordChildren;
+    }
+
+    public void setGoodsSellRecordChildren(List<GoodsSellRecordChildren> goodsSellRecordChildren) {
+        this.goodsSellRecordChildren = goodsSellRecordChildren;
+    }
+
+    public String getShowacctdate() {
+        return showacctdate;
+    }
+
+    public void setShowacctdate(String showacctdate) {
+        this.showacctdate = showacctdate;
+    }
+
+    public List<GoodsSellOutStatus> getGoodsSellOutStatus() {
+        return goodsSellOutStatus;
+    }
+
+    public void setGoodsSellOutStatus(List<GoodsSellOutStatus> goodsSellOutStatus) {
+        this.goodsSellOutStatus = goodsSellOutStatus;
     }
 
     @Override
@@ -1120,6 +1076,11 @@ public class OrderInfo implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.startDate);
+        dest.writeString(this.endDate);
+        dest.writeTypedList(this.goodsSellRecordChildren);
+        dest.writeString(this.showacctdate);
+        dest.writeTypedList(this.goodsSellOutStatus);
         dest.writeValue(this.id);
         dest.writeString(this.businessName);
         dest.writeValue(this.businessId);
@@ -1235,6 +1196,11 @@ public class OrderInfo implements Parcelable{
     }
 
     protected OrderInfo(Parcel in) {
+        this.startDate = in.readString();
+        this.endDate = in.readString();
+        this.goodsSellRecordChildren = in.createTypedArrayList(GoodsSellRecordChildren.CREATOR);
+        this.showacctdate = in.readString();
+        this.goodsSellOutStatus = in.createTypedArrayList(GoodsSellOutStatus.CREATOR);
         this.id = (Integer) in.readValue(Integer.class.getClassLoader());
         this.businessName = in.readString();
         this.businessId = (Integer) in.readValue(Integer.class.getClassLoader());

@@ -3,6 +3,7 @@ package com.example.runfastshop.activity.usercenter;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -84,10 +85,12 @@ public class IntegralActivity extends ToolBarActivity implements Callback<String
      * @param data
      */
     private void ResolveData(String data) {
-        MyScores scores = GsonUtil.parseJsonWithGson(data, MyScores.class);
-        if (scores.getRows().size() > 0) {
-            mMyScores.addAll(scores.getRows());
-            mAllAdapter.notifyDataSetChanged();
+        if (!TextUtils.isEmpty(data)) {
+            MyScores scores = GsonUtil.parseJsonWithGson(data, MyScores.class);
+            if (scores.getRows() != null && scores.getRows().size() > 0) {
+                mMyScores.addAll(scores.getRows());
+                mAllAdapter.notifyDataSetChanged();
+            }
         }
     }
 

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dp_10"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_order_man_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_20_dp"
+        android:text="骑手正在送货 >"
+        android:textColor="@color/order_detail_state"
+        android:textSize="@dimen/dimen_20_dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="预计送达时间"
+            android:layout_marginTop="@dimen/dimen_10_dp"
+            android:textColor="@color/order_detail_state_time"
+            android:textSize="@dimen/dimen_12_dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_man_deliver_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_10_dp"
+            android:text="11:04"
+            android:textColor="@color/color_orange_select"
+            android:textSize="@dimen/dimen_12_dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_20_dp"
+        android:layout_marginRight="@dimen/dimen_20_dp"
+        android:layout_marginBottom="@dimen/dimen_20_dp"
+        android:layout_marginTop="@dimen/dimen_18_dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_cancel_order"
+            android:layout_width="@dimen/dimen_0_dp"
+            android:layout_height="@dimen/dimen_32_dp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/dimen_6_dp"
+            android:background="@drawable/shape_button_pay_white"
+            android:textColor="@color/order_detail_state"
+            android:text="取消订单"/>
+        <Button
+            android:id="@+id/btn_contact_business"
+            android:layout_width="@dimen/dimen_0_dp"
+            android:layout_height="@dimen/dimen_32_dp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/dimen_6_dp"
+            android:background="@drawable/shape_button_pay"
+            android:textColor="@color/white"
+            android:text="联系商家"/>
+        <Button
+            android:id="@+id/btn_contact_man"
+            android:layout_width="@dimen/dimen_0_dp"
+            android:layout_height="@dimen/dimen_32_dp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/dimen_6_dp"
+            android:background="@drawable/shape_button_orange"
+            android:textColor="@color/white"
+            android:text="联系骑手"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -108,12 +108,13 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST(UrlConstant.SEARCH_GOODS_TYPE)
     Call<String> searchGoods(@Field("page") Integer page,
-                                 @Field("rows") Integer rows,
-                                 @Field("longitude") Double longitude,
-                                 @Field("latitude") Double latitude,
-                                 @Field("name") String name,
-                                 @Field("sorting") Integer sort,
-                                 @Field("agentId") Integer agentId);
+                             @Field("rows") Integer rows,
+                             @Field("longitude") Double longitude,
+                             @Field("latitude") Double latitude,
+                             @Field("name") String name,
+                             @Field("sorting") Integer sort,
+                             @Field("agentId") Integer agentId);
+
     /**
      * 获取商品列表
      *
@@ -211,8 +212,8 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST(UrlConstant.FORGOT_PWD)
     Call<String> updateForgotPwd(@Field("mobile") String mobile,
-                                @Field("xcode") String xcode,
-                                @Field("pwd") String pwd);
+                                 @Field("xcode") String xcode,
+                                 @Field("pwd") String pwd);
 
     /**
      * 获取修改密码验证码
@@ -275,8 +276,9 @@ public interface NetInterface {
 
     /**
      * 用户投诉
-     *
+     * <p>
      * aram businessId
+     *
      * @param id
      * @param email
      * @param content
@@ -467,6 +469,7 @@ public interface NetInterface {
 
     /**
      * 红包
+     *
      * @param uId
      * @param businessId
      * @return
@@ -474,10 +477,11 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST(UrlConstant.RED_PACKAGE)
     Call<String> postRedPackage(@Field("uId") Integer uId,
-                                 @Field("businessId") Integer businessId);
+                                @Field("businessId") Integer businessId);
 
     /**
      * 优惠券
+     *
      * @param uId
      * @param agentId
      * @return
@@ -485,9 +489,11 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST(UrlConstant.GET_COUPON)
     Call<String> GetCoupan(@Field("uId") Integer uId,
-                                 @Field("agentId") Integer agentId);
+                           @Field("agentId") Integer agentId);
+
     /**
      * 我的优惠券
+     *
      * @param uId
      * @param type
      * @return
@@ -495,10 +501,11 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST(UrlConstant.MY_CONPON)
     Call<String> GetMyCoupan(@Field("uId") Integer uId,
-                               @Field("type") Integer type);
+                             @Field("type") Integer type);
 
     /**
      * 积分明细
+     *
      * @param uId
      * @return
      */
@@ -508,6 +515,7 @@ public interface NetInterface {
 
     /**
      * 收支明细
+     *
      * @param uId
      * @return
      */
@@ -515,4 +523,67 @@ public interface NetInterface {
     @POST(UrlConstant.LIST_CONSUME)
     Call<String> getListConsume(@Field("uId") Integer uId);
 
+    /**
+     * 订单详情
+     *
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.ORDER_DETAIL)
+    Call<String> getOrderDetail(@Field("id") Integer id,
+                                @Field("uId") Integer uId);
+
+    /**
+     * 我的收藏
+     *
+     * @param uId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.MY_ENSHRINE)
+    Call<String> getEnshrine(@Field("uId") Integer uId);
+
+
+    /**
+     * 确认订单
+     *
+     * @param userId
+     * @param businessId
+     * @param userAddressId
+     * @param rid
+     * @param yhprice
+     * @param businesspay
+     * @param totalpay
+     * @param orderCode
+     * @param t
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.CREATE_ORDER)
+    Call<String> createOrder(@Field("userId") Integer userId,
+                             @Field("businessId") Integer businessId,
+                             @Field("userAddressId") Integer userAddressId,
+                             @Field("rid") Integer rid,
+                             @Field("yhprice") double yhprice,
+                             @Field("businesspay") double businesspay,
+                             @Field("totalpay") double totalpay,
+                             @Field("orderCode") String orderCode,
+                             @Field("t") String t);
+
+    @FormUrlEncoded
+    @POST(UrlConstant.ORDER_CAR)
+    Call<String> OrderCar(@Field("uId") Integer uId,
+                          @Field("id") Integer id,
+                          @Field("bid") Integer bid,
+                          @Field("gid") Integer gid,
+                          @Field("stanid") Integer stanid,
+                          @Field("optionIds") String optionIds,
+                          @Field("oid") Integer oid,
+                          @Field("price") double price,
+                          @Field("pricedis") double pricedis,
+                          @Field("disprice") double disprice,
+                          @Field("ptype") String ptype,
+                          @Field("packing") double packing,
+                          @Field("num") String num);
 }
