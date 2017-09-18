@@ -51,6 +51,10 @@ import com.example.runfastshop.bean.TypeBean;
 import com.example.runfastshop.bean.business.BusinessDetail;
 import com.example.runfastshop.bean.business.BusinessDetails;
 import com.example.runfastshop.bean.maintop.TopImage;
+import com.example.runfastshop.bean.maintop.TopImage1;
+import com.example.runfastshop.bean.order.ShoppingCarBean;
+import com.example.runfastshop.bean.order.ShoppingTrolley;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.NetConfig;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.fragment.BusinessFragment;
@@ -68,6 +72,7 @@ import com.example.runfastshop.view.ZFlowLayout;
 import com.example.supportv1.utils.LogUtil;
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -395,6 +400,13 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
         } else if (flags == 3) {
             businessId = getIntent().getIntExtra("search", 0);
             getBusinessDetailFromOrder(businessId);
+        } else if (flags == 4) {
+            TopImage1 business = getIntent().getParcelableExtra("business");
+            if (business != null) {
+                String[] split = business.getLinkAddr().split("=");
+                businessId = Integer.parseInt(split[1]);
+                getBusinessDetailFromBanner(businessId);
+            }
         }
         setTitle();
         BusinessFragment businessFragment = new BusinessFragment();
@@ -529,9 +541,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
 //                    startActivity(new Intent(this,LoginActivity.class));
 //                    return;
 //                }
-
-                List<FoodBean> flist = carFoods;
-                startActivity(new Intent(this, ConfirmOrderActivity.class).putExtra("foodBean", (Serializable) flist).putExtra("price", decimal));
+                saveOrderCar();
                 break;
         }
     }
@@ -550,9 +560,31 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
      */
     private void saveOrderCar() {
         netType = 8;
-        Integer id = UserService.getUserId(getApplicationContext());
-//        CustomApplication.getRetrofit().OrderCar(id,businessId,businessId,
-//                1,1,1,1,).enqueue(this);
+
+//        List<FoodBean> flist = carFoods;
+//        startActivity(new Intent(this, ConfirmOrderActivity.class).putExtra("foodBean", (Serializable) flist).putExtra("price", decimal));
+
+        User userInfo = UserService.getUserInfo();
+        List<ShoppingTrolley> trolleys = new ArrayList<>();
+        for (int i = 0; i < carFoods.size(); i++) {
+            ShoppingTrolley trolley = new ShoppingTrolley();
+            trolley.setGoodsSellId(carFoods.get(i).getId());
+            trolley.setGoodsSellStandardId(carFoods.get(i).getSid());
+//            trolley.setOptionIds(carFoods.get(i).get);
+            trolley.setNum(1);
+            trolleys.add(trolley);
+        }
+
+        ShoppingCarBean carBean = new ShoppingCarBean();
+        carBean.setBusinessId(businessId);
+//        carBean.setBusinessId(1);
+        carBean.setCid(userInfo.getId());
+        carBean.setCname(userInfo.getName());
+        carBean.setList(trolleys);
+
+        String goodJson = new Gson().toJson(carBean);
+        LogUtil.e("购物车", goodJson);
+        CustomApplication.getRetrofit().OrderCar(goodJson).enqueue(this);
     }
 
     @Override
@@ -950,7 +982,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     }
 
     /**
-     * 获取商品列表
+     * 获取商品规格
      */
     private void getGoodsSpec(int id) {
         netType = 3;
@@ -1242,7 +1274,6 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                     mIvCollection.setImageResource(R.drawable.icon_collection_no);
                 }
                 CustomToast.INSTANCE.showToast(this, object.getString("succ"));
-
             }
 
             if (netType == 6 || netType == 7) {
@@ -1257,6 +1288,14 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                 info.salesnum = business.getSalesnum();
                 getBusiness(business.getId());
                 setTitleUi(info);
+            }
+            if (netType == 8) {
+                if ((object.optBoolean("success"))) {
+                    List<FoodBean> flist = carFoods;
+                    startActivity(new Intent(this, ConfirmOrderActivity.class).putExtra("foodBean", (Serializable) flist).putExtra("price", decimal));
+                } else {
+                    CustomToast.INSTANCE.showToast(this, object.optString("msg"));
+                }
             }
 
         } catch (JSONException e) {

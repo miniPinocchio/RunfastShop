@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ordercenter.OrderRemarkActivity;
+import com.example.runfastshop.activity.ordercenter.PayChannelActivity;
 import com.example.runfastshop.activity.usercenter.AddressSelectActivity;
 import com.example.runfastshop.adapter.moneyadapter.BalanceProductAdapter;
 import com.example.runfastshop.application.CustomApplication;
@@ -19,6 +20,7 @@ import com.example.runfastshop.bean.address.AddressInfo;
 import com.example.runfastshop.bean.address.AddressInfos;
 import com.example.runfastshop.bean.coupon.MerchantCoupons;
 import com.example.runfastshop.bean.order.GoodsSellRecordChildren;
+import com.example.runfastshop.bean.order.OrderCodeInfo;
 import com.example.runfastshop.bean.redpackage.RedPackages;
 import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.IntentConfig;
@@ -26,7 +28,6 @@ import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
 import com.example.runfastshop.view.MaxHeightRecyclerView;
-import com.example.supportv1.utils.LogUtil;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
@@ -77,6 +78,8 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
     private BigDecimal mDecimalCoupon;
     private GoodsSellRecordChildren mChildren;
     private List<GoodsSellRecordChildren> mGoodsSellRecordChildrens;
+    private Intent mIntent;
+    private BigDecimal mSubtract;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,9 +197,9 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             mGoodsSellRecordChildrens.add(mChildren);
             Gson gson = new Gson();
             String goodsJson = gson.toJson(mGoodsSellRecordChildrens);
-            BigDecimal subtract = mPrice.subtract(mDecimalCoupon);
+            mSubtract = mPrice.subtract(mDecimalCoupon);
             CustomApplication.getRetrofit().createOrder(userInfo.getId(), mBusinessId, mAddressId, 0, 0,
-                    subtract.doubleValue(), subtract.doubleValue(), "", goodsJson).enqueue(this);
+                    mSubtract.doubleValue(), mSubtract.doubleValue(), "", goodsJson).enqueue(this);
         } else {
             CustomToast.INSTANCE.showToast(this, "请先登录");
         }
@@ -288,7 +291,19 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             }
         }
         if (mNetType == 4) {
-            LogUtil.d("订单", data);
+            OrderCodeInfo codeInfo = GsonUtil.parseJsonWithGson(data, OrderCodeInfo.class);
+            if (codeInfo != null) {
+                if (codeInfo.isSuccess()) {
+                    mIntent = new Intent(this, PayChannelActivity.class);
+                    mIntent.putExtra("orderId", codeInfo.getId());
+                    mIntent.putExtra("price", mSubtract.doubleValue());
+                    startActivity(mIntent);
+                } else {
+                    CustomToast.INSTANCE.showToast(this, codeInfo.getMsg());
+                }
+            } else {
+                CustomToast.INSTANCE.showToast(this, "下单失败，请重新选择商品");
+            }
         }
     }
 }

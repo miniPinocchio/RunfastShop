@@ -1,12 +1,15 @@
 package com.example.runfastshop.bean.maintop;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by huiliu on 2017/9/3.
  *
  * @email liu594545591@126.com
  * @introduce
  */
-public class TopImage1 {
+public class TopImage1 implements Parcelable{
     private int id;
 
     private String title;
@@ -128,4 +131,60 @@ public class TopImage1 {
         return this.createTime;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.adImages);
+        dest.writeString(this.linkAddr);
+        dest.writeInt(this.adRank);
+        dest.writeInt(this.used);
+        dest.writeString(this.typename);
+        dest.writeInt(this.adType);
+        dest.writeInt(this.location);
+        dest.writeInt(this.num);
+        dest.writeString(this.content);
+        dest.writeString(this.agentName);
+        dest.writeInt(this.agentId);
+        dest.writeInt(this.type);
+        dest.writeString(this.createTime);
+    }
+
+    public TopImage1() {
+    }
+
+    protected TopImage1(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.adImages = in.readString();
+        this.linkAddr = in.readString();
+        this.adRank = in.readInt();
+        this.used = in.readInt();
+        this.typename = in.readString();
+        this.adType = in.readInt();
+        this.location = in.readInt();
+        this.num = in.readInt();
+        this.content = in.readString();
+        this.agentName = in.readString();
+        this.agentId = in.readInt();
+        this.type = in.readInt();
+        this.createTime = in.readString();
+    }
+
+    public static final Creator<TopImage1> CREATOR = new Creator<TopImage1>() {
+        @Override
+        public TopImage1 createFromParcel(Parcel source) {
+            return new TopImage1(source);
+        }
+
+        @Override
+        public TopImage1[] newArray(int size) {
+            return new TopImage1[size];
+        }
+    };
 }

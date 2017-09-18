@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.BusinessActivity;
 import com.example.runfastshop.application.CustomApplication;
+import com.example.runfastshop.util.CustomToast;
 import com.shizhefei.fragment.LazyFragment;
 
 import org.json.JSONException;
@@ -72,7 +73,7 @@ public class BusinessInfoFragment extends LazyFragment implements Callback<Strin
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
-
+        CustomToast.INSTANCE.showToast(getActivity(), "网络异常");
     }
 
     private void ResolveData(String data) {

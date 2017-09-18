@@ -160,7 +160,9 @@ public class MineFragment extends Fragment implements Callback<String> {
                 startActivity(new Intent(getContext(), AddressSelectActivity.class));
                 break;
             case R.id.layout_collection://收藏
-                startActivity(new Intent(getContext(), MyEnshrineActivity.class));
+                if (isLogin()) {
+                    startActivity(new Intent(getContext(), MyEnshrineActivity.class));
+                }
                 break;
             case R.id.layout_join://加盟
                 startActivity(new Intent(getContext(), JoinBusinessActivity.class));

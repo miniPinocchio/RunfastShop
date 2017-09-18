@@ -53,8 +53,19 @@ public class MyEnshrineActivity extends ToolBarActivity implements View.OnClickL
     }
 
     private void getEnshrineData() {
-        Integer id = UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().getEnshrine(488993).enqueue(this);
+        if (isLogin()) {
+            Integer id = UserService.getUserInfo().getId();
+            CustomApplication.getRetrofit().getEnshrine(488993).enqueue(this);
+        }
+    }
+
+    private boolean isLogin() {
+        if (UserService.getUserInfo() != null) {
+            return true;
+        } else {
+            CustomToast.INSTANCE.showToast(this, "请先登录");
+            return false;
+        }
     }
 
     private void initData() {

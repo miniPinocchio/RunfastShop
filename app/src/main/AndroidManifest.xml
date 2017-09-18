@@ -211,6 +211,8 @@
             android:label="修改信息"/>
         <activity android:name=".activity.usercenter.MyEnshrineActivity">
         </activity>
+        <activity android:name=".activity.ordercenter.PayChannelActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -281,6 +281,9 @@ public class UrlConstant {
   /**
      * 添加购物车
      */
-    public static final String ORDER_CAR = "shopping/addShopping.do";
-
+    public static final String ORDER_CAR = "pay/addCart.do";
+    /**
+     * 钱包支付
+     */
+    public static final String WALLET_PAY = "pay/paypacket.do";
 }

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.example.runfastshop.activity.ordercenter.PayChannelActivity">
+
+
+    <include layout="@layout/layout_title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_45_dp"
+        android:layout_marginLeft="@dimen/dimen_15_dp"
+        android:layout_marginTop="@dimen/dimen_22_dp"
+        android:gravity="center_vertical"
+        android:text="选择支付方式"
+        android:textColor="@color/order_detail_state_time"
+        android:textSize="@dimen/dimen_12_dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55_dp"
+        android:background="@color/white"
+        >
+
+        <ImageView
+            android:id="@+id/iv_weixin_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_15_dp"
+            android:src="@drawable/weixin_pay"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_12_dp"
+            android:layout_toRightOf="@id/iv_weixin_pay"
+            android:text="微信支付"/>
+
+        <CheckBox
+            android:id="@+id/cb_weixin_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_15_dp"
+            android:background="@drawable/pay_type_nocheck"
+            android:button="@null"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dimen_15_dp"
+        android:background="@color/color_line_back"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55_dp"
+        android:background="@color/white"
+        >
+
+        <ImageView
+            android:id="@+id/iv_wallet_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_15_dp"
+            android:src="@drawable/wallet_pay"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_12_dp"
+            android:layout_toRightOf="@id/iv_wallet_pay"
+            android:text="余额支付"/>
+
+        <CheckBox
+            android:id="@+id/cb_wallet_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_15_dp"
+            android:background="@drawable/pay_type_nocheck"
+            android:button="@null"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dimen_15_dp"
+        android:background="@color/color_line_back"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55_dp"
+        android:background="@color/white"
+        >
+
+        <ImageView
+            android:id="@+id/iv_ali_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_15_dp"
+            android:src="@drawable/alipay_pay"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_12_dp"
+            android:layout_toRightOf="@id/iv_ali_pay"
+            android:text="支付宝支付"/>
+
+        <CheckBox
+            android:id="@+id/cb_ali_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_15_dp"
+            android:background="@drawable/pay_type_nocheck"
+            android:button="@null"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_to_pay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_49_dp"
+        android:layout_marginTop="@dimen/dimen_40_dp"
+        android:background="@drawable/shape_button_orange"
+        android:layout_marginLeft="@dimen/dimen_15_dp"
+        android:layout_marginRight="@dimen/dimen_15_dp"
+        android:text="确认支付"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimen_18_dp"/>
+
+
+</LinearLayout>

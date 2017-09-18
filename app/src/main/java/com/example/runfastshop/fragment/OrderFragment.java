@@ -83,12 +83,18 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
 //        recyclerView.addon
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getOrderList();
+    }
+
     /**
      *
      */
     private void getOrderList() {
 //        UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().postOrderList(1, 1, 10).enqueue(this);
+        CustomApplication.getRetrofit().postOrderList(488993, 1, 10).enqueue(this);
     }
 
     @Override

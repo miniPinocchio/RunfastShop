@@ -11,6 +11,7 @@ public class IntentFlag {
     public static final int MAIN_BOTTOM_PAGE = 1;//首页底部跳转
     public static final int ORDER_LIST = 2;//订单列表
     public static final int SEARCH_VIEW = 3;//搜索列表
+    public static final int MAIN_BOTTOM_AD = 4;//首页底部广告跳转
 
 
     public static final int ADD_ADDRESS = 0;//添加地址

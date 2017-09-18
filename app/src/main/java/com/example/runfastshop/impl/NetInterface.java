@@ -571,19 +571,27 @@ public interface NetInterface {
                              @Field("orderCode") String orderCode,
                              @Field("t") String t);
 
+    /**
+     * 添加购物车
+     *
+     * @param t
+     * @return
+     */
     @FormUrlEncoded
     @POST(UrlConstant.ORDER_CAR)
-    Call<String> OrderCar(@Field("uId") Integer uId,
-                          @Field("id") Integer id,
-                          @Field("bid") Integer bid,
-                          @Field("gid") Integer gid,
-                          @Field("stanid") Integer stanid,
-                          @Field("optionIds") String optionIds,
-                          @Field("oid") Integer oid,
-                          @Field("price") double price,
-                          @Field("pricedis") double pricedis,
-                          @Field("disprice") double disprice,
-                          @Field("ptype") String ptype,
-                          @Field("packing") double packing,
-                          @Field("num") String num);
+    Call<String> OrderCar(@Field("t") String t);
+
+    /**
+     * 余额支付
+     *
+     * @param id
+     * @param pass
+     * @param uId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.WALLET_PAY)
+    Call<String> walletPay(@Field("id") Integer id,
+                           @Field("password") String pass,
+                           @Field("uId") Integer uId);
 }
