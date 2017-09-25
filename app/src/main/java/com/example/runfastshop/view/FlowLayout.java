@@ -63,7 +63,6 @@ public class FlowLayout extends ViewGroup{
             int cr= cl+ mW+ width;
             int cb= ct+ mH+ height;
 
-            //TODO:检查cr是否已经超过了容器的宽度位置
             //超过就换行
             if (cr > selfWith) {
                 cl = 10;

@@ -12,6 +12,7 @@ import com.example.runfastshop.adapter.CashRecordAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.spend.AccountRecord;
 import com.example.runfastshop.bean.spend.AccountRecords;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
@@ -48,8 +49,11 @@ public class CashRecordActivity extends ToolBarActivity implements View.OnClickL
     }
 
     private void getNetData() {
-        Integer id = UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().getListConsume(id).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+        CustomApplication.getRetrofit().getListConsume(userInfo.getId()).enqueue(this);
     }
 
     private void initData() {

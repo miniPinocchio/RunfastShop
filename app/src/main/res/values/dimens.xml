@@ -121,6 +121,8 @@
     <dimen name="dimen_100_dp">100dp</dimen>
     <dimen name="dimen_120_dp">120dp</dimen>
     <dimen name="dimen_150_dp">150dp</dimen>
+    <dimen name="dimen_170_dp">170dp</dimen>
+    <dimen name="dimen_180_dp">180dp</dimen>
     <dimen name="dimen_200_dp">200dp</dimen>
     <dimen name="dimen_280_dp">280dp</dimen>
     <dimen name="dimen_250_dp">250dp</dimen>

@@ -10,7 +10,14 @@ import android.widget.RelativeLayout;
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ToolBarActivity;
 import com.example.runfastshop.application.CustomApplication;
+import com.example.runfastshop.bean.user.User;
+import com.example.runfastshop.config.UserService;
+import com.example.runfastshop.util.CustomToast;
+import com.example.supportv1.utils.ValidateUtil;
 import com.lljjcoder.citylist.Toast.ToastUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,8 +35,8 @@ public class ComplaintActivity extends ToolBarActivity implements Callback<Strin
     RelativeLayout mLayoutRightTitle;
     @BindView(R.id.et_complaint_count)
     EditText mEtComplaintCount;
-    @BindView(R.id.et_complaint_phone)
-    EditText mEtComplaintPhone;
+    @BindView(R.id.et_complaint_email)
+    EditText mEtComplaintEmail;
     @BindView(R.id.btn_commit_info)
     Button mBtnCommitInfo;
 
@@ -49,10 +56,10 @@ public class ComplaintActivity extends ToolBarActivity implements Callback<Strin
             case R.id.btn_commit_info:
                 if (!TextUtils.isEmpty(mEtComplaintCount.getText()) &&
                         mEtComplaintCount.getText().toString().length() > 5) {
-                    if (!TextUtils.isEmpty(mEtComplaintPhone.getText())) {
+                    if (ValidateUtil.isEmail(mEtComplaintEmail.getText().toString())) {
                         toCommitComments();
                     } else {
-                        ToastUtils.showShortToast(this, "请填写邮箱");
+                        ToastUtils.showShortToast(this, "请填写正确的邮箱");
                     }
                 } else {
                     ToastUtils.showShortToast(this, "投诉内容少于五个字");
@@ -65,17 +72,43 @@ public class ComplaintActivity extends ToolBarActivity implements Callback<Strin
      * 提交投诉
      */
     private void toCommitComments() {
-        CustomApplication.getRetrofit().postMineComplaint("", "", "",
-                mEtComplaintPhone.getText().toString()).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+        String email = mEtComplaintEmail.getText().toString();
+        String content = mEtComplaintCount.getText().toString();
+        CustomApplication.getRetrofit().postMineComplaint(userInfo.getId(), content,
+                email).enqueue(this);
     }
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
-
+        String data = response.body();
+        if (response.isSuccessful()) {
+            ResolveData(data);
+        }
     }
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
+        CustomToast.INSTANCE.showToast(this, "网络异常");
+    }
 
+
+    /**
+     * 解析数据
+     *
+     * @param data
+     */
+    private void ResolveData(String data) {
+        try {
+            JSONObject object = new JSONObject(data);
+            boolean success = object.optBoolean("success");
+            String msg = object.optString("msg");
+            CustomToast.INSTANCE.showToast(this, msg);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

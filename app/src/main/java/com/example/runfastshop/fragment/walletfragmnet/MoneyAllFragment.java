@@ -56,7 +56,6 @@ public class MoneyAllFragment extends Fragment implements View.OnClickListener {
         if (arguments != null) {
             mRecords = arguments.getParcelable("record");
             if (mRecords.getRows() != null) {
-                // TODO 处理是收入还是开支
                 data.addAll(mRecords.getRows());
             }
         } else {

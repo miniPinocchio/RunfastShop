@@ -49,11 +49,9 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
     private boolean codeIsEmpty;
     private boolean newIsEmpty;
     private boolean newAgainIsEmpty;
-    private User userInfo;
     private int netType;
     private int mFlags;
     private String mPhone;
-    private String mCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +69,6 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
             if (mFlags != 0) {
                 mPhone = intent.getStringExtra("phone");
             }
-        } else {
-            userInfo = UserService.getUserInfo();
         }
     }
 
@@ -171,6 +167,10 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
      */
     private void getAuthCode() {
         if (mFlags != 1) {
+            User userInfo = UserService.getUserInfo(this);
+            if (userInfo == null) {
+                return;
+            }
             String accountName = userInfo.getMobile();
             //|| !VaUtils.isMobileNo(accountName) 手机号正则验证
             if (TextUtils.isEmpty(accountName) || !VaUtils.isMobileNo(accountName)) {
@@ -212,11 +212,14 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
         }
         if (mFlags == 1) {
             netType = 3;
-            CustomApplication.getRetrofit().updateForgotPwd(mPhone, oldPwd, newPwd);
+            CustomApplication.getRetrofit().updateForgotPwd(mPhone, oldPwd, newPwd).enqueue(this);
         } else {
             netType = 2;
-            Integer id = UserService.getUserId(getApplicationContext());
-            CustomApplication.getRetrofit().updatePassword(id, oldPwd, newPwd, 1, newPwdAgain).enqueue(this);
+            User userInfo = UserService.getUserInfo(this);
+            if (userInfo == null) {
+                return;
+            }
+            CustomApplication.getRetrofit().updatePassword(userInfo.getId(), oldPwd, newPwd, 1, newPwdAgain).enqueue(this);
         }
     }
 

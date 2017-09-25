@@ -71,31 +71,6 @@ public class ForgotPasswordActivity extends ToolBarActivity implements Callback<
             }
         });
 
-//        mEtCode.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if (TextUtils.isEmpty(s.toString())) {
-//                    mCode = true;
-//                } else {
-//                    mCode = false;
-//                }
-//                if (mPhone && mCode) {
-//                    mBtnOk.setBackgroundResource(R.drawable.shape_button_pay);
-//                } else {
-//                    mBtnOk.setBackgroundResource(R.drawable.shape_button_pay_gary);
-//                }
-//            }
-//        });
     }
 
     @OnClick({R.id.tv_code, R.id.btn_ok})
@@ -130,10 +105,10 @@ public class ForgotPasswordActivity extends ToolBarActivity implements Callback<
         String phone = mEtUserName.getText().toString().trim();
         String code = mEtCode.getText().toString().trim();
 
-        if (TextUtils.isEmpty(phone)) {
-            CustomToast.INSTANCE.showToast(this, "请输入手机号");
-            return;
-        }
+//        if (TextUtils.isEmpty(phone)) {
+//            CustomToast.INSTANCE.showToast(this, "请输入手机号");
+//            return;
+//        }
 //        if (TextUtils.isEmpty(code)) {
 //            CustomToast.INSTANCE.showToast(this, "请输入验证码");
 //            return;

@@ -10,6 +10,7 @@ import com.example.runfastshop.activity.ToolBarActivity;
 import com.example.runfastshop.adapter.BusinessAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.spend.AccountRecords;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.fragment.walletfragmnet.MoneyAllFragment;
 import com.example.runfastshop.fragment.walletfragmnet.MoneyExpenditureFragment;
@@ -86,8 +87,11 @@ public class MoneyDetailActivity extends ToolBarActivity implements Callback<Str
     }
 
     private void getNetData() {
-        Integer id = UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().getListConsume(id).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+        CustomApplication.getRetrofit().getListConsume(userInfo.getId()).enqueue(this);
     }
 
     @Override

@@ -44,7 +44,7 @@
             android:src="@drawable/icon_bank_back"
             android:scaleType="centerCrop"/>
         <EditText
-            android:id="@+id/et_complaint_phone"
+            android:id="@+id/et_complaint_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -52,10 +52,10 @@
             android:paddingRight="25dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:inputType="phone"
+            android:inputType="textEmailAddress"
             android:textSize="14sp"
-            android:singleLine="true"
-            android:hint="请留下手机号码，以便我们回复您"
+            android:maxLines="1"
+            android:hint="请输入您的电子邮箱"
             android:textColorHint="@color/color_text_gray"
             android:textColor="@color/color_address_black"
             />

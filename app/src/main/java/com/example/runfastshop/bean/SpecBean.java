@@ -18,11 +18,11 @@ public class SpecBean {
      * businessId : 3447
      */
 
-    private Integer id;
+    private Integer id;//规格id
     private String name;
     private BigDecimal discount;
     private BigDecimal price;
-    private Integer goodsSellId;
+    private Integer goodsSellId;//商品id
 
     public Integer getId() {
         return id;
@@ -62,5 +62,16 @@ public class SpecBean {
 
     public void setGoodsSellId(Integer goodsSellId) {
         this.goodsSellId = goodsSellId;
+    }
+
+    @Override
+    public String toString() {
+        return "SpecBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", discount=" + discount +
+                ", price=" + price +
+                ", goodsSellId=" + goodsSellId +
+                '}';
     }
 }

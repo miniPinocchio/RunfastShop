@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -166,8 +165,8 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    1001);//自定义的code
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    10000);//自定义的code
         } else {
             initMap();
         }
@@ -193,12 +192,13 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.e("AmapError", "权限允许");
         switch (requestCode) {
-            case 1001:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            case 10000:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //用户同意授权
                     initMap();
                 } else {
                     //用户拒绝授权
+
                 }
                 break;
         }
@@ -298,6 +298,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
     private void netPostAddress(Double lon, Double lat) {
         netType = 1;
 //        CustomApplication.getRetrofit().postAddress(lon, lat).enqueue(this);
+        //TODO 经纬度
         CustomApplication.getRetrofit().postAddress(110.07, 23.38).enqueue(this);
     }
 
@@ -307,9 +308,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
      */
     private void netHomeImage(int agentId) {
         netType = 2;
-        //agentId 代理商id
-//        CustomApplication.getRetrofit().getAdvert(agentId).enqueue(this);
-        CustomApplication.getRetrofit().getAdvert(4).enqueue(this);
+        CustomApplication.getRetrofit().getAdvert(agentId).enqueue(this);
     }
 
     /**

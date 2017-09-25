@@ -59,8 +59,8 @@ public class BottomPageAdapter extends RecyclerView.Adapter<BottomPageAdapter.Bo
                     intent.putExtra("business", topImage1);
                     mContext.startActivity(intent);
                 }else {
-                    //TODO 商家
-                    CustomToast.INSTANCE.showToast(mContext,"活动暂未开放");
+                    //TODO 只处理了外卖操作。此处商家操作待处理
+                   CustomToast.INSTANCE.showToast(mContext,"活动暂未开放");
                 }
             }
         });

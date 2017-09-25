@@ -44,7 +44,6 @@ public class LoginActivity extends ToolBarActivity implements Callback<String> {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                //startActivity(new Intent(this,UserInfoActivity.class));
                 login();
                 break;
             case R.id.btn_register:

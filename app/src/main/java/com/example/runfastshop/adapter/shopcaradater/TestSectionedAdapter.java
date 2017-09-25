@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.example.runfastshop.R;
 import com.example.runfastshop.adapter.SectionedBaseAdapter;
 import com.example.runfastshop.bean.ProductType;
@@ -96,7 +95,7 @@ public class TestSectionedAdapter extends SectionedBaseAdapter {
                     int[] start_location = new int[2];
                     viewHolder.shoppingNum.getLocationInWindow(start_location);//获取点击商品图片的位置
                     Drawable drawable = context.getResources().getDrawable(R.drawable.adddetail);//复制一个新的商品图标
-                    //TODO:解决方案，先监听到左边ListView的Item中，然后在开始动画添加
+                    //解决方案，先监听到左边ListView的Item中，然后在开始动画添加
                     mHolderClickListener.onHolderClick(drawable, start_location);
                 }
             }

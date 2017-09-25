@@ -28,6 +28,7 @@ import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.bean.user.Users;
 import com.example.runfastshop.config.NetConfig;
 import com.example.runfastshop.config.UserService;
+import com.example.runfastshop.data.IntentFlag;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
 
@@ -75,16 +76,12 @@ public class MineFragment extends Fragment implements Callback<String> {
     }
 
     private void initData() {
-        userInfo = UserService.getUserInfo();
-        if (userInfo == null || userInfo.getId() == null) {
+        userInfo = UserService.getUserInfo(getActivity());
+        if (userInfo == null) {
             clearUi();
             return;
         }
         updateUi();
-//        else {
-//            mNetType = 1;
-//            CustomApplication.getRetrofit().postUserInfo(String.valueOf(userInfo.getId())).enqueue(this);
-//        }
     }
 
     /**
@@ -142,25 +139,27 @@ public class MineFragment extends Fragment implements Callback<String> {
                 startActivity(new Intent(getContext(), HelpCenterActivity.class));
                 break;
             case R.id.layout_my_wallet://我的钱包余额
-                if (isLogin()) {
+                if (UserService.getUserInfo(getActivity())!=null) {
                     startActivity(new Intent(getContext(), WalletActivity.class));
                 }
                 break;
             case R.id.layout_coupons://优惠券
-                if (isLogin()) {
+                if (UserService.getUserInfo(getActivity())!=null) {
                     startActivity(new Intent(getContext(), CouponActivity.class));
                 }
                 break;
             case R.id.layout_integral://积分
-                if (isLogin()) {
+                if (UserService.getUserInfo(getActivity())!=null) {
                     startActivity(new Intent(getContext(), IntegralActivity.class));
                 }
                 break;
             case R.id.layout_address://地址管理
-                startActivity(new Intent(getContext(), AddressSelectActivity.class));
+                Intent intent = new Intent(getActivity(), AddressSelectActivity.class);
+                intent.setFlags(IntentFlag.MANAGER_ADDRESS);
+                startActivity(intent);
                 break;
             case R.id.layout_collection://收藏
-                if (isLogin()) {
+                if (UserService.getUserInfo(getActivity())!=null) {
                     startActivity(new Intent(getContext(), MyEnshrineActivity.class));
                 }
                 break;
@@ -179,14 +178,6 @@ public class MineFragment extends Fragment implements Callback<String> {
         }
     }
 
-    private boolean isLogin() {
-        if (UserService.getUserInfo()!=null) {
-            return true;
-        }else {
-            CustomToast.INSTANCE.showToast(getActivity(),"请先登录");
-            return false;
-        }
-    }
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();

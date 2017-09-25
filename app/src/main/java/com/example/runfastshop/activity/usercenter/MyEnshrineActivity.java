@@ -13,6 +13,7 @@ import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.BusinessInfo;
 import com.example.runfastshop.bean.enshrien.Enshrine;
 import com.example.runfastshop.bean.enshrien.Enshrines;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
@@ -53,20 +54,12 @@ public class MyEnshrineActivity extends ToolBarActivity implements View.OnClickL
     }
 
     private void getEnshrineData() {
-        if (isLogin()) {
-            Integer id = UserService.getUserInfo().getId();
-            CustomApplication.getRetrofit().getEnshrine(488993).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo !=null) {
+            CustomApplication.getRetrofit().getEnshrine(userInfo.getId()).enqueue(this);
         }
     }
 
-    private boolean isLogin() {
-        if (UserService.getUserInfo() != null) {
-            return true;
-        } else {
-            CustomToast.INSTANCE.showToast(this, "请先登录");
-            return false;
-        }
-    }
 
     private void initData() {
         mEnshrines = new ArrayList<>();

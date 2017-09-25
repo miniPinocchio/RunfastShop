@@ -1,11 +1,12 @@
 package com.example.runfastshop.config;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
+import com.example.runfastshop.activity.LoginActivity;
 import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.impl.constant.CustomConstant;
-import com.example.runfastshop.util.CustomToast;
 import com.example.supportv1.app.BaseApplication;
 import com.example.supportv1.utils.SharedPreferencesUtil;
 import com.google.gson.Gson;
@@ -85,40 +86,27 @@ public class UserService {
         sharedPreferencesUtil.setData(USER_INFO, userJson);
 
     }
-    /**
-     * 获取用户id
-     *
-     * @param
-     */
-    public static Integer getUserId(Context context) {
-        User userInfo = getUserInfo();
-        if (userInfo == null) {
-            CustomToast.INSTANCE.showToast(context,"请先登录");
-            return -1;
-        }else {
-            return userInfo.getId();
-        }
 
+    public static void clearUserInfo() {
+        SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(BaseApplication.APP_CONTEXT, CustomConstant.sp_name);
+        sharedPreferencesUtil.clear();
     }
+
 
     /**
      * 获取用户信息
      *
      * @return
      */
-    public static User getUserInfo() {
-
+    public static User getUserInfo(Context context) {
         SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(BaseApplication.APP_CONTEXT, CustomConstant.sp_name);
         String userJson = (String) sharedPreferencesUtil.getData(USER_INFO);
-
         if (TextUtils.isEmpty(userJson)) {
+            context.startActivity(new Intent(context, LoginActivity.class));
             return null;
         }
-
         Gson gson = new Gson();
-        User user = gson.fromJson(userJson, User.class);
-
-        return user;
+        return gson.fromJson(userJson, User.class);
     }
 
 
@@ -138,12 +126,10 @@ public class UserService {
      * @return
      */
     public static boolean isAutoLogin() {
-
         SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(BaseApplication.APP_CONTEXT, CustomConstant.sp_name);
         String autoLoginJson = (String) sharedPreferencesUtil.getData(AUTO_LOGIN);
 
         return TextUtils.equals("1", autoLoginJson);
-
     }
 
 

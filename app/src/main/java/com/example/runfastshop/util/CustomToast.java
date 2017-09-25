@@ -19,8 +19,9 @@ public enum CustomToast {
     INSTANCE;// 实现单例
     private Toast mToast;
     private TextView mTvToast;
+
     public void showToast(Context ctx, String content) {
-        if (ctx == null){
+        if (ctx == null) {
             return;
         }
         if (mToast == null) {
@@ -34,9 +35,11 @@ public enum CustomToast {
         mTvToast.setText(content);//设置文本
         mToast.show();//展示toast
     }
+
     public void showToast(Context ctx, int stringId) {
         showToast(ctx, ctx.getString(stringId));
     }
+
     public void cancelToast() {
         if (mToast != null) {
             mToast.cancel();

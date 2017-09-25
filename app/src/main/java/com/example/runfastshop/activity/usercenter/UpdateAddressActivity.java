@@ -14,6 +14,8 @@ import com.example.runfastshop.activity.ToolBarActivity;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.Address;
 import com.example.runfastshop.bean.address.AddressInfo;
+import com.example.runfastshop.bean.user.User;
+import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 
 import org.json.JSONException;
@@ -48,7 +50,7 @@ public class UpdateAddressActivity extends ToolBarActivity implements Callback<S
     private Address mAddressLat;
     private String mAddress;
     private int mFlags;
-    private AddressInfo mInfo;
+    private AddressInfo mAddressInfo;
     private int mNetType;
     private String mTvAddress;
 
@@ -59,11 +61,21 @@ public class UpdateAddressActivity extends ToolBarActivity implements Callback<S
         ButterKnife.bind(this);
         mFlags = getIntent().getFlags();
         if (mFlags == 1) {
-            mInfo = getIntent().getParcelableExtra("addressInfo");
-            etUserName.setText(mInfo.getName());
-            etUserPhone.setText(mInfo.getPhone());
-            etHouseNumber.setText(mInfo.getAddress());
+            mAddressInfo = getIntent().getParcelableExtra("addressInfo");
+            etUserName.setText(mAddressInfo.getName());
+            etUserPhone.setText(mAddressInfo.getPhone());
+            etHouseNumber.setText(mAddressInfo.getAddress());
+            tvAddress.setText(mAddressInfo.getUserAddress());
+        } else {
             mBtnDeleteAddress.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onTitleChanged(CharSequence title, int color) {
+        super.onTitleChanged(title, color);
+        if (mFlags == 0) {
+            tvToolbarTitle.setText("新增地址");
         }
     }
 
@@ -83,9 +95,7 @@ public class UpdateAddressActivity extends ToolBarActivity implements Callback<S
                 }
                 break;
             case R.id.btn_delete_address:
-                if (!checkAvailable()) {
-                    CustomApplication.getRetrofit().postDeleteAddress(mInfo.getId());
-                }
+                deleteAddress();
                 break;
         }
     }
@@ -104,7 +114,7 @@ public class UpdateAddressActivity extends ToolBarActivity implements Callback<S
         } else if (TextUtils.isEmpty(mHouseNumber)) {
             CustomToast.INSTANCE.showToast(this, "请填入门牌号");
             return true;
-        } else if (mTvAddress.equals("光谷国际总部")) {
+        } else if (TextUtils.isEmpty(mTvAddress)) {
             CustomToast.INSTANCE.showToast(this, "请选择地址");
             return true;
         }
@@ -116,10 +126,32 @@ public class UpdateAddressActivity extends ToolBarActivity implements Callback<S
      */
     private void editAddress() {
         mNetType = 1;
-        CustomApplication.getRetrofit().postEditAddress(mInfo.getId(), 1, mUserName, mUserPhone, mAddress,
-                mHouseNumber, String.valueOf(mAddressLat.latLng.longitude), String.valueOf(mAddressLat.latLng.latitude),
-                mRegeocodeAddress.getProvince(), mRegeocodeAddress.getCity(), mRegeocodeAddress.getDistrict())
-                .enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+        if (mAddressLat != null) {
+            CustomApplication.getRetrofit().postEditAddress(mAddressInfo.getId(), userInfo.getId()
+                    , mUserName, mUserPhone, mAddress,
+                    mHouseNumber, String.valueOf(mAddressLat.latLng.longitude), String.valueOf(mAddressLat.latLng.latitude),
+                    mRegeocodeAddress.getProvince(), mRegeocodeAddress.getCity(), mRegeocodeAddress.getDistrict())
+                    .enqueue(this);
+        } else {
+            CustomApplication.getRetrofit().postEditAddress(mAddressInfo.getId(), userInfo.getId()
+                    , mUserName, mUserPhone, mAddress,
+                    mHouseNumber, String.valueOf(mAddressInfo.getLongitude()), String.valueOf(mAddressInfo.getLatitude()),
+                    mAddressInfo.getProvinceName(), mAddressInfo.getCityName(), mAddressInfo.getCountyName())
+                    .enqueue(this);
+        }
+    }
+
+
+    /**
+     * 删除地址
+     */
+    private void deleteAddress() {
+        mNetType = 2;
+        CustomApplication.getRetrofit().postDeleteAddress(mAddressInfo.getId()).enqueue(this);
     }
 
     /**
@@ -161,16 +193,23 @@ public class UpdateAddressActivity extends ToolBarActivity implements Callback<S
     }
 
     private void ResolveData(String data) {
-        try {
-            JSONObject object = new JSONObject(data);
-            boolean success = object.optBoolean("success");
-            String msg = object.optString("msg");
-            CustomToast.INSTANCE.showToast(this, "保存成功");
-            if (success) {
+        if (!TextUtils.isEmpty(data)) {
+            if (mNetType == 0 || mNetType == 1) {
+                try {
+                    JSONObject object = new JSONObject(data);
+                    boolean success = object.optBoolean("success");
+                    String msg = object.optString("msg");
+                    CustomToast.INSTANCE.showToast(this, "保存成功");
+                    if (success) {
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (mNetType == 2) {
+                CustomToast.INSTANCE.showToast(this, "删除成功");
                 finish();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 }

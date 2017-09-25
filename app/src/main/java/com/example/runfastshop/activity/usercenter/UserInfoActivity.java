@@ -45,7 +45,10 @@ public class UserInfoActivity extends ToolBarActivity {
     }
 
     private void initData() {
-        userInfo = UserService.getUserInfo();
+        userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
         updateUi();
     }
 
@@ -59,7 +62,9 @@ public class UserInfoActivity extends ToolBarActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_address_button://地址管理
-                startActivityForResult(new Intent(this, AddressSelectActivity.class), 1001);
+                Intent intent = new Intent(this, AddressSelectActivity.class);
+                intent.setFlags(IntentFlag.MANAGER_ADDRESS);
+                startActivity(intent);
                 break;
             case R.id.tv_update_password://密码管理
                 startActivity(new Intent(this, UpdatePasswordActivity.class));
@@ -68,7 +73,7 @@ public class UserInfoActivity extends ToolBarActivity {
                 exitLogin();
                 break;
             case R.id.ll_nickname://昵称
-                Intent intent = new Intent(this, ChangeNameActivity.class);
+                intent = new Intent(this, ChangeNameActivity.class);
                 intent.setFlags(IntentFlag.EDIT_NICKNAME);
                 intent.putExtra("userInfo", userInfo);
                 startActivityForResult(intent, 1002);
@@ -103,7 +108,7 @@ public class UserInfoActivity extends ToolBarActivity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             UserService.setAutoLogin("0");
-            UserService.saveUserInfo(new User());
+            UserService.clearUserInfo();
             finish();
         }
     }

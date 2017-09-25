@@ -10,6 +10,8 @@ import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ToolBarActivity;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.order.OrderInfo;
+import com.example.runfastshop.bean.user.User;
+import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.view.MaxHeightRecyclerView;
 
@@ -85,7 +87,11 @@ public class OrderDetailActivity extends ToolBarActivity implements Callback<Str
 
     private void getNetData() {
         Integer id = mOrderInfo.getId();
-        CustomApplication.getRetrofit().getOrderDetail(id,1).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+        CustomApplication.getRetrofit().getOrderDetail(id,userInfo.getId()).enqueue(this);
     }
 
     @Override

@@ -33,7 +33,10 @@ public class WalletActivity extends ToolBarActivity {
     }
 
     private void initView() {
-        User userInfo = UserService.getUserInfo();
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
         tvWalletMoney.setText(String.valueOf(userInfo.getRemainder()));
     }
 

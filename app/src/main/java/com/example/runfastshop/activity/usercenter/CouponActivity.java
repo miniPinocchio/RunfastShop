@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.runfastshop.R;
@@ -14,6 +15,7 @@ import com.example.runfastshop.adapter.moneyadapter.CouponsAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.coupon.CouponBean;
 import com.example.runfastshop.bean.coupon.CouponBeans;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
@@ -39,6 +41,8 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
     TextView mTvUseCouponNum;
     @BindView(R.id.tv_get_coupon)
     TextView mTvGetCoupon;
+    @BindView(R.id.ll_no_coupon)
+    LinearLayout mLlNoCoupon;
 
     private List<CouponBean> mCouponBeanList;
     private CouponsAdapter mAllAdapter;
@@ -56,8 +60,11 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
      * 获取优惠券
      */
     private void getNetData() {
-        Integer id = UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().GetMyCoupan(id, 0).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+        CustomApplication.getRetrofit().GetMyCoupan(userInfo.getId(), 0).enqueue(this);
     }
 
     private void initData() {
@@ -93,16 +100,21 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
      */
     private void ResolveData(String data) {
         CouponBeans couponBeans = GsonUtil.parseJsonWithGson(data, CouponBeans.class);
-        if (couponBeans.getRows().size() > 0) {
+        if (couponBeans.getRows() != null && couponBeans.getRows().size() > 0) {
             mTvUseCouponNum.setText(String.valueOf(couponBeans.getRows().size()));
             mCouponBeanList.addAll(couponBeans.getRows());
             mAllAdapter.notifyDataSetChanged();
+            mLlNoCoupon.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            mLlNoCoupon.setVisibility(View.VISIBLE);
         }
     }
 
     @OnClick(R.id.tv_get_coupon)
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_get_coupon:
                 startActivity(new Intent(this, CashCouponActivity.class));
         }

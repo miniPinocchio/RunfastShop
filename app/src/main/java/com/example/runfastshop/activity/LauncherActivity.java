@@ -7,12 +7,10 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.runfastshop.R;
-import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
-import com.example.runfastshop.util.MD5Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,24 +27,34 @@ public class LauncherActivity extends AppCompatActivity implements Callback<Stri
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-        initData();
+//        initData();
     }
 
-    private void initData() {
-        if (UserService.isAutoLogin()){
-            handler.sendEmptyMessage(2002);
-        }else {
-            handler.sendEmptyMessageDelayed(2001,2000);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userInfo = UserService.getUserInfo(this);
+        if (userInfo != null) {
+            startActivity(new Intent(LauncherActivity.this, MainActivity.class));
+            finish();
         }
     }
 
-    private Handler handler = new Handler(){
+    private void initData() {
+        if (UserService.isAutoLogin()) {
+            handler.sendEmptyMessageDelayed(2001, 2000);
+        } else {
+            handler.sendEmptyMessage(2002);
+        }
+    }
+
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 2001:
-                    startActivity(new Intent(LauncherActivity.this,MainActivity.class));
+                    startActivity(new Intent(LauncherActivity.this, MainActivity.class));
                     finish();
                     break;
                 case 2002:
@@ -55,34 +63,31 @@ public class LauncherActivity extends AppCompatActivity implements Callback<Stri
             }
         }
     };
-
-    /**
-     * 自动登录
-     */
     private void login() {
-        userInfo = UserService.getUserInfo();
-        if (userInfo != null) {
-            CustomApplication.getRetrofit().postLogin(userInfo.getMobile(), MD5Util.MD5(userInfo.getPassword()),0).enqueue(this);
-        }
+//        userInfo = UserService.getUserInfo(this);
+//        if (userInfo != null) {
+//            CustomApplication.getRetrofit().postLogin(userInfo.getMobile(), MD5Util.MD5(userInfo.getPassword()), 0).enqueue(this);
+//        }
+        startActivity(new Intent(LauncherActivity.this, LoginActivity.class));
     }
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
-        if (response.isSuccessful()){
+        if (response.isSuccessful()) {
             String data = response.body();
             ResolveData(data);
-        }else {
-            CustomToast.INSTANCE.showToast(this,"请求失败");
-            startActivity(new Intent(LauncherActivity.this,MainActivity.class));
+        } else {
+            CustomToast.INSTANCE.showToast(this, "请求失败");
+            startActivity(new Intent(LauncherActivity.this, MainActivity.class));
             finish();
         }
     }
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
-        startActivity(new Intent(LauncherActivity.this,MainActivity.class));
+        startActivity(new Intent(LauncherActivity.this, MainActivity.class));
         finish();
-        CustomToast.INSTANCE.showToast(this,"网络异常");
+        CustomToast.INSTANCE.showToast(this, "网络异常");
     }
 
     /**
@@ -95,16 +100,16 @@ public class LauncherActivity extends AppCompatActivity implements Callback<Stri
             JSONObject object = new JSONObject(data);
             boolean success = object.optBoolean("success");
             String msg = object.optString("msg");
-            if (!success){
-                CustomToast.INSTANCE.showToast(this,msg);
-                startActivity(new Intent(this,LoginActivity.class));
+            if (!success) {
+                CustomToast.INSTANCE.showToast(this, msg);
+                startActivity(new Intent(this, LoginActivity.class));
                 finish();
             }
             JSONObject app_cuser = object.getJSONObject("app_cuser");
-            User user = GsonUtil.parseJsonWithGson(app_cuser.toString(),User.class);
+            User user = GsonUtil.parseJsonWithGson(app_cuser.toString(), User.class);
             user.setPassword(userInfo.getPassword());
             UserService.saveUserInfo(user);
-            startActivity(new Intent(LauncherActivity.this,MainActivity.class));
+            startActivity(new Intent(LauncherActivity.this, MainActivity.class));
             finish();
         } catch (JSONException e) {
             e.printStackTrace();

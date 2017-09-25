@@ -44,9 +44,11 @@
 
                     <TextView
                         android:id="@+id/tv_order_shop_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/dimen_170_dp"
                         android:layout_height="wrap_content"
-                        android:text="外婆烧（笛扬路店）"
+                        android:text="外婆烧(笛扬路店)"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/color_address_black"
                         android:textSize="16sp"/>
 

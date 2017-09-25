@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,7 +25,6 @@ import com.example.runfastshop.bean.mainmiddle.MiddleSort;
 import com.example.runfastshop.data.IntentFlag;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
-import com.example.supportv1.utils.LogUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -132,12 +130,7 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
      * 初始化数据
      */
     private void initData() {
-        //TODO 默认地址
-//        lat = getIntent().getDoubleExtra("lat", 0.0);
-//        lon = getIntent().getDoubleExtra("lon", 0.0);
-        //getClassInfo();
-        lat = 110.3;
-        lon = 23.3;
+
         mSort = getIntent().getParcelableExtra("middleData");
         mName = mSort.getTypename();
 
@@ -175,18 +168,10 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
      */
     private void searchGoodsType(int page, int raw, int sorting, String name) {
         netType = 2;
-        LogUtil.d("", page + raw + lon + lat + name + sorting);
+        //TODO 经纬度
+        lat = 110.3;
+        lon = 23.3;
         CustomApplication.getRetrofit().searchGoods(page, raw, lon, lat, name, sorting, mSort.getAgentId()).enqueue(this);
-    }
-
-    /**
-     * 获取商家列表
-     */
-    private void getBusiness(Double lon, Double lat, Integer page) {
-        netType = 1;
-        Log.d("params", "lon = " + lon + ",lat = " + lat);
-//        CustomApplication.getRetrofit().getBusiness(String.valueOf(lon), String.valueOf(lat), page).enqueue(this);
-        CustomApplication.getRetrofit().getBusiness(String.valueOf(110.07), String.valueOf(23.38), page).enqueue(this);
     }
 
     @OnClick({R.id.layout_class, R.id.layout_sort, R.id.tv_class_back})

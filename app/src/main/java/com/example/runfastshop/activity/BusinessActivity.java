@@ -214,6 +214,8 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     private String typeName;
     private String typeNameTwo;
     private boolean isShowDetail;
+    private FoodBean mFoodBean;
+    private Integer specId;//规格id
 
     //-----------------
 
@@ -536,12 +538,11 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
 
                 break;
             case R.id.car_limit:
-                Integer userId = UserService.getUserId(getApplicationContext());
-//                if (userInfo == null || userInfo.getId() == null){
-//                    startActivity(new Intent(this,LoginActivity.class));
-//                    return;
-//                }
-                saveOrderCar();
+                User userInfo = UserService.getUserInfo(this);
+                if (userInfo == null) {
+                    return;
+                }
+                saveOrderCar(userInfo);
                 break;
         }
     }
@@ -551,27 +552,30 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
      */
     private void saveFavorite() {
         netType = 5;
-        Integer id = UserService.getUserId(getApplicationContext());
-        CustomApplication.getRetrofit().postSaveShop(businessId, 1, id).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+
+        CustomApplication.getRetrofit().postSaveShop(businessId, 1, userInfo.getId()).enqueue(this);
     }
 
     /**
      * 购物车
      */
-    private void saveOrderCar() {
+    private void saveOrderCar(User userInfo) {
         netType = 8;
-
-//        List<FoodBean> flist = carFoods;
-//        startActivity(new Intent(this, ConfirmOrderActivity.class).putExtra("foodBean", (Serializable) flist).putExtra("price", decimal));
-
-        User userInfo = UserService.getUserInfo();
         List<ShoppingTrolley> trolleys = new ArrayList<>();
         for (int i = 0; i < carFoods.size(); i++) {
+            mFoodBean = carFoods.get(i);
             ShoppingTrolley trolley = new ShoppingTrolley();
-            trolley.setGoodsSellId(carFoods.get(i).getId());
-            trolley.setGoodsSellStandardId(carFoods.get(i).getSid());
+            trolley.setGoodsSellId(mFoodBean.getId());
+            if (carFoods.get(i).getStandardList() != null && carFoods.get(i).getStandardList().size() > 0) {
+                trolley.setGoodsSellStandardId(mFoodBean.getGoodsSpecId());
+            }
+            //TODO 子选项
 //            trolley.setOptionIds(carFoods.get(i).get);
-            trolley.setNum(1);
+            trolley.setNum((int) mFoodBean.getSelectCount());
             trolleys.add(trolley);
         }
 
@@ -740,6 +744,12 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     public void goAccount(View view) {
     }
 
+    /**
+     * 添加商品
+     *
+     * @param view
+     * @param fb
+     */
     @Override
     public void onAddClick(View view, FoodBean fb) {
         dealCar(fb);
@@ -770,6 +780,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
             }
         }).start();
     }
+
 
     public void onAddClickSpec(View view, FoodBean fb) {
 
@@ -809,6 +820,11 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
         }).start();
     }
 
+    /**
+     * 规格--"选好了"点击事件
+     *
+     * @param foodBean
+     */
     private void dealCarSpec(FoodBean foodBean) {
         HashMap<String, Long> typeSelect = new HashMap<>();
         BigDecimal amount = new BigDecimal(0.0);
@@ -879,7 +895,11 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
         updateAmount(amount);
     }
 
-
+    /**
+     * 减少商品
+     *
+     * @param fb
+     */
     @Override
     public void onSubClick(FoodBean fb) {
         dealCar(fb);
@@ -889,7 +909,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     public void onClick(View v) {
         if (v != null) {
             switch (v.getId()) {
-                case R.id.food_main:
+                case R.id.food_main://商品item
                     positionSpec = (Integer) v.getTag();
                     Log.d("position", "position =" + positionSpec);
                     foodBeanDetail = foodBeens.get(positionSpec);
@@ -919,7 +939,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                         getGoodsDetail(foodBeanDetail.getId());
                     }
                     break;
-                case R.id.layout_spec:
+                case R.id.layout_spec://商品item
                     positionSpec = (Integer) v.getTag();
                     Log.d("position", "position =" + positionSpec);
                     FoodBean foodBeanSpec = foodBeens.get(positionSpec);
@@ -928,13 +948,13 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                     getGoodsSpec(foodBeanSpec.getId());
                     specDialog.show();
                     break;
-                case R.id.layout_detail_spec:
+                case R.id.layout_detail_spec://商品详情框
                     tvSpecTitle.setText(foodBeanDetail.getName());
                     tvSpecPrice.setText(foodBeanDetail.getPrice() + "");
                     getGoodsSpec(foodBeanDetail.getId());
                     specDialog.show();
                     break;
-                case R.id.tv_select_spec:
+                case R.id.tv_select_spec://规格框
                     boolean isCarFoodData = false;
                     FoodBean fbSpec = ((BusinessFragment) mFragments.get(0)).getFoodAdapter().getItem(positionSpec);
                     if (fbSpec != null) {
@@ -967,6 +987,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                         foodBeanTwo.setGoodsSpec(specName);
                         foodBeanTwo.setGoodsType(typeName);
                         foodBeanTwo.setGoodsTypeTwo(typeNameTwo);
+                        foodBeanTwo.setGoodsSpecId(specId);
 
                         onAddClickSpec(tvAdd, foodBeanTwo);
                     }
@@ -1021,7 +1042,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                     point = (Integer) v.getTag();
                     tvSpecPrice.setText(specBeanList.get(point).getPrice() + "");
                     specName = data.get(point).getName();
-
+                    specId = specBeanList.get(point).getId();
                     for (int j = 0; j < flowLayout.getChildCount(); j++) {
                         if (j == point) {
                             ((TextView) flowLayout.getChildAt(j)).setTextColor(getResources().getColor(R.color.color_white));
@@ -1033,7 +1054,6 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                     }
                 }
             });
-            //TODO:能否添加成功
             flowLayout.addView(textView, layoutParams);
         }
     }
@@ -1081,7 +1101,6 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
 
                 }
             });
-            //TODO:能否添加成功
             flowLayout.addView(textView, layoutParams);
         }
     }
@@ -1128,7 +1147,6 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                     }
                 }
             });
-            //TODO:能否添加成功
             flowLayout.addView(textView, layoutParams);
         }
     }

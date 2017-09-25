@@ -45,7 +45,6 @@ public class PageScrollAdapter extends RecyclerView.Adapter<PageScrollAdapter.My
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO  添加信息
                 Intent intent = new Intent(mContext, BreakfastActivity.class);
                 intent.putExtra("middleData",middleSort);
                 mContext.startActivity(intent);

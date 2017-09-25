@@ -59,7 +59,7 @@ public class NormalAdapter extends StaticPagerAdapter {
                         intent.putExtra("business", topImage);
                         mContext.startActivity(intent);
                         break;
-                    //TODO 待处理
+                    //TODO 商家和一元购 不知如何处理
                     case 1://商家
                         CustomToast.INSTANCE.showToast(mContext,"商家");
                         break;

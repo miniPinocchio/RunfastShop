@@ -25,9 +25,11 @@ import com.example.runfastshop.bean.redpackage.RedPackages;
 import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.IntentConfig;
 import com.example.runfastshop.config.UserService;
+import com.example.runfastshop.data.IntentFlag;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
 import com.example.runfastshop.view.MaxHeightRecyclerView;
+import com.example.supportv1.utils.LogUtil;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
@@ -94,6 +96,10 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
         mChildren = new GoodsSellRecordChildren();
         mGoodsSellRecordChildrens = new ArrayList<>();
         List<FoodBean> flist = (List<FoodBean>) getIntent().getSerializableExtra("foodBean");
+        for (int i = 0; i < flist.size(); i++) {
+            LogUtil.d("购物清单", flist.get(i).toString());
+        }
+
         if (flist != null) {
             List<Integer> optsubids = new ArrayList<>();
             for (int i = 0; i < flist.size(); i++) {
@@ -140,29 +146,39 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
 
 
     private void getRedData() {
-        Integer userId = UserService.getUserId(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
         mNetType = 1;
-        CustomApplication.getRetrofit().postRedPackage(1, mBusinessId).enqueue(this);
+        CustomApplication.getRetrofit().postRedPackage(userInfo.getId(), mBusinessId).enqueue(this);
     }
 
-    private void getDiscountData() {
-        Integer userId = UserService.getUserId(this);
+    private void getCouponData() {
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
         mNetType = 2;
-        CustomApplication.getRetrofit().GetCoupan(1, mAgentId).enqueue(this);
+        CustomApplication.getRetrofit().GetCoupan(userInfo.getId(), mAgentId).enqueue(this);
     }
 
     private void getAddressData() {
-//        Integer id = UserService.getUserInfo().getId();
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
         mNetType = 3;
-        //TODO 用户id
-        CustomApplication.getRetrofit().postListAddress(1).enqueue(this);
+        CustomApplication.getRetrofit().postListAddress(userInfo.getId()).enqueue(this);
     }
 
     @OnClick({R.id.layout_user_address, R.id.layout_pay_mode, R.id.layout_red_packet, R.id.layout_cash_coupon, R.id.layout_flavor, R.id.tv_pay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_user_address:
-                startActivityForResult(new Intent(this, AddressSelectActivity.class), IntentConfig.REQUEST_CODE);
+                Intent intent = new Intent(this, AddressSelectActivity.class);
+                intent.setFlags(IntentFlag.ORDER_ADDRESS);
+                startActivityForResult(intent, IntentConfig.REQUEST_CODE);
                 break;
             case R.id.layout_pay_mode:
 
@@ -191,17 +207,16 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
      *
      */
     private void toPay() {
-        User userInfo = UserService.getUserInfo();
+        User userInfo = UserService.getUserInfo(this);
         if (userInfo != null) {
             mNetType = 4;
             mGoodsSellRecordChildrens.add(mChildren);
             Gson gson = new Gson();
             String goodsJson = gson.toJson(mGoodsSellRecordChildrens);
             mSubtract = mPrice.subtract(mDecimalCoupon);
+            //TODO  参数含义
             CustomApplication.getRetrofit().createOrder(userInfo.getId(), mBusinessId, mAddressId, 0, 0,
                     mSubtract.doubleValue(), mSubtract.doubleValue(), "", goodsJson).enqueue(this);
-        } else {
-            CustomToast.INSTANCE.showToast(this, "请先登录");
         }
     }
 
@@ -211,7 +226,7 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
      */
     private void updateAddr(AddressInfo addr, boolean isShow) {
         if (isShow) {
-            tvUserAddress.setText(addr.getAddress());
+            tvUserAddress.setText(addr.getUserAddress());
             tvUserName.setText(addr.getName());
             tvUserPhone.setText(addr.getPhone());
         } else {
@@ -222,14 +237,13 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // TODO: 2017/8/30 将备注内容加入
         if (requestCode == IntentConfig.REQUEST_CODE && resultCode == IntentConfig.REMARK_RESULT_CODE) {
             if (data != null)
                 mTvOrderRemark.setText(data.getStringExtra("order_remark"));
+        } else if (requestCode == IntentConfig.REQUEST_CODE && resultCode == IntentConfig.ADDRESS_SELECT) {
+            AddressInfo addressInfo = data.getParcelableExtra("addressInfo");
+            updateAddr(addressInfo, true);
         }
-//        else if (requestCode == IntentConfig.REQUEST_CODE&& resultCode == IntentConfig.REMARK_RESULT_CODE){
-//
-//        }
     }
 
     @Override
@@ -263,7 +277,7 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             } else {
                 tvRedPacket.setText("暂无可用红包");
             }
-            getDiscountData();
+            getCouponData();
         }
         if (mNetType == 2) {
             if (!TextUtils.isEmpty(data)) {

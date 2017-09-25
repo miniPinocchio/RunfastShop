@@ -23,6 +23,11 @@ public class IntentFlag {
 
     public static final int FORGOT_PWD = 1;//忘记密码
 
+    public static final int ORDER_ADDRESS = 0;//订单跳地址
+    public static final int MANAGER_ADDRESS = 1;//地址管理跳地址
+
+
+
 
 
 

@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ToolBarActivity;
 import com.example.runfastshop.application.CustomApplication;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 
@@ -58,9 +59,12 @@ public class PayChannelActivity extends ToolBarActivity implements Callback<Stri
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_to_pay:
-                String password = UserService.getUserInfo().getPassword();
-                Integer id = UserService.getUserInfo().getId();
-                CustomApplication.getRetrofit().walletPay(mOrderId, password, id).enqueue(this);
+                User userInfo = UserService.getUserInfo(this);
+                if (userInfo == null) {
+                    return;
+                }
+                CustomApplication.getRetrofit().walletPay(mOrderId, userInfo.getPassword(),
+                        userInfo.getId()).enqueue(this);
                 break;
         }
     }

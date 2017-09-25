@@ -90,7 +90,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         holder.tv_order_shop_content.setText(orderInfo.getContent());
         holder.tv_order_shop_price.setText(String.valueOf(orderInfo.getPrice()));
         holder.iv_order_shop.setImageURI(ApiServiceFactory.BASE_IMG_URL + orderInfo.getLogo());
-        //TODO  订单评价
         holder.tv_order_shop_again.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +104,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, OrderComplainActivity.class);
+                intent.putExtra("orderInfo",orderInfo);
                 context.startActivity(intent);
             }
         });

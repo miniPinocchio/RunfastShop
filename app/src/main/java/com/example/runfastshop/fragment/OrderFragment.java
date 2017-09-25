@@ -18,6 +18,9 @@ import com.example.runfastshop.adapter.OrderListAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.order.OrderInfo;
 import com.example.runfastshop.bean.order.OrderInfos;
+import com.example.runfastshop.bean.user.User;
+import com.example.runfastshop.config.UserService;
+import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
 
 import java.util.ArrayList;
@@ -93,8 +96,11 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
      *
      */
     private void getOrderList() {
-//        UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().postOrderList(488993, 1, 10).enqueue(this);
+        User userInfo = UserService.getUserInfo(getActivity());
+        if (userInfo == null) {
+            return;
+        }
+        CustomApplication.getRetrofit().postOrderList(userInfo.getId(), 1, 10).enqueue(this);
     }
 
     @Override
@@ -126,7 +132,7 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
-
+        CustomToast.INSTANCE.showToast(getContext(), "网络异常");
     }
 
     private void ResolveData(String data) {

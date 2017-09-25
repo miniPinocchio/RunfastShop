@@ -15,6 +15,8 @@ import com.example.runfastshop.adapter.MessageAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.message.MessageInfo;
 import com.example.runfastshop.bean.message.MessageInfos;
+import com.example.runfastshop.bean.user.User;
+import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.GsonUtil;
 
 import java.util.ArrayList;
@@ -71,8 +73,11 @@ public class MessageFragment extends Fragment implements Callback<String> {
      * 获取消息
      */
     private void getNetData() {
-//        Integer id = UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().postMessageList(1, page, 10).enqueue(this);
+        User userInfo = UserService.getUserInfo(getActivity());
+        if (userInfo == null) {
+            return;
+        }
+        CustomApplication.getRetrofit().postMessageList(userInfo.getId(), page, 10).enqueue(this);
     }
 
     @Override

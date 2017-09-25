@@ -113,7 +113,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="光谷国际总部"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/color_address_black"
             android:textSize="14sp" />
 

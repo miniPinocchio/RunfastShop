@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,12 +22,14 @@ import com.example.runfastshop.bean.BusinessInfo;
 import com.example.runfastshop.data.IntentFlag;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.view.ZFlowLayout;
+import com.example.supportv1.utils.SharedPreferencesUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,11 +53,19 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
     RecyclerView recyclerViewList;
     @BindView(R.id.ll_search_history)
     LinearLayout search_history;
+    @BindView(R.id.iv_search_back)
+    ImageView mIvSearchBack;
+    @BindView(R.id.tv_cancel_search)
+    TextView mTvCancelSearch;
+
 
     private List<String> data = new ArrayList<>();
     private List<BusinessInfo> businessInfos = new ArrayList<>();
     private LoadMoreAdapter loadMoreAdapter;
     private int page = 1;
+    private SharedPreferencesUtil mUtil;
+    private String SEARCH_HISTORY = "search_history";
+    private String mSearch;
 
 
     @Override
@@ -65,8 +74,8 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
         setContentView(R.layout.activity_search_product);
         ButterKnife.bind(this);
         initData();
+        updateData();
         initRefreshLayout();
-        setListener();
         setData();
     }
 
@@ -74,29 +83,6 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
     private void setData() {
         recyclerViewList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewList.setAdapter(loadMoreAdapter);
-    }
-
-    private void setListener() {
-        etSearchName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                businessInfos.clear();
-                if (!TextUtils.isEmpty(s.toString())) {
-                    searchGoods(s.toString());
-                }
-                loadMoreAdapter.notifyDataSetChanged();
-            }
-        });
     }
 
     private void initRefreshLayout() {
@@ -110,34 +96,34 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
     }
 
     private void initData() {
+        mUtil = new SharedPreferencesUtil(this, SEARCH_HISTORY);
         mRefreshLayout.setVisibility(View.GONE);
-        data.add("鸡排");
-        data.add("咖喱");
-        data.add("麻辣烫");
-        data.add("泡菜饼");
-        data.add("肯德基宅急送");
-        data.add("烧烤");
-        data.add("烧烤");
-        addItem(data);
-
         BreakfastAdapter breakfastAdapert = new BreakfastAdapter(businessInfos, this, this);
         loadMoreAdapter = new LoadMoreAdapter(this, breakfastAdapert);
         loadMoreAdapter.setLoadMoreListener(this);
     }
 
     @SuppressWarnings("ResourceType")
-    public void addItem(List<String> data) {
-
+    public void addItem(final List<String> data) {
+        flowLayout.removeAllViews();
         ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 0, 10, 10);// 设置边距
 
         for (int i = 0; i < data.size(); i++) {
-            TextView textView = new TextView(this);
+            final TextView textView = new TextView(this);
             textView.setText(data.get(i));
             textView.setBackgroundResource(R.drawable.search_history_background);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
             textView.setTextColor(getResources().getColor(R.color.color_text_gray_two));
-            //TODO:能否添加成功
+            textView.setTag(i);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Integer tag = (Integer) textView.getTag();
+                    mSearch = data.get(tag);
+                    searchGoods(mSearch);
+                }
+            });
             flowLayout.addView(textView, layoutParams);
         }
     }
@@ -147,11 +133,6 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
      */
     private void searchGoods(String name) {
         CustomApplication.getRetrofit().searchGoods(1, 10, 110.0, 23.0, name, 1, 4).enqueue(this);
-    }
-
-    @OnClick(R.id.tv_cancel_search)
-    public void onViewClicked() {
-        finish();
     }
 
     @Override
@@ -175,6 +156,7 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
             if (bus == null || bus.length() <= 0) {
                 mRefreshLayout.endRefreshing();
                 loadMoreAdapter.loadAllDataCompleted();
+                CustomToast.INSTANCE.showToast(this, "没有该店铺信息");
                 return;
             }
             search_history.setVisibility(View.GONE);
@@ -227,7 +209,7 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
     @Override
     public void loadMore() {
         page += 1;
-        searchGoods(etSearchName.getText().toString());
+        searchGoods(mSearch);
     }
 
     @Override
@@ -246,11 +228,56 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         page = 1;
-        searchGoods(etSearchName.getText().toString());
+        searchGoods(mSearch);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         return false;
+    }
+
+    @OnClick({R.id.iv_search_back, R.id.tv_cancel_search})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_search_back:
+                finish();
+                break;
+            case R.id.tv_cancel_search://搜索
+                businessInfos.clear();
+                mSearch = etSearchName.getText().toString().trim();
+                if (!TextUtils.isEmpty(mSearch)) {
+                    saveHistory(mSearch);
+                    searchGoods(mSearch);
+                } else {
+                    CustomToast.INSTANCE.showToast(this, "请输入搜索内容");
+                }
+                break;
+        }
+    }
+
+    /**
+     * 保存历史
+     *
+     * @param text
+     */
+    private void saveHistory(String text) {
+        String oldText = (String) mUtil.getData(SEARCH_HISTORY);
+        if (!TextUtils.isEmpty(text) && !oldText.contains(text) && !TextUtils.isEmpty(oldText)) {
+            mUtil.setData(SEARCH_HISTORY, oldText + "," + text);
+        } else if (TextUtils.isEmpty(oldText)){
+            mUtil.setData(SEARCH_HISTORY, text);
+        }
+    }
+
+    /**
+     * 更新布局
+     */
+    public void updateData() {
+        String history = (String) mUtil.getData(SEARCH_HISTORY);
+        if (!TextUtils.isEmpty(history)) {
+            String[] split = history.split(",");
+            Collections.addAll(data, split);
+            addItem(data);
+        }
     }
 }

@@ -219,7 +219,7 @@ public class SharedPreferencesUtil
     {
         Editor editor = pref.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 
 }

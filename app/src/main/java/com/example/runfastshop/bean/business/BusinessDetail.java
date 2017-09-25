@@ -69,7 +69,6 @@ public class BusinessDetail {
     private Integer issubsidy;//是否补贴配送费1是0否
     private double subsidy ;//补贴金额
     private String  typeName;//商家类型名称
-    //TODO
 //    private List<SafetyRecordimg>imgs;
     private Integer sorting;//排序方式 1 推荐排序 2 月销量排序 3 距离排序 4评分排序
     private  double  distance;

@@ -12,6 +12,9 @@ import com.example.runfastshop.adapter.AddressSelectAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.address.AddressInfo;
 import com.example.runfastshop.bean.address.AddressInfos;
+import com.example.runfastshop.bean.user.User;
+import com.example.runfastshop.config.IntentConfig;
+import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.data.IntentFlag;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
@@ -36,6 +39,7 @@ public class AddressSelectActivity extends ToolBarActivity implements Callback<S
 
     private List<AddressInfo> mData;
     private AddressSelectAdapter mSelectAdapter;
+    private int mFlags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,7 @@ public class AddressSelectActivity extends ToolBarActivity implements Callback<S
     }
 
     private void initData() {
+        mFlags = getIntent().getFlags();
         mData = new ArrayList<>();
         mSelectAdapter = new AddressSelectAdapter(mData, this);
         mSelectAdapter.setOnItemClickListener(this);
@@ -67,9 +72,11 @@ public class AddressSelectActivity extends ToolBarActivity implements Callback<S
     }
 
     private void getNetData() {
-//        Integer id = UserService.getUserInfo().getId();
-        //TODO 用户id
-        CustomApplication.getRetrofit().postListAddress(1).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+        CustomApplication.getRetrofit().postListAddress(userInfo.getId()).enqueue(this);
     }
 
     @Override
@@ -96,9 +103,17 @@ public class AddressSelectActivity extends ToolBarActivity implements Callback<S
 
     @Override
     public void onItemClick(View view, int position) {
-        Intent intent = new Intent(this, UpdateAddressActivity.class);
-        intent.setFlags(IntentFlag.EDIT_ADDRESS);
-        intent.putExtra("addressInfo",mData.get(position));
-        startActivity(intent);
+        AddressInfo addressInfo = mData.get(position);
+        if (mFlags == IntentFlag.ORDER_ADDRESS){
+            Intent intent = new Intent();
+            intent.putExtra("addressInfo",addressInfo);
+            setResult(IntentConfig.ADDRESS_SELECT,intent);
+            finish();
+        }else if (mFlags == IntentFlag.MANAGER_ADDRESS){
+            Intent intent = new Intent(this, UpdateAddressActivity.class);
+            intent.setFlags(IntentFlag.EDIT_ADDRESS);
+            intent.putExtra("addressInfo", addressInfo);
+            startActivity(intent);
+        }
     }
 }

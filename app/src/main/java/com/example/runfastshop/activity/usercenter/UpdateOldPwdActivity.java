@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ToolBarActivity;
 import com.example.runfastshop.application.CustomApplication;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 
@@ -147,8 +148,11 @@ public class UpdateOldPwdActivity extends ToolBarActivity implements Callback<St
             CustomToast.INSTANCE.showToast(this,"两次新密码输入不一致");
             return;
         }
-        Integer id = UserService.getUserId(getApplicationContext());
-        CustomApplication.getRetrofit().updatePassword(id,oldPwd, newPwd,0,newPwdAgain).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+        CustomApplication.getRetrofit().updatePassword(userInfo.getId(),oldPwd, newPwd,0,newPwdAgain).enqueue(this);
     }
 
     @OnClick(R.id.btn_save_password)

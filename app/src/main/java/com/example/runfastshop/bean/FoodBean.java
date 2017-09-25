@@ -1,6 +1,10 @@
 package com.example.runfastshop.bean;
 
 
+import com.example.runfastshop.bean.gooddetail.GoodsSellOption;
+import com.example.runfastshop.bean.gooddetail.GoodsSellStandard;
+import com.example.runfastshop.bean.gooddetail.GoodsSellSubOption;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,9 +19,11 @@ public class FoodBean implements Serializable{
 
 	private long selectCount;
 
-	private String goodsSpec;
-	private String goodsType;
-	private String goodsTypeTwo;
+	private String goodsSpec;//规格
+	private Integer goodsSpecId;//规格Id
+	private String goodsType;//
+	private String goodsTypeTwo;//
+	private Integer goodsTypeSpecId;//子规格Id
 
 	private Integer id;
 	private String businessName;//商家名称
@@ -50,8 +56,9 @@ public class FoodBean implements Serializable{
 	private String limiEndTime;//限购结束时间
 	private BigDecimal discount;//优惠价
 	private BigDecimal disprice;//优惠金额
-//	private List<GoodsSellOption> optionList;//商品选项
-//	private List<GoodsSellStandard> standardList;//商品规格
+	private List<GoodsSellOption> optionList;//商品选项
+	private List<GoodsSellStandard> standardList;//商品规格
+	private Integer standardListPosition;
 	private Integer shownum;//数量
 	private Integer lid;
 	private List<Integer> goodsellids; //商品id集合
@@ -62,7 +69,7 @@ public class FoodBean implements Serializable{
 
 	private Integer isonly;//是否单规格单选项1否0是
 
-//	private List<GoodsSellSubOption> opsubList;//商品选项
+	private List<GoodsSellSubOption> opsubList;//商品子选项
 
 	
 	private String showzs;//赠送活动
@@ -433,5 +440,110 @@ public class FoodBean implements Serializable{
 
 	public void setShowlimit(String showlimit) {
 		this.showlimit = showlimit;
+	}
+
+	public List<GoodsSellOption> getOptionList() {
+		return optionList;
+	}
+
+	public void setOptionList(List<GoodsSellOption> optionList) {
+		this.optionList = optionList;
+	}
+
+	public List<GoodsSellStandard> getStandardList() {
+		return standardList;
+	}
+
+	public void setStandardList(List<GoodsSellStandard> standardList) {
+		this.standardList = standardList;
+	}
+
+	public List<GoodsSellSubOption> getOpsubList() {
+		return opsubList;
+	}
+
+	public void setOpsubList(List<GoodsSellSubOption> opsubList) {
+		this.opsubList = opsubList;
+	}
+
+	public Integer getStandardListPosition() {
+		return standardListPosition;
+	}
+
+	public void setStandardListPosition(Integer standardListPosition) {
+		this.standardListPosition = standardListPosition;
+	}
+
+	public Integer getGoodsSpecId() {
+		return goodsSpecId;
+	}
+
+	public void setGoodsSpecId(Integer goodsSpecId) {
+		this.goodsSpecId = goodsSpecId;
+	}
+
+	public Integer getGoodsTypeSpecId() {
+		return goodsTypeSpecId;
+	}
+
+	public void setGoodsTypeSpecId(Integer goodsTypeSpecId) {
+		this.goodsTypeSpecId = goodsTypeSpecId;
+	}
+
+	@Override
+	public String toString() {
+		return "FoodBean{" +
+				"sale='" + sale + '\'' +
+				", isCommand='" + isCommand + '\'' +
+				", cut='" + cut + '\'' +
+				", type='" + type + '\'' +
+				", icon='" + icon + '\'' +
+				", selectCount=" + selectCount +
+				", goodsSpec='" + goodsSpec + '\'' +
+				", goodsSpecId=" + goodsSpecId +
+				", goodsType='" + goodsType + '\'' +
+				", goodsTypeTwo='" + goodsTypeTwo + '\'' +
+				", goodsTypeSpecId=" + goodsTypeSpecId +
+				", id=" + id +
+				", businessName='" + businessName + '\'' +
+				", businessId=" + businessId +
+				", name='" + name + '\'' +
+				", imgPath='" + imgPath + '\'' +
+				", mini_imgPath='" + mini_imgPath + '\'' +
+				", price=" + price +
+				", content='" + content + '\'' +
+				", typeId=" + typeId +
+				", typeName='" + typeName + '\'' +
+				", sellTypeId=" + sellTypeId +
+				", sellTypeName='" + sellTypeName + '\'' +
+				", status=" + status +
+				", createTime='" + createTime + '\'' +
+				", star=" + star +
+				", salesnum=" + salesnum +
+				", num=" + num +
+				", ptype=" + ptype +
+				", agentName='" + agentName + '\'' +
+				", agentId=" + agentId +
+				", islimited=" + islimited +
+				", limittype=" + limittype +
+				", limitNum=" + limitNum +
+				", limiStartTime='" + limiStartTime + '\'' +
+				", limiEndTime='" + limiEndTime + '\'' +
+				", discount=" + discount +
+				", disprice=" + disprice +
+				", optionList=" + optionList +
+				", standardList=" + standardList +
+				", standardListPosition=" + standardListPosition +
+				", shownum=" + shownum +
+				", lid=" + lid +
+				", goodsellids=" + goodsellids +
+				", sid=" + sid +
+				", showprice='" + showprice + '\'' +
+				", isonly=" + isonly +
+				", opsubList=" + opsubList +
+				", showzs='" + showzs + '\'' +
+				", isdz=" + isdz +
+				", showlimit='" + showlimit + '\'' +
+				'}';
 	}
 }

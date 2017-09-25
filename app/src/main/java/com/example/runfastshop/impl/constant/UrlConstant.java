@@ -207,6 +207,10 @@ public class UrlConstant {
      */
     public static final String MINE_COMPLAINT = "userComplain/add.do";
     /**
+     * 订单投诉
+     */
+    public static final String ORDER_COMPLAINT = "userComplain/add.do";
+    /**
      * 加盟合作
      */
     public static final String JOIN_LEAGUE = "user/join.do";

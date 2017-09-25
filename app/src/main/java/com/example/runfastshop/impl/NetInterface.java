@@ -279,17 +279,34 @@ public interface NetInterface {
      * <p>
      * aram businessId
      *
-     * @param id
+     * @param uId
      * @param email
      * @param content
      * @return
      */
     @FormUrlEncoded
     @POST(UrlConstant.MINE_COMPLAINT)
-    Call<String> postMineComplaint(@Field("businessId") String businessId,
-                                   @Field("id") String id,
-                                   @Field("email") String email,
+    Call<String> postMineComplaint(@Field("uId") Integer uId,
+                                   @Field("userEmail") String email,
                                    @Field("content") String content);
+
+    /**
+     * 订单投诉
+     * <p>
+     * aram businessId
+     *
+     * @param uId
+     * @param userEmail
+     * @param content
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.ORDER_COMPLAINT)
+    Call<String> postOrderComplaint(@Field("uId") Integer uId,
+                                    @Field("businessId") Integer businessId,
+                                    @Field("goodsSellRecordId") Integer goodsSellRecordId,
+                                    @Field("userEmail") String userEmail,
+                                    @Field("content") String content);
 
     /**
      * 合作加盟
@@ -316,7 +333,7 @@ public interface NetInterface {
      * 收藏
      *
      * @param shopId
-     * @param type
+     * @param type  0商品  1商家
      * @param uId
      * @return
      */
@@ -495,7 +512,7 @@ public interface NetInterface {
      * 我的优惠券
      *
      * @param uId
-     * @param type
+     * @param type 优惠券类型(1.商城、0.外卖)
      * @return
      */
     @FormUrlEncoded

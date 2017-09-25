@@ -13,6 +13,7 @@ import com.example.runfastshop.adapter.moneyadapter.ScoreRecordAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.score.MyScore;
 import com.example.runfastshop.bean.score.MyScores;
+import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
@@ -50,8 +51,11 @@ public class IntegralActivity extends ToolBarActivity implements Callback<String
     }
 
     private void getNetData() {
-        Integer id = UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().getListScore(id).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null) {
+            return;
+        }
+        CustomApplication.getRetrofit().getListScore(userInfo.getId()).enqueue(this);
     }
 
     private void initData() {
