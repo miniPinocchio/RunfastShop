@@ -1,7 +1,6 @@
 package com.lljjcoder.citypickerview.widget;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
@@ -14,21 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lljjcoder.citypickerview.R;
-import com.lljjcoder.citypickerview.model.CityModel;
-import com.lljjcoder.citypickerview.model.DistrictModel;
-import com.lljjcoder.citypickerview.model.ProvinceModel;
-import com.lljjcoder.citypickerview.utils.XmlParserHandler;
 import com.lljjcoder.citypickerview.widget.wheel.OnWheelChangedListener;
 import com.lljjcoder.citypickerview.widget.wheel.WheelView;
 import com.lljjcoder.citypickerview.widget.wheel.adapters.ArrayWheelAdapter;
 
-import java.io.InputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 /**
  * 省市区三级选择
@@ -845,7 +835,6 @@ public class CityPicker implements CanShow, OnWheelChangedListener {
 
     @Override
     public void onChanged(WheelView wheel, int oldValue, int newValue) {
-        // TODO Auto-generated method stub
         if (wheel == mViewProvince) {
 
             updateCities();
