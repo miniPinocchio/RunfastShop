@@ -1,1 +1,1 @@
-include ':app', ':supportv1', 'master', ':citypickerview'
+include ':app', ':supportv1', 'master', ':citypickerview', ':shareLib'

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="status-bar-compat-0.5.3">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/ecd8acfcb703f9e2f40efd700f46aa1e9a17c873/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/ecd8acfcb703f9e2f40efd700f46aa1e9a17c873/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.githang/status-bar-compat/0.5.3/77746060b2642bf9044fd440061a79201bc8fc0/status-bar-compat-0.5.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

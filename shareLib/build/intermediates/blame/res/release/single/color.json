@@ -1,0 +1,78 @@
+[
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/switch_thumb_material_light.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/switch_thumb_material_dark.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_tint_switch_thumb.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_tint_seek_thumb.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_tint_edittext.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_tint_default.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_tint_default.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/btn_font_s.xml",
+        "source": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/src/main/res/color/btn_font_s.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_dark.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/text_color.xml",
+        "source": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/src/main/res/color/text_color.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_tint_switch_track.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_tint_spinner.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_tint_btn_checkable.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_search_url_text.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/intermediates/res/merged/release/color/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/wuzhendi/.android/build-cache/61fe2129a64c6696990eab9e19c1ff89b3ee399b/output/res/color/abc_btn_colored_borderless_text_material.xml"
+    }
+]

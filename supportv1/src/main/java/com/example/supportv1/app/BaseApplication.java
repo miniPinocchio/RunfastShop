@@ -2,6 +2,7 @@ package com.example.supportv1.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.example.supportv1.assist.netWork.OFHttpUrlWork;
@@ -24,6 +25,12 @@ public class BaseApplication extends Application {
         super.onCreate();
         APP_CONTEXT = getApplicationContext();
 //        initSSL(this);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     /***

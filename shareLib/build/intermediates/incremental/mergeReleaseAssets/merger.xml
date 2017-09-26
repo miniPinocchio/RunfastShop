@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/wuzhendi/Documents/git/RunfastShop/shareLib/src/main/assets"><file name="ShareSDK.xml" path="/Users/wuzhendi/Documents/git/RunfastShop/shareLib/src/main/assets/ShareSDK.xml"/></source><source path="/Users/wuzhendi/Documents/git/RunfastShop/shareLib/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/Users/wuzhendi/Documents/git/RunfastShop/shareLib/src/release/assets"/></dataSet></merger>

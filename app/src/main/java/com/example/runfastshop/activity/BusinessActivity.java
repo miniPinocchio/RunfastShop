@@ -91,6 +91,8 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import shopex.cn.sharelibrary.ShareViewDataSource;
+import shopex.cn.sharelibrary.SharedView;
 
 import static java.lang.Double.NaN;
 
@@ -140,6 +142,8 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     ImageView ivTitleBg;
     @BindView(R.id.iv_collection)
     ImageView mIvCollection;
+    @BindView(R.id.iv_share)
+    ImageView ivShare;
     private boolean isShowBottom;
 
     private TextView car_badge, car_limit, tv_amount;
@@ -520,7 +524,29 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                 appBarLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_share:
+                SharedView sharedView = new SharedView(this);
 
+                sharedView.setSharedDataSource(
+                        new ShareViewDataSource(
+//                                getApplication().getCurrentSelectedShop().shop_name,
+                                "aksjdkasjd",
+//                                getH5ShopShareUrl(),
+                                "www.baidu.com",
+//                                getApplication().getCurrentSelectedShop().desc,
+                                "23231231232",
+//                                getH5ShopLogoUrl(),// 微信分享 shareImageUrl不能为空
+                                "www.baidu.com",// 微信分享 shareImageUrl不能为空
+//                                getH5ShopShareUrl(),
+                                "www.baidu.com",
+                                SharedView.SHARE_TEXT_IMAGE));
+                sharedView.setSharedStateListen(new SharedView.SharedStateListen() {
+                    @Override
+                    public void shareState(int state) {
+
+                    }
+                });
+
+                sharedView.show();
                 break;
             case R.id.iv_collection:
                 saveFavorite();

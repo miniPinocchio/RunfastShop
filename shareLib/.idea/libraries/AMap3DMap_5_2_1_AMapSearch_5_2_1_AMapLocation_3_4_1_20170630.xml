@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="AMap3DMap_5.2.1_AMapSearch_5.2.1_AMapLocation_3.4.1_20170630">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../app/libs/AMap3DMap_5.2.1_AMapSearch_5.2.1_AMapLocation_3.4.1_20170630.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
