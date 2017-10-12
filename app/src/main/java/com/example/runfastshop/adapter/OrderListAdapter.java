@@ -49,7 +49,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         final OrderInfo orderInfo = data.get(position);
         holder.itemView.setTag(position);
         holder.tv_order_shop_name.setText(orderInfo.getBusinessName());
-        switch (orderInfo.getStatus()){
+        switch (orderInfo.getStatus()) {
             case -3:
                 holder.tv_order_shop_state.setText("商家拒单");
                 break;
@@ -95,8 +95,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             public void onClick(View v) {
                 Intent intent = new Intent(context, BusinessActivity.class);
                 intent.setFlags(IntentFlag.ORDER_LIST);
-                intent.putExtra("orderInfo",orderInfo.getBusinessId());
-                intent.putExtra("orderInfos",orderInfo);
+                intent.putExtra("orderInfo", orderInfo.getBusinessId());
+                intent.putExtra("orderInfos", orderInfo);
                 context.startActivity(intent);
             }
         });
@@ -104,7 +104,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, OrderComplainActivity.class);
-                intent.putExtra("orderInfo",orderInfo);
+                intent.putExtra("orderInfo", orderInfo);
                 context.startActivity(intent);
             }
         });
