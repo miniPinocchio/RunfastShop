@@ -137,7 +137,7 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
 
     private void ResolveData(String data) {
         OrderInfos orderInfos = GsonUtil.parseJsonWithGson(data, OrderInfos.class);
-        if (orderInfos.getRows().size() > 0) {
+        if (orderInfos.getRows() != null && orderInfos.getRows().size() > 0) {
             layoutNotOrder.setVisibility(View.GONE);
         }
         mOrderInfos.addAll(orderInfos.getRows());
