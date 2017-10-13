@@ -219,7 +219,7 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
             if (userInfo == null) {
                 return;
             }
-            CustomApplication.getRetrofit().updatePassword(userInfo.getId(), oldPwd, newPwd, 1, newPwdAgain).enqueue(this);
+            CustomApplication.getRetrofit().updatePassword(oldPwd, newPwd, 1, newPwdAgain).enqueue(this);
         }
     }
 

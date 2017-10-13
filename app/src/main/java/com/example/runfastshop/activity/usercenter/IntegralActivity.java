@@ -55,7 +55,7 @@ public class IntegralActivity extends ToolBarActivity implements Callback<String
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().getListScore(userInfo.getId()).enqueue(this);
+        CustomApplication.getRetrofit().getListScore().enqueue(this);
     }
 
     private void initData() {

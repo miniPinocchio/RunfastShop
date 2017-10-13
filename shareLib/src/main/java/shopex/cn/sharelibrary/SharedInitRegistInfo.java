@@ -90,15 +90,15 @@ public class SharedInitRegistInfo {
         map_qqFriend = new HashMap<String, Object>();
         map_Sina = new HashMap<String, Object>();
 
-        map_wxCircle.put("AppId", "wx47d3daf1f00763bc");
-        map_wxCircle.put("AppSecret", "c9196d6ea1baf8d3bb1793ee2cc2ebb9");
+        map_wxCircle.put("AppId", "wx7b0ceb559269b805");
+        map_wxCircle.put("AppSecret", "6fbed65b919d3bd1e00f05f8e8fca046");
         map_wxCircle.put("Enable", "true");
         map_wxCircle.put("BypassApproval", "false");
         map_wxCircle.put("ShortLinkConversationEnable", "true");
         ShareSDK.setPlatformDevInfo(WechatMoments.NAME, map_wxCircle);
 
-        map_wxFriend.put("AppId", "wx47d3daf1f00763bc");
-        map_wxFriend.put("AppSecret", "c9196d6ea1baf8d3bb1793ee2cc2ebb9");
+        map_wxFriend.put("AppId", "wx7b0ceb559269b805");
+        map_wxFriend.put("AppSecret", "6fbed65b919d3bd1e00f05f8e8fca046");
         map_wxFriend.put("Enable", "true");
         map_wxFriend.put("BypassApproval", "false");
         map_wxFriend.put("ShortLinkConversationEnable", "true");

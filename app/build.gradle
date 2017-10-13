@@ -1,27 +1,33 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'runfast'
-            keyPassword 'runfast8899cc'
-            storeFile file('runfast_key_pas_runfast8899cc.jks')
-            storePassword 'runfast8899cc'
-        }
-    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
+
     defaultConfig {
-        applicationId "com.example.runfastshop"
+        applicationId "com.gxuc.runfast.shop"
+//        applicationId "com.example.runfastshop"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.config
+//        signingConfig signingConfigs.config
     }
+
+    signingConfigs {
+        config {
+            storeFile file('runfast_key_pas_runfast8899cc.jks')
+            storePassword 'runfast8899cc'
+            keyAlias 'runfast'
+            keyPassword 'runfast8899cc'
+        }
+    }
+
     buildTypes {
+
         release {
             buildConfigField "String", "BASE_URL", "\"http://www.gxptkc.com/iwapb/\""
             debuggable true
@@ -31,6 +37,7 @@ android {
             zipAlignEnabled true
             signingConfig signingConfigs.config
         }
+
         debug {
             buildConfigField "String", "BASE_URL", "\"http://www.gxptkc.com/iwapb/\""
             debuggable true
@@ -43,6 +50,7 @@ android {
             signingConfig signingConfigs.config
         }
     }
+
     productFlavors {
     }
 }
@@ -62,6 +70,7 @@ dependencies {
     compile(name: 'viewpagerindicator', ext: 'aar')
     compile project(':citypickerview')
     compile project(':shareLib')
+    compile project(':shopexpay')
     compile files('libs/alipaySdk-20170725.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'

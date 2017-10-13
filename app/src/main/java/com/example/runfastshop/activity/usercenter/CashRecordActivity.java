@@ -53,7 +53,7 @@ public class CashRecordActivity extends ToolBarActivity implements View.OnClickL
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().getListConsume(userInfo.getId()).enqueue(this);
+        CustomApplication.getRetrofit().getListConsume().enqueue(this);
     }
 
     private void initData() {

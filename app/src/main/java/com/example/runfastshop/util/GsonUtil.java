@@ -2,6 +2,7 @@ package com.example.runfastshop.util;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -22,6 +23,16 @@ public class GsonUtil {
         Gson gson = new Gson();
         String json = gson.toJson(type);
         return json;
+    }
+
+    public static <T> T fromJson(String str, Class<T> type) {
+        Gson gson = new Gson();
+        return gson.fromJson(str, type);
+    }
+
+    public static <T> T fromJson(String str, Type type) {
+        Gson gson = new Gson();
+        return gson.fromJson(str, type);
     }
 
 }

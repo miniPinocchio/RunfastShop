@@ -143,11 +143,11 @@ public class UrlConstant {
     /**
      * 忘记密码
      */
-    public static final String FORGOT_PWD =  "sendpwd.do";
+    public static final String FORGOT_PWD = "sendpwd.do";
     /**
      * 修改密码
      */
-    public static final String EDIT_PASSWORD =  "user/editPassword.do";
+    public static final String EDIT_PASSWORD = "user/editPassword.do";
 
 
     /***
@@ -269,11 +269,15 @@ public class UrlConstant {
     /**
      * 收支明细
      */
-    public static final String LIST_CONSUME = "wallet/record.do";
+    public static final String LIST_CONSUME = "wallet/recorda.do";
     /**
      * 订单详情
      */
     public static final String ORDER_DETAIL = "userOrder/getGoodsSellRecord.do";
+    /**
+     * 订单详情
+     */
+    public static final String ORDER_DETAIL_INFO = "userOrder/dateil.do";
     /**
      * 我的收藏
      */
@@ -282,7 +286,7 @@ public class UrlConstant {
      * 生成订单
      */
     public static final String CREATE_ORDER = "pay/addGoodsSellRecord.do";
-  /**
+    /**
      * 添加购物车
      */
     public static final String ORDER_CAR = "pay/addCart.do";
@@ -290,4 +294,27 @@ public class UrlConstant {
      * 钱包支付
      */
     public static final String WALLET_PAY = "pay/paypacket.do";
+    /**
+     * 支付宝支付
+     */
+    public static final String ALIPAY_PAY = "pay/alipayresultmap.do";
+    /**
+     * 微信支付
+     */
+    public static final String WEIXIN_PAY = "pay/wxPay.do";
+
+    /**
+     * 微信签名
+     */
+    public static final String WEIXIN_SIGN = "pay/signForApp.do";
+
+    /**
+     * 确认收货
+     */
+    public static final String ORDER_RECEIVE = "userOrder/receive.do";
+
+    /**
+     * 取消订单
+     */
+    public static final String ORDER_CANCEL = "userOrder/cancel.do";
 }

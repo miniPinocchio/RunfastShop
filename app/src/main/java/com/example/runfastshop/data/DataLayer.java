@@ -1,13 +1,21 @@
 package com.example.runfastshop.data;
 
 import android.app.Application;
+import android.content.Intent;
 import android.support.v4.util.SimpleArrayMap;
+import android.util.Log;
 
 import com.example.runfastshop.BuildConfig;
+import com.example.runfastshop.activity.LoginActivity;
+import com.example.runfastshop.application.CustomApplication;
+import com.example.runfastshop.util.MD5Util;
+import com.example.supportv1.assist.netWork.CookieManger;
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +39,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
  */
 public final class DataLayer {
 
+    private static Application aplication; // 缓存文件
     private static final String RESPONSE_CACHE_FILE = "responseCache"; // 缓存文件
 
     private static final long RESPONSE_CACHE_SIZE = 10 * 1024 * 1024L; // 缓存大小
@@ -62,11 +71,26 @@ public final class DataLayer {
     }
 
     public static void init(Application app) {
+        aplication = app;
         Paper.init(app);
 
         File cacheFile = new File(app.getCacheDir(), RESPONSE_CACHE_FILE);
 
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                try {
+                    message = message.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+//                    Log.d("devon", "OkHttp====Message111:" + message);
+                    message = URLDecoder.decode(message, "UTF-8");
+                    Log.d("devon", "OkHttp====Message:" + message);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
         logging.setLevel(BuildConfig.DEBUG ?
                 HttpLoggingInterceptor.Level.BODY :
                 HttpLoggingInterceptor.Level.NONE
@@ -77,7 +101,7 @@ public final class DataLayer {
                 .connectTimeout(HTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(HTTP_WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(HTTP_READ_TIMEOUT, TimeUnit.SECONDS)
-                .cookieJar(new CookieStore())
+                .cookieJar(new CookieManger(app.getApplicationContext()))
                 .addInterceptor(new NetworkIntercept())
                 .addInterceptor(logging);
 
@@ -92,7 +116,7 @@ public final class DataLayer {
             Response response = chain.proceed(request);
 
             String json = response.body().string();
-            json = json.replace("{\"relogin\":1}", "");
+//            json = json.replace("{\"relogin\":1}", "");
 
 //            Logger.json(json);
             return response.newBuilder()

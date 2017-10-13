@@ -33,6 +33,10 @@ public class BaseApplication extends Application {
         MultiDex.install(this);
     }
 
+    public static synchronized BaseApplication context() {
+        return (BaseApplication) APP_CONTEXT;
+    }
+
     /***
      * 初始化证书信息
      *

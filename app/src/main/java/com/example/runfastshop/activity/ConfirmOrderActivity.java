@@ -82,6 +82,7 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
     private List<GoodsSellRecordChildren> mGoodsSellRecordChildrens;
     private Intent mIntent;
     private BigDecimal mSubtract;
+    private int businessId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +132,8 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             data.add(info);
         }
         mPrice = (BigDecimal) getIntent().getSerializableExtra("price");
+        businessId = getIntent().getIntExtra("businessId", 0);
+        LogUtil.d("devon", "businessId====22222====" + businessId);
         mDecimalCoupon = new BigDecimal("6");
         Log.d("price", "price =" + mPrice);
         if (mPrice != null) {
@@ -151,7 +154,7 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             return;
         }
         mNetType = 1;
-        CustomApplication.getRetrofit().postRedPackage(userInfo.getId(), mBusinessId).enqueue(this);
+        CustomApplication.getRetrofit().postRedPackage(userInfo.getId(), businessId).enqueue(this);
     }
 
     private void getCouponData() {
@@ -160,7 +163,7 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             return;
         }
         mNetType = 2;
-        CustomApplication.getRetrofit().GetCoupan(userInfo.getId(), mAgentId).enqueue(this);
+        CustomApplication.getRetrofit().GetCoupan(businessId, mAgentId).enqueue(this);
     }
 
     private void getAddressData() {
@@ -215,8 +218,11 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             String goodsJson = gson.toJson(mGoodsSellRecordChildrens);
             mSubtract = mPrice.subtract(mDecimalCoupon);
             //TODO  参数含义
-            CustomApplication.getRetrofit().createOrder(userInfo.getId(), mBusinessId, mAddressId, 0, 0,
-                    mSubtract.doubleValue(), mSubtract.doubleValue(), "", goodsJson).enqueue(this);
+            CustomApplication.getRetrofit().createOrder(businessId, mAddressId, 0, 0,
+                    mSubtract.doubleValue(),
+//                    mSubtract.doubleValue(),
+                    0.01,
+                    "", goodsJson).enqueue(this);
         }
     }
 
@@ -310,7 +316,7 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
                 if (codeInfo.isSuccess()) {
                     mIntent = new Intent(this, PayChannelActivity.class);
                     mIntent.putExtra("orderId", codeInfo.getId());
-                    mIntent.putExtra("price", mSubtract.doubleValue());
+                    mIntent.putExtra("price", codeInfo.getGoodsSellRecord().getTotalpay());
                     startActivity(mIntent);
                 } else {
                     CustomToast.INSTANCE.showToast(this, codeInfo.getMsg());

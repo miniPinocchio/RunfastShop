@@ -64,7 +64,7 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().GetMyCoupan(userInfo.getId(), 0).enqueue(this);
+        CustomApplication.getRetrofit().GetMyCoupan(0).enqueue(this);
     }
 
     private void initData() {

@@ -396,7 +396,8 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
                 MapInfo map1 = mapInfos.getMap();
                 pointLat = map1.getLatitude();
                 pointLon = map1.getLongitude();
-                netHomeImage(mAgentId);
+                page = 1;
+                getNearbyBusiness(pointLon, pointLat, page);
             } else if (netType == 2) {
                 TopImages topImages = GsonUtil.parseJsonWithGson(data, TopImages.class);
                 if (topImages != null && topImages.getRows1().size() > 0) {
@@ -422,8 +423,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
                     }
                     myAdapter.notifyDataSetChanged();
                 }
-                page = 1;
-                getNearbyBusiness(pointLon, pointLat, page);
+
             } else if (netType == 4) {
                 if (page == 1) {
                     businessInfos.clear();
@@ -468,6 +468,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
                 }
                 loadMoreAdapter.notifyDataSetChanged();
                 mRefreshLayout.endRefreshing();
+                netHomeImage(mAgentId);
             }
         } catch (JSONException e) {
             e.printStackTrace();

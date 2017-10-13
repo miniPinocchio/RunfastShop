@@ -81,7 +81,7 @@ public class ChangeNameActivity extends ToolBarActivity implements Callback<Stri
             case 0:
                 if (!TextUtils.isEmpty(mInfo)) {
                     mType = 0;
-                    CustomApplication.getRetrofit().postChangeName(mUserInfo.getId(), mInfo).enqueue(this);
+                    CustomApplication.getRetrofit().postChangeName(mInfo).enqueue(this);
                 } else {
                     CustomToast.INSTANCE.showToast(this, "昵称不可为空");
                 }
@@ -89,7 +89,7 @@ public class ChangeNameActivity extends ToolBarActivity implements Callback<Stri
             case 1:
                 if (ValidateUtil.isEmail(mInfo)) {
                     mType = 1;
-                    CustomApplication.getRetrofit().postChangeEmail(mUserInfo.getId(), mInfo).enqueue(this);
+                    CustomApplication.getRetrofit().postChangeEmail(mInfo).enqueue(this);
                 } else {
                     CustomToast.INSTANCE.showToast(this, "邮箱格式错误，请检查");
                 }

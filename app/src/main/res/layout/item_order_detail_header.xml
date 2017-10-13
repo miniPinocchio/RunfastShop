@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="@dimen/dp_10"
-              android:background="@color/white"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_10"
+    android:background="@color/white"
+    android:orientation="vertical">
 
 
     <TextView
         android:id="@+id/tv_order_man_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_20_dp"
-        android:text="骑手正在送货 >"
+        android:gravity="center_horizontal"
         android:textColor="@color/order_detail_state"
-        android:textSize="@dimen/dimen_20_dp"
-        />
+        android:textSize="@dimen/dimen_20_dp" />
 
     <LinearLayout
+        android:id="@+id/ll_man_deliver_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -27,60 +26,102 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10_dp"
             android:gravity="center_horizontal"
             android:text="预计送达时间"
-            android:layout_marginTop="@dimen/dimen_10_dp"
             android:textColor="@color/order_detail_state_time"
-            android:textSize="@dimen/dimen_12_dp"
-            />
+            android:textSize="@dimen/dimen_12_dp" />
 
         <TextView
             android:id="@+id/tv_man_deliver_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_marginTop="@dimen/dimen_10_dp"
+            android:gravity="center_horizontal"
             android:text="11:04"
             android:textColor="@color/color_orange_select"
-            android:textSize="@dimen/dimen_12_dp"
-            />
+            android:textSize="@dimen/dimen_12_dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_20_dp"
-        android:layout_marginRight="@dimen/dimen_20_dp"
         android:layout_marginBottom="@dimen/dimen_20_dp"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dimen_15_dp"
+        android:layout_marginRight="@dimen/dimen_15_dp"
         android:layout_marginTop="@dimen/dimen_18_dp"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_buy_again"
+            android:layout_width="104dp"
+            android:layout_height="@dimen/dimen_32_dp"
+            android:layout_margin="@dimen/dimen_3_dp"
+            android:background="@drawable/shape_button_pay_white"
+            android:text="再来一单"
+            android:textColor="@color/order_detail_state"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_pay_now"
+            android:layout_width="104dp"
+            android:layout_height="@dimen/dimen_32_dp"
+            android:layout_margin="@dimen/dimen_3_dp"
+            android:background="@drawable/shape_button_pay_white"
+            android:text="立即支付"
+            android:textColor="@color/order_detail_state"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_confirm_completed"
+            android:layout_width="104dp"
+            android:layout_height="@dimen/dimen_32_dp"
+            android:layout_margin="@dimen/dimen_3_dp"
+            android:background="@drawable/shape_button_pay_white"
+            android:text="确认完成"
+            android:textColor="@color/order_detail_state"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/btn_cancel_order"
-            android:layout_width="@dimen/dimen_0_dp"
+            android:layout_width="104dp"
             android:layout_height="@dimen/dimen_32_dp"
-            android:layout_weight="1"
-            android:layout_margin="@dimen/dimen_6_dp"
+            android:layout_margin="@dimen/dimen_3_dp"
             android:background="@drawable/shape_button_pay_white"
+            android:text="取消订单"
             android:textColor="@color/order_detail_state"
-            android:text="取消订单"/>
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/btn_contact_business"
-            android:layout_width="@dimen/dimen_0_dp"
+            android:layout_width="104dp"
             android:layout_height="@dimen/dimen_32_dp"
-            android:layout_weight="1"
-            android:layout_margin="@dimen/dimen_6_dp"
+            android:layout_margin="@dimen/dimen_3_dp"
             android:background="@drawable/shape_button_pay"
+            android:text="联系商家"
             android:textColor="@color/white"
-            android:text="联系商家"/>
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/btn_contact_man"
-            android:layout_width="@dimen/dimen_0_dp"
+            android:layout_width="104dp"
             android:layout_height="@dimen/dimen_32_dp"
-            android:layout_weight="1"
-            android:layout_margin="@dimen/dimen_6_dp"
+            android:layout_margin="@dimen/dimen_3_dp"
             android:background="@drawable/shape_button_orange"
+            android:text="联系骑手"
             android:textColor="@color/white"
-            android:text="联系骑手"/>
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_appraise"
+            android:layout_width="104dp"
+            android:layout_height="@dimen/dimen_32_dp"
+            android:layout_margin="@dimen/dimen_3_dp"
+            android:background="@drawable/shape_button_orange"
+            android:text="评价"
+            android:textColor="@color/white"
+            android:visibility="gone" />
     </LinearLayout>
 
 

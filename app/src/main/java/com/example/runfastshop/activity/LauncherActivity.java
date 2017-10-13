@@ -7,10 +7,12 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.runfastshop.R;
+import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
+import com.example.runfastshop.util.MD5Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,24 +29,24 @@ public class LauncherActivity extends AppCompatActivity implements Callback<Stri
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-//        initData();
+        initData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        userInfo = UserService.getUserInfo(this);
-        if (userInfo != null) {
-            startActivity(new Intent(LauncherActivity.this, MainActivity.class));
-            finish();
-        }
+//        userInfo = UserService.getUserInfo(this);
+//        if (userInfo != null) {
+//            startActivity(new Intent(LauncherActivity.this, MainActivity.class));
+//            finish();
+//        }
     }
 
     private void initData() {
         if (UserService.isAutoLogin()) {
             handler.sendEmptyMessageDelayed(2001, 2000);
         } else {
-            handler.sendEmptyMessage(2002);
+            handler.sendEmptyMessageDelayed(2002, 2000);
         }
     }
 
@@ -54,21 +56,23 @@ public class LauncherActivity extends AppCompatActivity implements Callback<Stri
             super.handleMessage(msg);
             switch (msg.what) {
                 case 2001:
-                    startActivity(new Intent(LauncherActivity.this, MainActivity.class));
-                    finish();
+                    login();
                     break;
                 case 2002:
-                    login();
+                    startActivity(new Intent(LauncherActivity.this, LoginActivity.class));
+                    finish();
                     break;
             }
         }
     };
     private void login() {
-//        userInfo = UserService.getUserInfo(this);
-//        if (userInfo != null) {
-//            CustomApplication.getRetrofit().postLogin(userInfo.getMobile(), MD5Util.MD5(userInfo.getPassword()), 0).enqueue(this);
-//        }
-        startActivity(new Intent(LauncherActivity.this, LoginActivity.class));
+        userInfo = UserService.getUserInfo(this);
+        if (userInfo != null) {
+            CustomApplication.getRetrofit().postLogin(userInfo.getMobile(), MD5Util.MD5(userInfo.getPassword()), 0).enqueue(this);
+        } else {
+            startActivity(new Intent(LauncherActivity.this, LoginActivity.class));
+            finish();
+        }
     }
 
     @Override

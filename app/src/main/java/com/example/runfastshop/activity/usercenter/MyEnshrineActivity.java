@@ -56,7 +56,7 @@ public class MyEnshrineActivity extends ToolBarActivity implements View.OnClickL
     private void getEnshrineData() {
         User userInfo = UserService.getUserInfo(this);
         if (userInfo !=null) {
-            CustomApplication.getRetrofit().getEnshrine(userInfo.getId()).enqueue(this);
+            CustomApplication.getRetrofit().getEnshrine().enqueue(this);
         }
     }
 

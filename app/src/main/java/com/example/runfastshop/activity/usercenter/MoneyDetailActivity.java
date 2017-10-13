@@ -91,7 +91,7 @@ public class MoneyDetailActivity extends ToolBarActivity implements Callback<Str
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().getListConsume(userInfo.getId()).enqueue(this);
+        CustomApplication.getRetrofit().getListConsume().enqueue(this);
     }
 
     @Override

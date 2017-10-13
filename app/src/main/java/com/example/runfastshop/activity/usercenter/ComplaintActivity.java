@@ -78,7 +78,7 @@ public class ComplaintActivity extends ToolBarActivity implements Callback<Strin
         }
         String email = mEtComplaintEmail.getText().toString();
         String content = mEtComplaintCount.getText().toString();
-        CustomApplication.getRetrofit().postMineComplaint(userInfo.getId(), content,
+        CustomApplication.getRetrofit().postMineComplaint(content,
                 email).enqueue(this);
     }
 

@@ -100,7 +100,7 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().postOrderList(userInfo.getId(), 1, 10).enqueue(this);
+        CustomApplication.getRetrofit().postOrderList(1, 10).enqueue(this);
     }
 
     @Override

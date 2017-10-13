@@ -77,7 +77,7 @@ public class MessageFragment extends Fragment implements Callback<String> {
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().postMessageList(userInfo.getId(), page, 10).enqueue(this);
+        CustomApplication.getRetrofit().postMessageList(page, 10).enqueue(this);
     }
 
     @Override

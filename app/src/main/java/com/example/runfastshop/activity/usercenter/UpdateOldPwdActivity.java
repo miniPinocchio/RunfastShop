@@ -152,7 +152,7 @@ public class UpdateOldPwdActivity extends ToolBarActivity implements Callback<St
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().updatePassword(userInfo.getId(),oldPwd, newPwd,0,newPwdAgain).enqueue(this);
+        CustomApplication.getRetrofit().updatePassword(oldPwd, newPwd,0,newPwdAgain).enqueue(this);
     }
 
     @OnClick(R.id.btn_save_password)

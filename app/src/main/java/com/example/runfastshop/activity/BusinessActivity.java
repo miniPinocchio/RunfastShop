@@ -531,13 +531,13 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
 //                                getApplication().getCurrentSelectedShop().shop_name,
                                 "aksjdkasjd",
 //                                getH5ShopShareUrl(),
-                                "www.baidu.com",
+                                "http://www.baidu.com",
 //                                getApplication().getCurrentSelectedShop().desc,
                                 "23231231232",
 //                                getH5ShopLogoUrl(),// 微信分享 shareImageUrl不能为空
-                                "www.baidu.com",// 微信分享 shareImageUrl不能为空
+                                "http://www.baidu.com",// 微信分享 shareImageUrl不能为空
 //                                getH5ShopShareUrl(),
-                                "www.baidu.com",
+                                "http://www.baidu.com",
                                 SharedView.SHARE_TEXT_IMAGE));
                 sharedView.setSharedStateListen(new SharedView.SharedStateListen() {
                     @Override
@@ -583,7 +583,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
             return;
         }
 
-        CustomApplication.getRetrofit().postSaveShop(businessId, 1, userInfo.getId()).enqueue(this);
+        CustomApplication.getRetrofit().postSaveShop(businessId, 1).enqueue(this);
     }
 
     /**
@@ -1256,8 +1256,12 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                         }
                     }
                 }
-                fragment.getFoodAdapter().notifyDataSetChanged();
-                fragment.getTypeAdapter().notifyDataSetChanged();
+                if (fragment.getFoodAdapter() != null) {
+                    fragment.getFoodAdapter().notifyDataSetChanged();
+                }
+                if (fragment.getTypeAdapter() != null) {
+                    fragment.getTypeAdapter().notifyDataSetChanged();
+                }
             }
             if (netType == 2) {
                 JSONObject goodsSell = object.getJSONObject("goodsSell");
@@ -1336,7 +1340,10 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
             if (netType == 8) {
                 if ((object.optBoolean("success"))) {
                     List<FoodBean> flist = carFoods;
-                    startActivity(new Intent(this, ConfirmOrderActivity.class).putExtra("foodBean", (Serializable) flist).putExtra("price", decimal));
+                    startActivity(new Intent(this, ConfirmOrderActivity.class)
+                            .putExtra("foodBean", (Serializable) flist)
+                            .putExtra("price", decimal)
+                            .putExtra("businessId", businessId));
                 } else {
                     CustomToast.INSTANCE.showToast(this, object.optString("msg"));
                 }
