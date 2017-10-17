@@ -40,7 +40,7 @@ android {
         }
 
         debug {
-            buildConfigField "String", "BASE_URL", "\"http://192.168.0.107:8080/iwapb1/\""
+            buildConfigField "String", "BASE_URL", "\"http://www.gxptkc.com/iwapb1/\""
             debuggable true
             jniDebuggable true
             minifyEnabled false
