@@ -3,6 +3,7 @@ package com.example.runfastshop.activity.usercenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -81,7 +82,7 @@ public class ChangeNameActivity extends ToolBarActivity implements Callback<Stri
             case 0:
                 if (!TextUtils.isEmpty(mInfo)) {
                     mType = 0;
-                    CustomApplication.getRetrofit().postChangeName(mInfo).enqueue(this);
+                    CustomApplication.getRetrofit().postChangeName(mUserInfo.getId(),mInfo).enqueue(this);
                 } else {
                     CustomToast.INSTANCE.showToast(this, "昵称不可为空");
                 }
@@ -89,7 +90,7 @@ public class ChangeNameActivity extends ToolBarActivity implements Callback<Stri
             case 1:
                 if (ValidateUtil.isEmail(mInfo)) {
                     mType = 1;
-                    CustomApplication.getRetrofit().postChangeEmail(mInfo).enqueue(this);
+                    CustomApplication.getRetrofit().postChangeEmail(mUserInfo.getId(),mInfo).enqueue(this);
                 } else {
                     CustomToast.INSTANCE.showToast(this, "邮箱格式错误，请检查");
                 }
@@ -101,6 +102,7 @@ public class ChangeNameActivity extends ToolBarActivity implements Callback<Stri
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
         if (response.isSuccessful()) {
+            Log.d("params","response ="+data);
             ResolveData(data);
         }
     }
@@ -118,40 +120,42 @@ public class ChangeNameActivity extends ToolBarActivity implements Callback<Stri
             case 0:
                 try {
                     object = new JSONObject(data);
+                    boolean success = object.optBoolean("success");
+                    if (success) {
+                        mUserInfo.setNickname(mInfo);
+                        UserService.saveUserInfo(mUserInfo);
+                        CustomToast.INSTANCE.showToast(this, "保存成功");
+                        Intent intent = new Intent();
+                        intent.putExtra("nickname", mInfo);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                        CustomToast.INSTANCE.showToast(this, "保存失败");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                boolean success = object.optBoolean("success");
-                if (success) {
-                    mUserInfo.setName(mInfo);
-                    UserService.saveUserInfo(mUserInfo);
-                    CustomToast.INSTANCE.showToast(this, "保存成功");
-                    Intent intent = new Intent();
-                    intent.putExtra("nickname", mInfo);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                } else {
-                    CustomToast.INSTANCE.showToast(this, "保存失败");
-                }
+
                 break;
             case 1:
                 try {
                     object = new JSONObject(data);
+                    boolean success = object.optBoolean("success");
+                    if (success) {
+                        mUserInfo.setEmail(mInfo);
+                        UserService.saveUserInfo(mUserInfo);
+                        CustomToast.INSTANCE.showToast(this, "保存成功");
+                        Intent intent = new Intent();
+                        intent.putExtra("email", mInfo);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                        CustomToast.INSTANCE.showToast(this, "保存失败");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                success = object.optBoolean("success");
-                if (success) {
-                    mUserInfo.setEmail(mInfo);
-                    UserService.saveUserInfo(mUserInfo);
-                    CustomToast.INSTANCE.showToast(this, "保存成功");
-                    Intent intent = new Intent();
-                    intent.putExtra("email", mInfo);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                } else {
-                    CustomToast.INSTANCE.showToast(this, "保存失败");
-                }
+
                 break;
         }
     }

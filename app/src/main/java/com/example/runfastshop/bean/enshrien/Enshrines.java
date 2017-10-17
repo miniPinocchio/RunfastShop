@@ -9,7 +9,9 @@ import java.util.List;
  * @introduce
  */
 public class Enshrines {
+
     private List<Enshrine> enshrine;
+
     private Integer totalPage;
 
     public List<Enshrine> getEnshrine() {

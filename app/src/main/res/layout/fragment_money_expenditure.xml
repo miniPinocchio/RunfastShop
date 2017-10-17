@@ -22,5 +22,10 @@
             android:textSize="15sp"
             android:textColor="@color/color_text_gray_two"/>
     </LinearLayout>
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/view_money_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@color/color_food_gray"/>
 </FrameLayout>

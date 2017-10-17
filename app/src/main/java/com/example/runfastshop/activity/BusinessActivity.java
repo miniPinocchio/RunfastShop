@@ -146,7 +146,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     ImageView ivShare;
     private boolean isShowBottom;
 
-    private TextView car_badge, car_limit, tv_amount;
+    private TextView car_badge, car_limit, tv_amount,tv_sale_price_bottom;
 
     private ImageView iv_shop_car;
 
@@ -220,6 +220,10 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     private boolean isShowDetail;
     private FoodBean mFoodBean;
     private Integer specId;//规格id
+    //起送价
+    private Double startPay;
+    //配送费
+    private Double salePrice;
 
     //-----------------
 
@@ -281,13 +285,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
 
 
     private void initShopCar() {
-        layoutShopCar = (FrameLayout) findViewById(R.id.layout_shop_car);
-        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
-        iv_shop_car = (ImageView) findViewById(R.id.iv_shop_car);
-        car_badge = (TextView) findViewById(R.id.car_badge);
-        business_title = (TextView) findViewById(R.id.business_title);
-        car_limit = (TextView) findViewById(R.id.car_limit);
-        tv_amount = (TextView) findViewById(R.id.tv_amount);
+
         RecyclerView carRecView = (RecyclerView) findViewById(R.id.car_recyclerview);
         carRecView.setLayoutManager(new LinearLayoutManager(this));
         ((DefaultItemAnimator) carRecView.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -316,6 +314,14 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     }
 
     private void initView() {
+        layoutShopCar = (FrameLayout) findViewById(R.id.layout_shop_car);
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        iv_shop_car = (ImageView) findViewById(R.id.iv_shop_car);
+        car_badge = (TextView) findViewById(R.id.car_badge);
+        business_title = (TextView) findViewById(R.id.business_title);
+        car_limit = (TextView) findViewById(R.id.car_limit);
+        tv_sale_price_bottom = (TextView) findViewById(R.id.tv_sale_price_bottom);
+        tv_amount = (TextView) findViewById(R.id.tv_amount);
         layoutProductDetail = (RelativeLayout) findViewById(R.id.layout_product_detail);
         rootview = (CoordinatorLayout) findViewById(R.id.rootview);
         mToolbar = (Toolbar) findViewById(R.id.tb_collapsing_test);
@@ -424,6 +430,10 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
         mAdapter = new BusinessAdapter(getSupportFragmentManager(), mFragments, mStringList);
     }
 
+    /**
+     * 获取商家信息
+     * @param id
+     */
     private void getBusinessDetailFromBanner(int id) {
         netType = 6;
         CustomApplication.getRetrofit().getBusinessInfo(id).enqueue(this);
@@ -450,9 +460,21 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
         if (!TextUtils.isEmpty(businessInfo.imgPath)) {
             x.image().bind(ivTitleBg, UrlConstant.ImageBaseUrl + businessInfo.imgPath, NetConfig.optionsPagerCache);
         }
+        startPay = businessInfo.startPay;
         tvSaleStartPay.setText(businessInfo.startPay == NaN ? "¥ 0元起送" : "¥ " + String.valueOf(businessInfo.startPay) + "起送");
-        tvSalePrice.setText(businessInfo.baseCharge == NaN ? "配送费¥0" : "配送费¥" + String.valueOf(businessInfo.baseCharge));
-        tvSaleTime.setText("快车专送·约" + businessInfo.speed);
+        car_limit.setText(businessInfo.startPay == NaN ? "¥ 0元起送" : "¥ " + String.valueOf(businessInfo.startPay) + "起送");
+        if (businessInfo.isDeliver == 0) {
+            salePrice = businessInfo.busshowps;
+            tvSalePrice.setText(businessInfo.baseCharge == NaN ? "配送费¥0" : "配送费¥" + String.valueOf(businessInfo.baseCharge));
+            tv_sale_price_bottom.setText(businessInfo.baseCharge == NaN ? "配送费¥0" : "配送费¥" + String.valueOf(businessInfo.baseCharge));
+            tvSaleTime.setText("快车专送·约" + businessInfo.speed);
+        } else {
+            salePrice = businessInfo.busshowps;
+            tvSaleTime.setText("商家配送·约" + businessInfo.speed);
+            tvSalePrice.setText(businessInfo.busshowps == NaN ? "配送费¥0" : "配送费¥" + String.valueOf(businessInfo.busshowps));
+            tv_sale_price_bottom.setText(businessInfo.busshowps == NaN ? "配送费¥0" : "配送费¥" + String.valueOf(businessInfo.busshowps));
+        }
+
         tvSalesNum.setText("月售" + String.valueOf(businessInfo.salesnum) + "单");
 
         List<BusinessExercise> alist = businessInfo.alist;
@@ -505,6 +527,18 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     private void getBusiness(int id) {
         netType = 1;
         CustomApplication.getRetrofit().getBusinessGoods(id).enqueue(this);
+    }
+
+    /**
+     * 获取商家收藏信息
+     */
+    private void getBusinessCollection() {
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null){
+            return;
+        }
+        netType = 9;
+        CustomApplication.getRetrofit().getIsShoucang(businessId,userInfo.getId()).enqueue(this);
     }
 
     private void setTitle() {
@@ -583,7 +617,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
             return;
         }
 
-        CustomApplication.getRetrofit().postSaveShop(businessId, 1).enqueue(this);
+        CustomApplication.getRetrofit().postSaveShop(userInfo.getId(),businessId, 1).enqueue(this);
     }
 
     /**
@@ -701,7 +735,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
 
     private void updateAmount(BigDecimal amount) {
         if (amount.compareTo(new BigDecimal(0.0)) == 0) {
-            car_limit.setText("¥20 起送");
+            car_limit.setText(startPay == NaN ? "¥ 0元起送" : "¥ " + String.valueOf(startPay) + "起送");
             car_limit.setTextColor(Color.parseColor("#a8a8a8"));
             car_limit.setBackgroundColor(Color.parseColor("#535353"));
             findViewById(R.id.car_nonselect).setVisibility(View.VISIBLE);
@@ -709,8 +743,8 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
             iv_shop_car.setImageResource(R.drawable.icon_not_shop_car);
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             car_limit.setEnabled(false);
-        } else if (amount.compareTo(new BigDecimal(20.0)) < 0) {
-            car_limit.setText("还差 ¥" + (new BigDecimal(20.0).subtract(amount)) + " 起送");
+        } else if (amount.compareTo(new BigDecimal(startPay)) < 0) {
+            car_limit.setText("还差 ¥" + (new BigDecimal(startPay).subtract(amount)) + " 起送");
             car_limit.setTextColor(Color.parseColor("#a8a8a8"));
             car_limit.setBackgroundColor(Color.parseColor("#535353"));
             findViewById(R.id.car_nonselect).setVisibility(View.GONE);
@@ -1204,6 +1238,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
         if (response.isSuccessful()) {
+            Log.d("params","response = "+data);
             ResolveData(data);
         }
     }
@@ -1221,6 +1256,15 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
     private void ResolveData(String data) {
         try {
             JSONObject object = new JSONObject(data);
+            if (netType == 9){
+                String isShoucang = object.optString("isShoucang");
+                if (TextUtils.equals(isShoucang,"0")){
+                    mIvCollection.setImageResource(R.drawable.icon_collection_no);
+                }else {
+                    mIvCollection.setImageResource(R.drawable.icon_collection_yes);
+                }
+                return;
+            }
             if (netType == 1) {
                 BusinessFragment fragment = (BusinessFragment) mFragments.get(0);
                 JSONArray gtlist = object.getJSONArray("gtlist");
@@ -1250,6 +1294,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                             foodBean.setPrice(BigDecimal.valueOf(jsonObject.optDouble("price")).setScale(1, BigDecimal.ROUND_HALF_DOWN));
                             foodBean.setSale(String.valueOf(jsonObject.optInt("salesnum")));
                             foodBean.setBusinessId(jsonObject.optInt("businessId"));
+                            foodBean.setBusinessName(jsonObject.optString("businessName"));
                             foodBean.setAgentId(jsonObject.optInt("agentId"));
                             foodBeens.add(foodBean);
                             fragment.getFoodBeanList().add(foodBean);
@@ -1262,6 +1307,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                 if (fragment.getTypeAdapter() != null) {
                     fragment.getTypeAdapter().notifyDataSetChanged();
                 }
+                getBusinessCollection();
             }
             if (netType == 2) {
                 JSONObject goodsSell = object.getJSONObject("goodsSell");
@@ -1343,6 +1389,7 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                     startActivity(new Intent(this, ConfirmOrderActivity.class)
                             .putExtra("foodBean", (Serializable) flist)
                             .putExtra("price", decimal)
+                            .putExtra("salePrice", salePrice)
                             .putExtra("businessId", businessId));
                 } else {
                     CustomToast.INSTANCE.showToast(this, object.optString("msg"));

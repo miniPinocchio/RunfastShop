@@ -35,8 +35,8 @@ import retrofit2.Response;
  */
 public class UpdateMessageActivity extends ToolBarActivity implements Callback<String> {
 
-    @BindView(R.id.et_old_password)
-    EditText etOldPassword;
+    @BindView(R.id.et_code)
+    EditText etCode;
     @BindView(R.id.tv_get_code)
     TextView tvGetCode;
     @BindView(R.id.et_new_password)
@@ -73,7 +73,7 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
     }
 
     private void setListener() {
-        etOldPassword.addTextChangedListener(new TextWatcher() {
+        etCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -171,14 +171,9 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
             if (userInfo == null) {
                 return;
             }
-            String accountName = userInfo.getMobile();
-            //|| !VaUtils.isMobileNo(accountName) 手机号正则验证
-            if (TextUtils.isEmpty(accountName) || !VaUtils.isMobileNo(accountName)) {
-                CustomToast.INSTANCE.showToast(this, getString(R.string.please_input_correct_phone));
-                return;
-            }
+
             netType = 1;
-            CustomApplication.getRetrofit().getEditPwdCode(accountName).enqueue(this);
+            CustomApplication.getRetrofit().getEditPwdCode(userInfo.getId()).enqueue(this);
         } else {
             //|| !VaUtils.isMobileNo(accountName) 手机号正则验证
             if (TextUtils.isEmpty(mPhone) || !VaUtils.isMobileNo(mPhone)) {
@@ -194,16 +189,16 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
      * 密码修改
      */
     private void editPassword() {
-        String oldPwd = etOldPassword.getText().toString().trim();
+        String code = etCode.getText().toString().trim();
         String newPwd = etNewPassword.getText().toString().trim();
         String newPwdAgain = etNewPasswordAgain.getText().toString().trim();
 
-        if (TextUtils.isEmpty(oldPwd)) {
-            CustomToast.INSTANCE.showToast(this, "旧密码不能为空");
+        if (TextUtils.isEmpty(code)) {
+            CustomToast.INSTANCE.showToast(this, "验证码不能为空");
             return;
         }
         if (TextUtils.isEmpty(newPwd)) {
-            CustomToast.INSTANCE.showToast(this, "旧密码不能为空");
+            CustomToast.INSTANCE.showToast(this, "新密码不能为空");
             return;
         }
         if (!TextUtils.equals(newPwd, newPwdAgain)) {
@@ -212,14 +207,14 @@ public class UpdateMessageActivity extends ToolBarActivity implements Callback<S
         }
         if (mFlags == 1) {
             netType = 3;
-            CustomApplication.getRetrofit().updateForgotPwd(mPhone, oldPwd, newPwd).enqueue(this);
+            CustomApplication.getRetrofit().updateForgotPwd(mPhone, code, newPwd).enqueue(this);
         } else {
             netType = 2;
             User userInfo = UserService.getUserInfo(this);
             if (userInfo == null) {
                 return;
             }
-            CustomApplication.getRetrofit().updatePassword(oldPwd, newPwd, 1, newPwdAgain).enqueue(this);
+            CustomApplication.getRetrofit().updatePassword(userInfo.getId(),code, newPwd, 1, newPwdAgain).enqueue(this);
         }
     }
 

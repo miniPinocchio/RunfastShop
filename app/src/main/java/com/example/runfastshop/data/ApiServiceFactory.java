@@ -2,6 +2,7 @@ package com.example.runfastshop.data;
 
 
 import com.example.runfastshop.impl.NetInterface;
+import com.example.runfastshop.impl.constant.UrlConstant;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -22,7 +23,7 @@ public final class ApiServiceFactory {
     private ApiServiceFactory() {
         Retrofit mRetrofit = new Retrofit.Builder()
                 //添加网络请求的基地址
-                .baseUrl(HOST)
+                .baseUrl(UrlConstant.BaseUrl)
                 //增加返回值为String的支持
                 .addConverterFactory(ScalarsConverterFactory.create())
                 //添加转换工厂，用于解析json并转化为javaBean

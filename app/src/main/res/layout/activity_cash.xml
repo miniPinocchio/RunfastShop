@@ -98,14 +98,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="钱包余额¥20.00，"
+                    android:text="钱包余额¥"
+                    android:textSize="13sp"
+                    android:textColor="@color/color_address_black"/>
+                <TextView
+                    android:id="@+id/tv_wallet_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20.00"
                     android:textSize="13sp"
                     android:textColor="@color/color_address_black"/>
                 <TextView
                     android:id="@+id/tv_cash_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="全部提现"
+                    android:text="，全部提现"
                     android:textSize="13sp"
                     android:textColor="@color/color_pay_mode"/>
             </LinearLayout>
@@ -119,7 +126,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_gravity="center"
                 android:background="@drawable/shape_button_pay"
-                android:text="下一步"
+                android:text="提现"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"/>
         </LinearLayout>

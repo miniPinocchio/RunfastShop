@@ -3,6 +3,7 @@ package com.example.runfastshop.activity.usercenter;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,6 +40,8 @@ public class CashRecordActivity extends ToolBarActivity implements View.OnClickL
     private List<AccountRecord> mRecordList;
     private CashRecordAdapter mAllAdapter;
 
+    private int page =1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +56,7 @@ public class CashRecordActivity extends ToolBarActivity implements View.OnClickL
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().getListConsume().enqueue(this);
+        CustomApplication.getRetrofit().getCashRecord(userInfo.getId(),page).enqueue(this);
     }
 
     private void initData() {
@@ -72,6 +75,7 @@ public class CashRecordActivity extends ToolBarActivity implements View.OnClickL
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
         if (response.isSuccessful()) {
+            Log.d("params","response = "+data);
             ResolveData(data);
         }
     }

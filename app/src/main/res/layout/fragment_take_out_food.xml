@@ -25,7 +25,7 @@
                 <com.jude.rollviewpager.RollPagerView
                     android:id="@+id/roll_view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="180dp"
                     app:rollviewpager_play_delay="3000"/>
 
                 <LinearLayout
@@ -55,7 +55,9 @@
                <android.support.v7.widget.RecyclerView
                    android:id="@+id/rv_home_bottom"
                    android:layout_width="match_parent"
-                   android:layout_height="@dimen/dimen_200_dp"/>
+                   android:layout_marginTop="10dp"
+                   android:background="@color/color_white"
+                   android:layout_height="160dp"/>
 
                 <ImageView
                     android:layout_width="match_parent"

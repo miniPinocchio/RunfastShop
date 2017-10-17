@@ -1,12 +1,14 @@
 package com.example.runfastshop.bean.coupon;
 
+import java.io.Serializable;
+
 /**
  * Created by huiliu on 2017/9/13.
  *
  * @email liu594545591@126.com
  * @introduce 优惠券
  */
-public class CouponBean {
+public class CouponBean implements Serializable{
     private Integer id;
     private Integer couponId; //优惠券id
     private Integer cuserId; //领取用户id

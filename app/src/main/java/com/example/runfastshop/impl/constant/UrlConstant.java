@@ -14,6 +14,7 @@ public class UrlConstant {
     public static final String BaseUrl = BuildConfig.BASE_URL;
 
     public static final String ImageBaseUrl = "http://www.gxptkc.com";
+    public static final String ImageHeadBaseUrl = "http://192.168.0.107:8080/";
 
 //    public static final String BaseUrl = "http://115.28.39.61:28080/wanglu/";
 
@@ -92,6 +93,16 @@ public class UrlConstant {
     public static final String QUERY_EDIT_PWD_CODE = "user/getcode.do";
 
     /***
+     * 上传图片
+     */
+    public static final String UPLOAD_PIC = BaseUrl +"fileUpload.do";
+
+    /***
+     * 更换头像
+     */
+    public static final String QUERY_EDIT_HEAD = "user/editavatar.do";
+
+    /***
      *  商家列表
      */
     public static final String GET_BUSINESS = "getBusiness.do";
@@ -119,6 +130,11 @@ public class UrlConstant {
      * 商品详情
      */
     public static final String GOODS_DETAIL = "business/deail.do";
+
+    /**
+     * 商家收藏
+     */
+    public static final String GET_IS_SHOUCANG = "business/getIsShouCang.do";
 
     /***
      * 商家评价
@@ -263,13 +279,54 @@ public class UrlConstant {
      */
     public static final String MY_CONPON = "coupon/mycoupon.do";
     /**
+     * 优惠券领取中心列表
+     */
+    public static final String RECEIVE_CONPON = "coupon/index.do";
+    /**
+     * 领取优惠券
+     */
+    public static final String GET_CONPON = "coupon/receive.do";
+    /**
      * 积分明细
      */
     public static final String LIST_SCORE = "userScore/getdate.do";
     /**
+     * 我的积分
+     */
+    public static final String SCORE_DATA = "userScore/list.do";
+    /**
      * 收支明细
      */
-    public static final String LIST_CONSUME = "wallet/recorda.do";
+    public static final String LIST_CONSUME = "wallet/record.do";
+    /**
+     * 提现
+     */
+    public static final String CASH_SEND = "wallet/withdrawal.do";
+    /**
+     * 提现账号
+     */
+    public static final String BANK_INFO = "wallet/bankaccounts.do";
+    /**
+     * 删除提现账号
+     */
+    public static final String DELETE_BANK_INFO = "wallet/delete.do";
+
+    /**
+     * 提现银行卡列表
+     */
+    public static final String WATHDRAWALL_LIST = "wallet/withdrawal1.do";
+    /**
+     * 获取银行卡
+     */
+    public static final String GET_BANK_NAME = "wallet/getBankName.do";
+    /**
+     * 添加银行卡
+     */
+    public static final String ADD_BANK = "wallet/addAccount.do";
+    /**
+     * 提现记录
+     */
+    public static final String CASH_RECORD = "wallet/walletrecord.do";
     /**
      * 订单详情
      */

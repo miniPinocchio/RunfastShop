@@ -20,12 +20,21 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="@color/color_white"
             >
-            <ImageView
-                android:id="@+id/iv_title_bg"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/icon_banner"/>
+                android:layout_height="@dimen/dimen_200_dp">
+                <ImageView
+                    android:id="@+id/iv_title_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/icon_banner"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.3"
+                    android:background="@color/color_image_bg"/>
+            </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -414,6 +423,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/tv_sale_price_bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="另需配送费¥4元"

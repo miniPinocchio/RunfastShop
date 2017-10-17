@@ -3,6 +3,7 @@ package com.example.runfastshop.activity.usercenter;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.runfastshop.R;
@@ -56,7 +57,7 @@ public class MyEnshrineActivity extends ToolBarActivity implements View.OnClickL
     private void getEnshrineData() {
         User userInfo = UserService.getUserInfo(this);
         if (userInfo !=null) {
-            CustomApplication.getRetrofit().getEnshrine().enqueue(this);
+            CustomApplication.getRetrofit().getEnshrine(userInfo.getId()).enqueue(this);
         }
     }
 
@@ -110,9 +111,13 @@ public class MyEnshrineActivity extends ToolBarActivity implements View.OnClickL
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
+        Log.d("params","Success = "+response.isSuccessful());
         if (response.isSuccessful()) {
+            Log.d("params","response = "+data);
             ResolveData(data);
+            return;
         }
+        mRefreshLayout.endRefreshing();
     }
 
     @Override
@@ -124,11 +129,13 @@ public class MyEnshrineActivity extends ToolBarActivity implements View.OnClickL
     private void ResolveData(String data) {
         if (data != null) {
             Enshrines enshrines = GsonUtil.parseJsonWithGson(data, Enshrines.class);
-            if (enshrines != null && enshrines.getEnshrine() != null) {
-                mEnshrines.addAll(enshrines.getEnshrine());
-                loadMoreAdapter.loadCompleted();
-                mRefreshLayout.endRefreshing();
+            if (enshrines == null || enshrines.getEnshrine() == null || enshrines.getEnshrine().size() <= 0){
+                loadMoreAdapter.loadAllDataCompleted();
+                return;
             }
+            mEnshrines.addAll(enshrines.getEnshrine());
+            loadMoreAdapter.loadAllDataCompleted();
+            mRefreshLayout.endRefreshing();
         }
     }
 }

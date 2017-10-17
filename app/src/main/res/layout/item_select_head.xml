@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_photo_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择上传图片方式"
+        android:textSize="16sp"
+        android:layout_margin="15dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_line_back" />
+    <TextView
+        android:id="@+id/tv_select_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="照相机上传"
+        android:padding="20dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/color_line_back" />
+    <TextView
+        android:id="@+id/tv_select_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="本地上传"
+        android:padding="20dp"/>
+</LinearLayout>

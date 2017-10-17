@@ -151,7 +151,11 @@ public class UpdateAddressActivity extends ToolBarActivity implements Callback<S
      */
     private void deleteAddress() {
         mNetType = 2;
-        CustomApplication.getRetrofit().postDeleteAddress(mAddressInfo.getId()).enqueue(this);
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null){
+            return;
+        }
+        CustomApplication.getRetrofit().postDeleteAddress(mAddressInfo.getId(),userInfo.getId()).enqueue(this);
     }
 
     /**
@@ -159,8 +163,12 @@ public class UpdateAddressActivity extends ToolBarActivity implements Callback<S
      */
     private void toAddAddress() {
         mNetType = 0;
+        User userInfo = UserService.getUserInfo(this);
+        if (userInfo == null){
+            return;
+        }
 //        Integer id = UserService.getUserInfo().getId();
-        CustomApplication.getRetrofit().postAddAddress(1, mUserName, mUserPhone, mAddress,
+        CustomApplication.getRetrofit().postAddAddress(userInfo.getId(), mUserName, mUserPhone, mAddress,
                 mHouseNumber, String.valueOf(mAddressLat.latLng.longitude), String.valueOf(mAddressLat.latLng.latitude),
                 mRegeocodeAddress.getProvince(), mRegeocodeAddress.getCity(), mRegeocodeAddress.getDistrict())
                 .enqueue(this);

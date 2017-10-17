@@ -52,7 +52,7 @@ public class EnshrineAdapter  extends RecyclerView.Adapter<EnshrineAdapter.Enshr
         Enshrine enshrine = data.get(position);
         if (enshrine != null) {
             x.image().bind(holder.ivBusinessLogo, UrlConstant.ImageBaseUrl + enshrine.imgPath, NetConfig.optionsPagerCache);
-            holder.tvBusinessName.setText(enshrine.name);
+            holder.tvBusinessName.setText(enshrine.shopname);
 //            holder.tvSaleDistance.setText(String.valueOf(new DecimalFormat("#0.0").format(enshrine.distance)) + "km");
 //            holder.tvBusinessLevel.setText(String.valueOf(enshrine.levelId));
 //            holder.tvBusinessSaleNum.setText("月售" + String.valueOf(enshrine.salesnum) + "单");

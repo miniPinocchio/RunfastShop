@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.LoginActivity;
+import com.example.runfastshop.activity.MainActivity;
 import com.example.runfastshop.activity.usercenter.AboutActivity;
 import com.example.runfastshop.activity.usercenter.AddressSelectActivity;
 import com.example.runfastshop.activity.usercenter.ComplaintActivity;
@@ -29,6 +31,7 @@ import com.example.runfastshop.bean.user.Users;
 import com.example.runfastshop.config.NetConfig;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.data.IntentFlag;
+import com.example.runfastshop.impl.constant.UrlConstant;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
 
@@ -85,11 +88,6 @@ public class MineFragment extends Fragment implements Callback<String> {
     }
 
     /**
-     * 请求用户中心
-     */
-
-
-    /**
      * 重置页面
      */
     private void clearUi() {
@@ -105,12 +103,16 @@ public class MineFragment extends Fragment implements Callback<String> {
      */
     private void updateUi() {
         if (!TextUtils.isEmpty(userInfo.getPic())){
-            x.image().bind(ivHead,userInfo.getPic(), NetConfig.optionsHeadImage);
+            x.image().bind(ivHead, UrlConstant.ImageHeadBaseUrl+userInfo.getPic(), NetConfig.optionsHeadImage);
         }
-        tvUserName.setText(TextUtils.isEmpty(userInfo.getName())?userInfo.getMobile():userInfo.getName());
+        tvUserName.setText(TextUtils.isEmpty(userInfo.getNickname())?userInfo.getMobile():userInfo.getNickname());
         tvWalletMoney.setText(userInfo.getShowremainder()+"元");
         tvCouponsNum.setText((userInfo.getRnum() == null)?"0个":(userInfo.getRnum()+"个"));
-        tvIntegralNum.setText((userInfo.getScore() == null)?"0分":(userInfo.getScore()+"分"));
+        String score = String.valueOf(userInfo.getScore());
+        if (score.contains(".")){
+            score = score.substring(0,score.indexOf("."));
+        }
+        tvIntegralNum.setText((userInfo.getScore() == null)?"0分":(score+"分"));
     }
 
     @Override
@@ -182,6 +184,7 @@ public class MineFragment extends Fragment implements Callback<String> {
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
         if (response.isSuccessful()) {
+            Log.d("params","response = "+data);
             ResolveData(data);
         }
     }

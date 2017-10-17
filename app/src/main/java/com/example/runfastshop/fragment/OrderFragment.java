@@ -3,9 +3,12 @@ package com.example.runfastshop.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +70,7 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
         toolbarTitle.setText("订单");
         initData();
         initEvent();
-        getOrderList();
+
         return view;
     }
 
@@ -92,6 +95,14 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
         getOrderList();
     }
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            getOrderList();
+        }
+    };
+
     /**
      *
      */
@@ -100,7 +111,7 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().postOrderList(1, 10).enqueue(this);
+        CustomApplication.getRetrofit().postOrderList(userInfo.getId(),1, 10).enqueue(this);
     }
 
     @Override
@@ -125,6 +136,7 @@ public class OrderFragment extends Fragment implements OrderListAdapter.OnClickL
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
         if (response.isSuccessful()) {
+            Log.d("params","responseOrder ="+data);
             ResolveData(data);
         }
     }

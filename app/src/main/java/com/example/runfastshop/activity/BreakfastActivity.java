@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -97,7 +98,7 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
     private MiddleSort mSort;
     private Integer mPosition;
     private Integer mPositionSort = 1;
-    private String mName;
+    private String mName = "";
     private int mTotalpage;
 
     @Override
@@ -240,9 +241,14 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
                     }
                     typeInfos.get(mPosition).isSelect = true;
                     adapterType.notifyDataSetChanged();
-                    mName = typeInfos.get(mPosition).name;
-                    tvClassName.setText(mName);
-                    searchGoodsType(1, 10, mPositionSort, mName);
+                    if (mPosition == 0){
+                        mName = mSort.getTypename();
+                    }else {
+                        mName = typeInfos.get(mPosition).name;
+                    }
+                    tvClassName.setText(typeInfos.get(mPosition).name);
+                    page = 1;
+                    searchGoodsType(page, 10, mPositionSort, mName);
                     uiHide();
                     break;
                 case R.id.layout_sort_select:
@@ -331,7 +337,9 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
+        Log.d("params","Success = "+response.isSuccessful());
         if (response.isSuccessful()) {
+            Log.d("params","response = "+data);
             ResolveData(data);
         }
     }
@@ -353,19 +361,22 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
             if (netType == 1) {
                 ClassTypeInfos classTypeInfo = GsonUtil.parseJsonWithGson(data, ClassTypeInfos.class);
                 List<ClassTypeInfo> listTypeInfos = classTypeInfo.getBustype();
+                ClassTypeInfo info = new ClassTypeInfo();
+                info.id = 0;
+                info.name = "全部分类";
+                info.isSelect = true;
+                info.imgId = R.drawable.icon_class_all;
+                this.typeInfos.add(info);
                 for (int i = 0; i < listTypeInfos.size(); i++) {
-                    ClassTypeInfo info = new ClassTypeInfo();
+                    info = new ClassTypeInfo();
                     info.id = listTypeInfos.get(i).getId();
                     info.name = listTypeInfos.get(i).getName();
-                    if (i == 0) {
-                        info.isSelect = true;
-                    }
                     info.imgId = R.drawable.icon_class_all;
                     this.typeInfos.add(info);
                 }
-                searchGoodsType(1, 10, mPositionSort, mName);
+                page = 1;
+                searchGoodsType(page, 10, mPositionSort, mName);
                 adapterType.notifyDataSetChanged();
-                return;
             } else if (netType == 2) {
                 JSONArray bus = object.getJSONArray("bus");
                 mTotalpage = object.optInt("totalpage");
@@ -423,7 +434,7 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
     public void loadMore() {
         if (page < mTotalpage) {
             page += 1;
-            searchGoodsType(1, 10, mPositionSort, mName);
+            searchGoodsType(page, 10, mPositionSort, mName);
         } else {
             Handler handler = new Handler();
             final Runnable r = new Runnable() {
@@ -439,7 +450,7 @@ public class BreakfastActivity extends ToolBarActivity implements View.OnClickLi
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         page = 1;
-        searchGoodsType(1, 10, mPositionSort, mName);
+        searchGoodsType(page, 10, mPositionSort, mName);
     }
 
     @Override

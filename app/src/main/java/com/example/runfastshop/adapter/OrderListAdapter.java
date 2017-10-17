@@ -87,7 +87,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         }
 
         holder.tv_order_shop_time.setText(orderInfo.getAccptTime());
-        holder.tv_order_shop_content.setText(orderInfo.getContent());
+        holder.tv_order_shop_content.setText(orderInfo.getGoodsSellName());
         holder.tv_order_shop_price.setText(String.valueOf(orderInfo.getPrice()));
         holder.iv_order_shop.setImageURI(ApiServiceFactory.BASE_IMG_URL + orderInfo.getLogo());
         holder.tv_order_shop_again.setOnClickListener(new View.OnClickListener() {

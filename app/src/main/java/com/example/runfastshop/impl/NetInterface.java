@@ -143,6 +143,16 @@ public interface NetInterface {
     Call<String> getGoodsDetail(@Field("id") Integer id);
 
     /**
+     * 商家收藏
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.GET_IS_SHOUCANG)
+    Call<String> getIsShoucang(@Field("busId") Integer busId,
+                               @Field("uId") Integer uId);
+
+    /**
      * 获取商家评价
      *
      * @return
@@ -198,7 +208,8 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.EDIT_PASSWORD)
-    Call<String> updatePassword(@Field("old") String old,
+    Call<String> updatePassword(@Field("id") Integer id,
+                                @Field("old") String old,
                                 @Field("password") String password,
                                 @Field("codetype") Integer codetype,
                                 @Field("code") String code);
@@ -221,7 +232,7 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.QUERY_EDIT_PWD_CODE)
-    Call<String> getEditPwdCode(@Field("mobile") String mobile);
+    Call<String> getEditPwdCode(@Field("id") Integer id);
 
     /**
      * 获取注册验证码
@@ -335,7 +346,8 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.SAVE_SHOP)
-    Call<String> postSaveShop(@Field("shopId") Integer shopId,
+    Call<String> postSaveShop(@Field("uId") Integer uId,
+                              @Field("shopId") Integer shopId,
                               @Field("type") Integer type);
 
     /**
@@ -385,7 +397,7 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST(UrlConstant.EDIT_USER_ADDRESS)
     Call<String> postEditAddress(@Field("id") Integer id,
-                                 @Field("cId") Integer uId,
+                                 @Field("uId") Integer uId,
                                  @Field("name") String name,
                                  @Field("phone") String phone,
                                  @Field("userAddress") String userAddress,
@@ -414,7 +426,8 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.DELETE_USER_ADDRESS)
-    Call<String> postDeleteAddress(@Field("id") Integer id);
+    Call<String> postDeleteAddress(@Field("id") Integer id,
+                                   @Field("uId") Integer uId);
 
     /**
      * 地址列表
@@ -435,7 +448,8 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.MESSAGE_LIST)
-    Call<String> postMessageList(@Field("page") Integer page,
+    Call<String> postMessageList(@Field("uId") Integer uId,
+                                 @Field("page") Integer page,
                                  @Field("rows") Integer rows);
 
     /**
@@ -447,7 +461,8 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.ORDER_LIST)
-    Call<String> postOrderList(@Field("page") Integer page,
+    Call<String> postOrderList(@Field("uId") Integer uId,
+                               @Field("page") Integer page,
                                @Field("rows") Integer rows);
 
     /**
@@ -458,7 +473,17 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.CHANGE_NAME)
-    Call<String> postChangeName(@Field("nickname") String nickname);
+    Call<String> postChangeName(@Field("id") Integer id,@Field("nickname") String nickname);
+
+    /**
+     * 修改头像
+     *
+     * @param imgpath
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.QUERY_EDIT_HEAD)
+    Call<String> updateHead(@Field("uId") Integer uId,@Field("imgpath") String imgpath);
 
     /**
      * 绑定邮箱
@@ -468,7 +493,7 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.CHANGE_EMAIL)
-    Call<String> postChangeEmail(@Field("email") String email);
+    Call<String> postChangeEmail(@Field("id") Integer id,@Field("email") String email);
 
     /**
      * 红包
@@ -501,7 +526,36 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.MY_CONPON)
-    Call<String> GetMyCoupan(@Field("type") Integer type);
+    Call<String> GetMyCoupan(@Field("uId") Integer uId,@Field("type") Integer type);
+
+    /**
+     * 优惠券领取中心
+     *
+     * @param type 优惠券类型(1.商城、0.外卖)
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.RECEIVE_CONPON)
+    Call<String> receiveCoupan(@Field("uId") Integer uId,
+                               @Field("agentId") Integer agentId,
+                               @Field("type") Integer type);
+    /**
+     * 领取优惠券
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.GET_CONPON)
+    Call<String> getCoupan(@Field("uId") Integer uId,
+                               @Field("couponId") Integer couponId);
+
+    /**
+     * 我的积分
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.SCORE_DATA)
+    Call<String> getScore(@Field("uId") Integer uId);
 
     /**
      * 积分明细
@@ -510,7 +564,7 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.LIST_SCORE)
-    Call<String> getListScore();
+    Call<String> getListScore(@Field("uId") Integer uId,@Field("page") Integer page,@Field("rows") Integer rows);
 
     /**
      * 收支明细
@@ -519,7 +573,80 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.LIST_CONSUME)
-    Call<String> getListConsume();
+    Call<String> getListConsume(@Field("uId") Integer uId,
+                                @Field("page") Integer page,
+                                @Field("type") Integer type);
+
+    /**
+     * 提现
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.CASH_SEND)
+    Call<String> getCashSend(@Field("uId") Integer uId,
+                             @Field("monetary") Double monetary,
+                             @Field("type") Integer type,
+                             @Field("bankid") Integer bankid);
+    /**
+     * 提现账号
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.BANK_INFO)
+    Call<String> getBankUser(@Field("uId") Integer uId,
+                             @Field("page") Integer page);
+
+    /**
+     * 删除提现账号
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.DELETE_BANK_INFO)
+    Call<String> deleteBankUser(@Field("uId") Integer uId,
+                             @Field("id") Integer id);
+
+    /**
+     * 提现银行卡列表
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.WATHDRAWALL_LIST)
+    Call<String> getWathdrawallList(@Field("uId") Integer uId);
+
+    /**
+     * 获取银行卡
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.GET_BANK_NAME)
+    Call<String> getBankName(@Field("cardNo") String cardNo);
+
+    /**
+     * 添加银行卡
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.ADD_BANK)
+    Call<String> addBank(@Field("uId") Integer uId,
+                         @Field("name") String name,
+                         @Field("banktype") String banktype,
+                         @Field("account") String account);
+
+    /**
+     * 提现记录
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(UrlConstant.CASH_RECORD)
+    Call<String> getCashRecord(@Field("uId") Integer uId,
+                                @Field("page") Integer page);
 
     /**
      * 订单详情
@@ -529,7 +656,8 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.ORDER_DETAIL)
-    Call<String> getOrderDetail(@Field("id") Integer id);
+    Call<String> getOrderDetail(@Field("uId") Integer uId,
+                                @Field("id") Integer id);
 
     /**
      * 订单详情
@@ -547,13 +675,12 @@ public interface NetInterface {
      */
     @FormUrlEncoded
     @POST(UrlConstant.MY_ENSHRINE)
-    Call<String> getEnshrine();
+    Call<String> getEnshrine(@Field("uId") Integer id);
 
 
     /**
      * 确认订单
      *
-     * @param userId
      * @param businessId
      * @param userAddressId
      * @param rid

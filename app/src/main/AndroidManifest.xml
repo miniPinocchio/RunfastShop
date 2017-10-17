@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.runfastshop">
+    package="com.example.runfastshop">
 
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 允许程序设置内置sd卡的写权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 允许程序获取网络状态 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 允许程序访问WiFi网络信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 允许程序读写手机状态和身份 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 一些手机设置此权限才可以debug -->
-    <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
     <!-- 手机wifi状态改变 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -34,21 +34,21 @@
             android:screenOrientation="portrait"
             android:theme="@style/WelcomeEntranceActionBarTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <meta-data
-        android:name="com.amap.api.v2.apikey"
-        android:value="8ce45bcbc60d5e1a26515c6df303af70"/>
-        <!--<meta-data-->
-            <!--android:name="com.amap.api.v2.apikey"-->
-            <!--android:value="5272f4f15e779adfcf76756efe57d27f"/>-->
+            android:name="com.amap.api.v2.apikey"
+            android:value="8ce45bcbc60d5e1a26515c6df303af70" />
+        <!-- <meta-data -->
+        <!-- android:name="com.amap.api.v2.apikey" -->
+        <!-- android:value="5272f4f15e779adfcf76756efe57d27f"/> -->
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -62,180 +62,185 @@
 
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RegisterActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BreakfastActivity"
             android:label="早餐"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.UserInfoActivity"
             android:label="详细资料"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.AddressManagerActivity"
             android:label="地址管理"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BusinessActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ConfirmOrderActivity"
             android:label="确认订单"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.WalletActivity"
             android:label="我的钱包"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PayDetailActivity"
             android:label="详情"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.MoneyDetailActivity"
             android:label="收支明细"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ProductDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.WalletRechargeActivity"
             android:label="钱包充值"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.UpdatePasswordActivity"
             android:label="修改密码"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.UpdateOldPwdActivity"
             android:label="原密码验证修改"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.UpdateMessageActivity"
             android:label="短信验证码修改"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.CashRecordActivity"
             android:label="提现记录"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.CashActivity"
             android:label="提现"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.CouponActivity"
             android:label="优惠券"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.BankActivity"
             android:label="我的钱包"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.SelectBankActivity"
             android:label="选择银行卡"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.AddBankActivity"
             android:label="添加银行卡"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.IntegralActivity"
             android:label="积分明细"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ForgotPasswordActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.AboutActivity"
             android:label="关于跑腿快车"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.HelpCenterActivity"
             android:label="帮助中心"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.AddressSelectActivity"
             android:label="地址管理"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.UpdateAddressActivity"
             android:label="编辑地址"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.JoinBusinessActivity"
             android:label="加盟合作"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.ConsultationActivity"
             android:label="客服咨询"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.usercenter.ComplaintActivity"
             android:label="投诉"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SearchProductActivity"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.SearchProductActivity" />
         <activity
             android:name=".activity.usercenter.CollectionActivity"
             android:label="我的收藏"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DiscountActivity"
             android:label="优惠活动"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DeliveryAddressActivity"
             android:label="管理收货地址"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CashCouponActivity"
             android:label="领券专区"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ordercenter.OrderDetailActivity"
-            android:label="订单详情"/>
+            android:label="订单详情"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.BusinessInfoActivity"
-            android:label=""/>
+            android:label=""
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ordercenter.OrderRemarkActivity"
-            android:label="用户反馈"/>
+            android:label="用户反馈"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.homepage.TopImageLinkActivity"
-            android:label="活动详情"/>
+            android:label="活动详情"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activity.ordercenter.OrderComplainActivity"
-            android:label="投诉"/>
+            android:label="投诉"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.usercenter.ChangeNameActivity"
-            android:label="修改信息"/>
-        <activity android:name=".activity.usercenter.MyEnshrineActivity">
-        </activity>
-        <activity android:name=".activity.ordercenter.PayChannelActivity">
-        </activity>
-
+            android:label="修改信息"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.usercenter.MyEnshrineActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ordercenter.PayChannelActivity"
+            android:label="支付"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.gxuc.runfast.shop.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.usercenter.UserBankActivity"
+            android:label="提现账户"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

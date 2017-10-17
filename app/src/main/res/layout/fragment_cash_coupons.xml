@@ -4,9 +4,30 @@
     android:layout_height="match_parent"
     tools:context="com.example.runfastshop.fragment.CashCouponsFragment">
 
+    <LinearLayout
+        android:id="@+id/ll_no_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="135dp"
+            android:src="@drawable/icon_not_coupon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="没有可领取优惠券"
+            android:layout_marginTop="35dp"
+            android:textSize="15sp"
+            android:textColor="@color/color_text_gray_two"/>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_cash_coupons"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/color_food_gray"/>
 
 </FrameLayout>

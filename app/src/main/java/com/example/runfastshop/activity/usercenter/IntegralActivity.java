@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ToolBarActivity;
+import com.example.runfastshop.adapter.LoadMoreAdapter;
 import com.example.runfastshop.adapter.moneyadapter.ScoreRecordAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.score.MyScore;
@@ -17,6 +19,10 @@ import com.example.runfastshop.bean.user.User;
 import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +37,7 @@ import retrofit2.Response;
 /**
  * 积分
  */
-public class IntegralActivity extends ToolBarActivity implements Callback<String>, View.OnClickListener {
+public class IntegralActivity extends ToolBarActivity implements Callback<String>, View.OnClickListener, LoadMoreAdapter.LoadMoreApi {
 
     @BindView(R.id.tv_integral)
     TextView tvIntegral;
@@ -39,7 +45,9 @@ public class IntegralActivity extends ToolBarActivity implements Callback<String
     RecyclerView recyclerView;
 
     private List<MyScore> mMyScores;
-    private ScoreRecordAdapter mAllAdapter;
+    private User userInfo;
+    private LoadMoreAdapter moreAdapter;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +55,32 @@ public class IntegralActivity extends ToolBarActivity implements Callback<String
         setContentView(R.layout.activity_integral);
         ButterKnife.bind(this);
         initData();
-        getNetData();
+        getDataList();
     }
 
-    private void getNetData() {
-        User userInfo = UserService.getUserInfo(this);
+    /**
+     * 积分明细获取
+     */
+    private void getDataList() {
+        userInfo = UserService.getUserInfo(this);
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().getListScore().enqueue(this);
+        String score = String.valueOf(userInfo.getScore());
+        if (score.contains(".")){
+            score = score.substring(0,score.indexOf("."));
+        }
+        tvIntegral.setText(score);
+        CustomApplication.getRetrofit().getListScore(userInfo.getId(), page,10).enqueue(this);
     }
 
     private void initData() {
         mMyScores = new ArrayList<>();
-        mAllAdapter = new ScoreRecordAdapter(mMyScores, this, this);
+        ScoreRecordAdapter mAllAdapter = new ScoreRecordAdapter(mMyScores, this, this);
+        moreAdapter = new LoadMoreAdapter(this,mAllAdapter);
+        moreAdapter.setLoadMoreListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(mAllAdapter);
+        recyclerView.setAdapter(moreAdapter);
     }
 
     @OnClick(R.id.layout_integral_rule)
@@ -73,7 +91,9 @@ public class IntegralActivity extends ToolBarActivity implements Callback<String
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
+        Log.d("params","isSuccessful = "+response.isSuccessful());
         if (response.isSuccessful()) {
+            Log.d("params","response = "+data);
             ResolveData(data);
         }
     }
@@ -93,7 +113,9 @@ public class IntegralActivity extends ToolBarActivity implements Callback<String
             MyScores scores = GsonUtil.parseJsonWithGson(data, MyScores.class);
             if (scores.getRows() != null && scores.getRows().size() > 0) {
                 mMyScores.addAll(scores.getRows());
-                mAllAdapter.notifyDataSetChanged();
+                moreAdapter.loadCompleted();
+            }else {
+                moreAdapter.loadAllDataCompleted();
             }
         }
     }
@@ -101,5 +123,11 @@ public class IntegralActivity extends ToolBarActivity implements Callback<String
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void loadMore() {
+        page += 1;
+        getDataList();
     }
 }

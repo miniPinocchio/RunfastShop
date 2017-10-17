@@ -56,13 +56,15 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.Brea
             holder.tvSaleDistance.setText(String.valueOf(new DecimalFormat("#0.0").format(businessInfo.distance)) + "km");
             holder.tvBusinessLevel.setText(String.valueOf(businessInfo.levelId));
             holder.tvBusinessSaleNum.setText("月售" + String.valueOf(businessInfo.salesnum) + "单");
-            holder.tvSaleStartPay.setText(businessInfo.startPay == NaN ? "¥ 0元起送" : "¥ " + String.valueOf(businessInfo.startPay) + "起送");
-            holder.tvSalePrice.setText(businessInfo.baseCharge == NaN ? "配送费¥0" : "配送费¥" + String.valueOf(businessInfo.baseCharge));
+            holder.tvSaleStartPay.setText(businessInfo.startPay == null ? "¥ 0元起送" : "¥ " + String.valueOf(businessInfo.startPay) + "起送");
+
             holder.tvSaleTime.setText(businessInfo.speed);
             if (businessInfo.isDeliver == 0) {
+                holder.tvSalePrice.setText(businessInfo.baseCharge == null ? "配送费¥0" : "配送费¥" + String.valueOf(businessInfo.baseCharge));
                 holder.ivCharge.setVisibility(View.VISIBLE);
             } else {
                 holder.ivCharge.setVisibility(View.GONE);
+                holder.tvSalePrice.setText(businessInfo.busshowps == null ? "配送费¥0" : "配送费¥" + String.valueOf(businessInfo.busshowps));
             }
 
             List<BusinessExercise> alist = businessInfo.alist;

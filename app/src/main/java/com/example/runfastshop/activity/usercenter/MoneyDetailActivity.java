@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.ToolBarActivity;
@@ -46,6 +47,8 @@ public class MoneyDetailActivity extends ToolBarActivity implements Callback<Str
     private MoneyIncomeFragment mMoneyIncomeFragment;
     private MoneyExpenditureFragment mMoneyExpenditureFragment;
 
+    private int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +61,6 @@ public class MoneyDetailActivity extends ToolBarActivity implements Callback<Str
 
     private void initData() {
         setTitle();
-
-        mMoneyAllFragment = new MoneyAllFragment();
-        mMoneyIncomeFragment = new MoneyIncomeFragment();
-        mMoneyExpenditureFragment = new MoneyExpenditureFragment();
-        mFragments.add(mMoneyAllFragment);
-        mFragments.add(mMoneyIncomeFragment);
-        mFragments.add(mMoneyExpenditureFragment);
 
         mAdapter = new BusinessAdapter(getSupportFragmentManager(), mFragments, mStringList);
     }
@@ -91,13 +87,14 @@ public class MoneyDetailActivity extends ToolBarActivity implements Callback<Str
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().getListConsume().enqueue(this);
+        CustomApplication.getRetrofit().getListConsume(userInfo.getId(),page,0).enqueue(this);
     }
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
         if (response.isSuccessful()) {
+            Log.d("params","response = "+data);
             ResolveData(data);
         }
     }
@@ -118,9 +115,16 @@ public class MoneyDetailActivity extends ToolBarActivity implements Callback<Str
         if (accountRecords != null && accountRecords.getRows().size() > 0) {
             Bundle bundle = new Bundle();
             bundle.putParcelable("record", accountRecords);
+            mMoneyAllFragment = new MoneyAllFragment();
+            mMoneyIncomeFragment = new MoneyIncomeFragment();
+            mMoneyExpenditureFragment = new MoneyExpenditureFragment();
+            mFragments.add(mMoneyAllFragment);
+            mFragments.add(mMoneyIncomeFragment);
+            mFragments.add(mMoneyExpenditureFragment);
             mMoneyAllFragment.setArguments(bundle);
             mMoneyExpenditureFragment.setArguments(bundle);
             mMoneyIncomeFragment.setArguments(bundle);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

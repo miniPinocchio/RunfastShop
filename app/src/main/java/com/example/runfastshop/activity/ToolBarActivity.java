@@ -111,7 +111,7 @@ public class ToolBarActivity extends BaseActivity {
     }
 
     private void toolBarInit() {
-        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.colorPrimary), true);
+        //StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.colorPrimary), true);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         rightTitle = (TextView) findViewById(R.id.tv_right_title);
         //tvBadge = (TextView) findViewById(R.id.tv_badge);

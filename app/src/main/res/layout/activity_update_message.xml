@@ -30,12 +30,12 @@
         android:gravity="center_vertical">
 
         <EditText
-            android:id="@+id/et_old_password"
+            android:id="@+id/et_code"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:textSize="15sp"
             android:hint="验证码"
             android:singleLine="true"

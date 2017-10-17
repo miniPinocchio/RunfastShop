@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorPrimaryDark">#1b1b1b</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="color_title">#ffffff</color>
@@ -33,7 +33,9 @@
     <color name="color_money_green">#55b936</color>
     <color name="color_coupon_number">#ff6e72</color>
     <color name="color_balance_price">#eb5633</color>
-
+    <color name="color_image_bg">#2e2e2e</color>
+    <!--tab标签栏文字的颜色-->
+    <color name="colorTabText">#585858</color>
     <color name="consumer_bg">#f3f3f3</color>
     <color name="left_list">#F4F4F5</color>
     <color name="user_center_divide_line">#dcdcdc</color>

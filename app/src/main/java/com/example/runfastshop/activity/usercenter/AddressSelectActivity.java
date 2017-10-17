@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.runfastshop.R;
@@ -83,6 +84,7 @@ public class AddressSelectActivity extends ToolBarActivity implements Callback<S
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
         if (response.isSuccessful()) {
+            Log.d("params", "response = " + data);
             ResolveData(data);
         }
     }
@@ -94,6 +96,7 @@ public class AddressSelectActivity extends ToolBarActivity implements Callback<S
 
     private void ResolveData(String data) {
         //处理数据 显示地址
+        mData.clear();
         AddressInfos addressInfos = GsonUtil.parseJsonWithGson(data, AddressInfos.class);
         if (addressInfos.getRows().size() > 0) {
             mData.addAll(addressInfos.getRows());

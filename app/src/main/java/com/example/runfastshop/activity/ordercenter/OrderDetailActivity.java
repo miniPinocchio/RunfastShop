@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -133,12 +134,13 @@ public class OrderDetailActivity extends ToolBarActivity {
     }
 
     private void getOrderDetail(Integer id, User userInfo) {
-        CustomApplication.getRetrofit().getOrderDetail(id).enqueue(new MyCallback<String>() {
+        CustomApplication.getRetrofit().getOrderDetail(userInfo.getId(),id).enqueue(new MyCallback<String>() {
 
             @Override
             public void onSuccessResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
                     String data = response.body();
+                    Log.d("params","response ="+data);
                     fillView(data);
                 }
             }
@@ -157,6 +159,9 @@ public class OrderDetailActivity extends ToolBarActivity {
      */
     private void fillView(String data) {
         orderDetailInfo = GsonUtil.fromJson(data, OrderDetail.class);
+        if (orderDetailInfo == null){
+            return;
+        }
         mTvOrderManState.setText(orderDetailInfo.goodsSellRecord.statStr);
 
         if (orderDetailInfo.goodsSellRecord.status == 2 ||
@@ -176,8 +181,10 @@ public class OrderDetailActivity extends ToolBarActivity {
 
         OrderGoodsAdapter orderGoodsAdapter = new OrderGoodsAdapter(this, orderDetailInfo.goodsSellRecordChildren);
         llContainProduct.removeAllViews();
-        for (int i = 0; i < orderDetailInfo.goodsSellRecordChildren.size(); i++) {
-            llContainProduct.addView(orderGoodsAdapter.getView(i, null, null));
+        if (orderDetailInfo.goodsSellRecordChildren != null){
+            for (int i = 0; i < orderDetailInfo.goodsSellRecordChildren.size(); i++) {
+                llContainProduct.addView(orderGoodsAdapter.getView(i, null, null));
+            }
         }
         tvOrderDetailShowps.setText("¥ " + orderDetailInfo.goodsSellRecord.showps);
         tvOrderDetailPackaging.setText("¥ " + orderDetailInfo.goodsSellRecord.packing);

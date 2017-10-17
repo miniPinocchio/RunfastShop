@@ -30,7 +30,36 @@ public class AccountRecord implements Parcelable{
     private String startTime;//查询时使用
     private String endTime;//查询时使用
     private String keyword;//查询时使用
+
     private BigDecimal showmonetary;//金额（正未充值负为消费）
+
+    private Integer bankid;//银行卡id
+    private String banktype;//银行卡名
+    private String account;//银行卡号
+
+    public Integer getBankid() {
+        return bankid;
+    }
+
+    public void setBankid(Integer bankid) {
+        this.bankid = bankid;
+    }
+
+    public String getBanktype() {
+        return banktype;
+    }
+
+    public void setBanktype(String banktype) {
+        this.banktype = banktype;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
     public Integer getId() {
         return id;

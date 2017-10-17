@@ -12,4 +12,6 @@ public class IntentConfig {
 
     public static final int ADDRESS_SELECT = 1000;//
 
+    public static int AGENT_ID = 0;//
+
 }

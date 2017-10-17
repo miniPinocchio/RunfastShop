@@ -2,6 +2,7 @@ package com.example.runfastshop.adapter.moneyadapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,6 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsV
     public CouponsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_coupon_info, parent, false);
         CouponsViewHolder holder = new CouponsViewHolder(view);
-        view.setOnClickListener(mListener);
         return holder;
     }
 
@@ -46,8 +46,15 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsV
         holder.mTvCouponMin.setText("满" + String.valueOf(couponBean.getFull()) + "可用");
         //TODO 无配送类型字段
 //        holder.mTvCouponDeliver.setText(String.valueOf(couponBean.getPrice()));
-
-        holder.mTvCouponDate.setText(couponBean.getStart() + "至" + couponBean.getEnd());
+        String startTime = couponBean.getStart();
+        String endTime = couponBean.getEnd();
+        if (startTime.contains(" ")){
+            startTime = startTime.substring(0,startTime.indexOf(" "));
+        }
+        if (endTime.contains(" ")){
+            endTime = endTime.substring(0,endTime.indexOf(" "));
+        }
+        holder.mTvCouponDate.setText(startTime + " 至 " + endTime);
         //TODO 已过期需要服务器返回 用户端存在手机系统时间非国际时间
         switch (couponBean.getUserd()) {
             case 1:
@@ -58,7 +65,13 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsV
                 break;
         }
 
-        holder.mTvCouponLimitDate.setText(String.valueOf(couponBean.getPrice()));
+        if (TextUtils.isEmpty(couponBean.getEnduse())){
+            holder.mTvCouponLimitDate.setText("限时段：无");
+        }else if (!TextUtils.isEmpty(couponBean.getStartuse())) {
+            holder.mTvCouponLimitDate.setText("限时段：" + couponBean.getStartuse() + " - " + couponBean.getEnduse());
+        }else {
+            holder.mTvCouponLimitDate.setText("限时段：截止时间" + couponBean.getEnduse());
+        }
         switch (couponBean.getRange1()) {
             case 1:
                 holder.mTvCouponType.setText("通用优惠券");
@@ -71,6 +84,8 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.CouponsV
                 break;
         }
 
+        holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(mListener);
     }
 
     @Override

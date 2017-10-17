@@ -198,7 +198,7 @@ public class SearchProductActivity extends ToolBarActivity implements Callback<S
                 }
                 businessInfos.add(info);
             }
-            loadMoreAdapter.loadCompleted();
+            loadMoreAdapter.loadAllDataCompleted();
             mRefreshLayout.endRefreshing();
         } catch (JSONException e) {
             e.printStackTrace();

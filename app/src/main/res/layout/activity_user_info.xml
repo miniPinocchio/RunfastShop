@@ -12,6 +12,7 @@
     <include layout="@layout/layout_title"/>
 
     <LinearLayout
+        android:id="@+id/layout_update_head"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:paddingLeft="15dp"
@@ -25,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <ImageView
+                android:id="@+id/iv_head"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:src="@drawable/icon_default_head"/>

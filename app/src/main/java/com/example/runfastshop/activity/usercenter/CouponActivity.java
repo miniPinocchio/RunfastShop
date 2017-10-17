@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,6 +48,7 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
 
     private List<CouponBean> mCouponBeanList;
     private CouponsAdapter mAllAdapter;
+    private String order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +63,12 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
      * 获取优惠券
      */
     private void getNetData() {
+        order = getIntent().getStringExtra("order");
         User userInfo = UserService.getUserInfo(this);
         if (userInfo == null) {
             return;
         }
-        CustomApplication.getRetrofit().GetMyCoupan(0).enqueue(this);
+        CustomApplication.getRetrofit().GetMyCoupan(userInfo.getId(),0).enqueue(this);
     }
 
     private void initData() {
@@ -77,13 +81,25 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        if (v != null) {
+            if (TextUtils.isEmpty(order)){
+                return;
+            }
+            Integer position = (Integer) v.getTag();
+            CouponBean couponBean = mCouponBeanList.get(position);
+            Intent intent = new Intent();
+            intent.putExtra("coupon",couponBean);
+            setResult(RESULT_OK,intent);
+            finish();
+        }
     }
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
+        Log.d("params","isSuccessful = "+response.isSuccessful());
         if (response.isSuccessful()) {
+            Log.d("params","response = "+data);
             ResolveData(data);
         }
     }
@@ -101,6 +117,7 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
     private void ResolveData(String data) {
         CouponBeans couponBeans = GsonUtil.parseJsonWithGson(data, CouponBeans.class);
         if (couponBeans.getRows() != null && couponBeans.getRows().size() > 0) {
+            mCouponBeanList.clear();
             mTvUseCouponNum.setText(String.valueOf(couponBeans.getRows().size()));
             mCouponBeanList.addAll(couponBeans.getRows());
             mAllAdapter.notifyDataSetChanged();
@@ -116,7 +133,16 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_get_coupon:
-                startActivity(new Intent(this, CashCouponActivity.class));
+                startActivityForResult(new Intent(this, CashCouponActivity.class),1001);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK){
+            return;
+        }
+        getNetData();
     }
 }

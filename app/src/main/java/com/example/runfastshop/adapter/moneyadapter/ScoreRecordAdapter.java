@@ -44,20 +44,52 @@ public class ScoreRecordAdapter extends RecyclerView.Adapter<ScoreRecordAdapter.
         MyScore myScore = mScoreList.get(position);
         //积分类型1注册积分、2消费积分(下单消费)、3推荐积分、4分享积分、
         // 5收藏积分、6评论积分、7广告积分、8购物消费
+        String score = String.valueOf(myScore.getScore());
+        if (score.contains(".")){
+            score = score.substring(0,score.indexOf("."));
+        }
         switch (myScore.getType()){
             case 1:
+                holder.mTvMakeMoneyTitle.setText("注册积分");
+                holder.mTvMakeMoneyNum.setText("+"+score);
+                holder.mTvMakeMoneyNum.setTextColor(context.getResources().getColor(R.color.color_money_green));
+                break;
             case 2:
+                holder.mTvMakeMoneyTitle.setText("消费积分");
+                holder.mTvMakeMoneyNum.setText("-"+score);
+                holder.mTvMakeMoneyNum.setTextColor(context.getResources().getColor(R.color.color_address_black));
+                break;
             case 3:
+                holder.mTvMakeMoneyTitle.setText("推荐积分");
+                holder.mTvMakeMoneyNum.setText("+"+score);
+                holder.mTvMakeMoneyNum.setTextColor(context.getResources().getColor(R.color.color_money_green));
+                break;
             case 4:
+                holder.mTvMakeMoneyTitle.setText("分享积分");
+                holder.mTvMakeMoneyNum.setText("+"+score);
+                holder.mTvMakeMoneyNum.setTextColor(context.getResources().getColor(R.color.color_money_green));
+                break;
             case 5:
+                holder.mTvMakeMoneyTitle.setText("收藏积分");
+                holder.mTvMakeMoneyNum.setText("+"+score);
+                holder.mTvMakeMoneyNum.setTextColor(context.getResources().getColor(R.color.color_money_green));
+                break;
             case 6:
+                holder.mTvMakeMoneyTitle.setText("评论积分");
+                holder.mTvMakeMoneyNum.setText("+"+score);
+                holder.mTvMakeMoneyNum.setTextColor(context.getResources().getColor(R.color.color_money_green));
+                break;
             case 7:
+                holder.mTvMakeMoneyTitle.setText("广告积分");
+                holder.mTvMakeMoneyNum.setText("+"+score);
+                holder.mTvMakeMoneyNum.setTextColor(context.getResources().getColor(R.color.color_money_green));
+                break;
             case 8:
-
+                holder.mTvMakeMoneyTitle.setText("购物消费");
+                holder.mTvMakeMoneyNum.setText("+"+score);
+                holder.mTvMakeMoneyNum.setTextColor(context.getResources().getColor(R.color.color_money_green));
                 break;
        }
-        holder.mTvMakeMoneyNum.setTextColor(context.getResources().getColor(R.color.color_money_green));
-        holder.mTvMakeMoneyNum.setText(String.valueOf(myScore.getScore()));
         holder.mTvMakeMoneyTime.setText(myScore.getCreateTime());
     }
 

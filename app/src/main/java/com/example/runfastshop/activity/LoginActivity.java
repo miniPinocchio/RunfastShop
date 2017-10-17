@@ -108,6 +108,7 @@ public class LoginActivity extends ToolBarActivity implements Callback<String> {
             user.setPassword(etUserPassword.getText().toString().trim());
             UserService.saveUserInfo(user);
             UserService.setAutoLogin("1");
+            startActivity(new Intent(this,MainActivity.class));
             finish();
         } catch (JSONException e) {
             e.printStackTrace();

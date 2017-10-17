@@ -56,6 +56,7 @@ public class WalletActivity extends ToolBarActivity {
                 startActivity(new Intent(this,CashRecordActivity.class));
                 break;
             case R.id.layout_withdrawals_account://提现账号
+                startActivity(new Intent(this,UserBankActivity.class));
                 break;
         }
     }

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +23,15 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.runfastshop.R;
 import com.example.runfastshop.activity.BusinessActivity;
 import com.example.runfastshop.activity.DeliveryAddressActivity;
 import com.example.runfastshop.activity.SearchProductActivity;
 import com.example.runfastshop.adapter.BottomPageAdapter;
 import com.example.runfastshop.adapter.BreakfastAdapter;
+import com.example.runfastshop.adapter.LoadMoreAdapter;
+import com.example.runfastshop.adapter.NearbyBusinessAdapter;
 import com.example.runfastshop.adapter.NormalAdapter;
 import com.example.runfastshop.adapter.PageScrollAdapter;
 import com.example.runfastshop.application.CustomApplication;
@@ -41,9 +45,12 @@ import com.example.runfastshop.bean.maintop.TopImage;
 import com.example.runfastshop.bean.maintop.TopImage1;
 import com.example.runfastshop.bean.maintop.TopImages;
 import com.example.runfastshop.data.IntentFlag;
+import com.example.runfastshop.util.CustomProgressDialog;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
 import com.example.runfastshop.view.CustomScrollView;
+import com.example.runfastshop.view.EasyLoadMoreView;
+import com.example.runfastshop.view.MaxHeightRecyclerView;
 import com.example.runfastshop.view.recyclerview.HorizontalPageLayoutManager;
 import com.example.runfastshop.view.recyclerview.PagingScrollHelper;
 import com.example.supportv1.utils.LogUtil;
@@ -66,11 +73,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.runfastshop.config.IntentConfig.AGENT_ID;
+
 /**
  * 首页
  * A simple {@link Fragment} subclass.
  */
-public class TakeOutFoodFragment extends Fragment implements Callback<String>, BGARefreshLayout.BGARefreshLayoutDelegate, View.OnClickListener, PagingScrollHelper.onPageChangeListener {
+public class TakeOutFoodFragment extends Fragment implements Callback<String>,
+        BGARefreshLayout.BGARefreshLayoutDelegate,
+        View.OnClickListener, PagingScrollHelper.onPageChangeListener,
+        BaseQuickAdapter.RequestLoadMoreListener {
 
 
     Unbinder unbinder;
@@ -99,7 +111,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
     private int netType;
     private double pointLat;
     private double pointLon;
-    private BreakfastAdapter loadMoreAdapter;
+
     private int page = 1;
     private LinearLayoutManager linearLayoutManager;
     private List<TopImage> imgurl;//轮播图地址
@@ -116,6 +128,8 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
     private static final int MCOLUMNS = 4;//列数
     private BottomPageAdapter mBottomPageAdapter;
     private Intent mIntent;
+    private BaseQuickAdapter mAdapter;
+    private EasyLoadMoreView easyLoadMoreView;
 
 
     public TakeOutFoodFragment() {
@@ -137,6 +151,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
                         Log.e("AmapError", "pointLat:"
                                 + pointLat + ", pointLon:"
                                 + pointLon);
+                        CustomProgressDialog.startProgressDialog(getActivity());
                         netPostAddress(aMapLocation.getLongitude(), aMapLocation.getLatitude());
                         if (mLocationClient != null) {
                             mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
@@ -225,9 +240,26 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
     }
 
     private void setData() {
+        mAdapter = new NearbyBusinessAdapter(businessInfos);
+        easyLoadMoreView = new EasyLoadMoreView();
+        mAdapter.setLoadMoreView(easyLoadMoreView);
+        mAdapter.setOnLoadMoreListener(this, recyclerView);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(loadMoreAdapter);
+        recyclerView.setAdapter(mAdapter);
+
+        ((NearbyBusinessAdapter) mAdapter).setOnItemClickListener(new NearbyBusinessAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(BusinessInfo businessInfo, View view) {
+                Intent intent = new Intent(getContext(), BusinessActivity.class);
+                intent.setFlags(IntentFlag.MAIN_BOTTOM_PAGE);
+                intent.putExtra("business", businessInfo);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void setListener() {
@@ -248,19 +280,6 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
                 }
             }
         });
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                //SCROLL_STATE_IDLE recylerview停止滑动
-                if (newState == RecyclerView.SCROLL_STATE_IDLE &&
-                        linearLayoutManager.findLastVisibleItemPosition() == businessInfos.size() - 1) {
-                    page++;
-                    getNearbyBusiness(pointLon, pointLat, page);
-                }
-            }
-        });
     }
 
     private void initData() {
@@ -278,11 +297,6 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
         scrollHelper = new PagingScrollHelper();
         scrollHelper.setUpRecycleView(mRvHomeMiddle);
         scrollHelper.setOnPageChangeListener(this);
-
-        recyclerView.setFocusable(false);
-        loadMoreAdapter = new BreakfastAdapter(businessInfos, getContext(), this);
-        //loadMoreAdapter = new LoadMoreAdapter(getContext(), adapter);
-        //loadMoreAdapter.setLoadMoreLitener(this);
 
         //底部滚动
         imgurl1 = new ArrayList<>();
@@ -370,13 +384,17 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
     public void onResponse(Call<String> call, Response<String> response) {
         String data = response.body();
         if (response.isSuccessful()) {
+            Log.d("params","response = "+data);
             ResolveData(data);
+            return;
         }
+        CustomProgressDialog.stopProgressDialog();
     }
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
         CustomToast.INSTANCE.showToast(getContext(), "网络异常");
+        CustomProgressDialog.stopProgressDialog();
         if (mRefreshLayout != null) {
             mRefreshLayout.endRefreshing();
         }
@@ -393,11 +411,13 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
             if (netType == 1) {
                 MapInfos mapInfos = GsonUtil.parseJsonWithGson(data, MapInfos.class);
                 mAgentId = mapInfos.getAgentId();
+                AGENT_ID = mAgentId;
                 MapInfo map1 = mapInfos.getMap();
-                pointLat = map1.getLatitude();
-                pointLon = map1.getLongitude();
-                page = 1;
-                getNearbyBusiness(pointLon, pointLat, page);
+                if (map1 != null) {
+                    pointLat = map1.getLatitude();
+                    pointLon = map1.getLongitude();
+                }
+                netHomeImage(mAgentId);
             } else if (netType == 2) {
                 TopImages topImages = GsonUtil.parseJsonWithGson(data, TopImages.class);
                 if (topImages != null && topImages.getRows1().size() > 0) {
@@ -415,6 +435,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
                 }
 
                 netHomePager(mAgentId);
+
             } else if (netType == 3) {
                 MiddleSorts middleSorts = GsonUtil.parseJsonWithGson(data, MiddleSorts.class);
                 if (middleSorts != null && middleSorts.getRows().size() > 0) {
@@ -423,15 +444,16 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
                     }
                     myAdapter.notifyDataSetChanged();
                 }
-
+                page = 1;
+                getNearbyBusiness(pointLon, pointLat, page);
             } else if (netType == 4) {
                 if (page == 1) {
                     businessInfos.clear();
                 }
                 JSONArray bus = object.getJSONArray("rows");
                 if (bus == null || bus.length() <= 0) {
+                    mAdapter.loadMoreEnd();
                     mRefreshLayout.endRefreshing();
-                    loadMoreAdapter.notifyDataSetChanged();
                     return;
                 }
                 for (int i = 0; i < bus.length(); i++) {
@@ -443,7 +465,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
                     info.name = busObject.optString("name");
                     info.distance = busObject.optDouble("distance");
                     info.levelId = busObject.optInt("levelId");
-                    info.salesnum = busObject.optInt("levelId");
+                    info.salesnum = busObject.optInt("salesnum");
                     info.startPay = busObject.optDouble("startPay");
                     info.busshowps = busObject.optDouble("busshowps");
                     info.baseCharge = busObject.optDouble("baseCharge");
@@ -466,9 +488,9 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
                     }
                     businessInfos.add(info);
                 }
-                loadMoreAdapter.notifyDataSetChanged();
                 mRefreshLayout.endRefreshing();
-                netHomeImage(mAgentId);
+                mAdapter.loadMoreEnd();
+                CustomProgressDialog.stopProgressDialog();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -502,5 +524,11 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>, B
             case 1:
                 break;
         }
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        page += 1;
+        getNearbyBusiness(pointLon, pointLat, page);
     }
 }

@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_marginTop="10dp"
-    android:layout_height="140dp">
+    android:layout_height="145dp">
 
     <ImageView
         android:layout_width="match_parent"
@@ -12,12 +12,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
         <ImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:src="@drawable/icon_bank_photo"
             />
 
@@ -25,15 +27,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="农业银行"
-                android:textSize="15sp"
-                android:textColor="@color/color_address_black"/>
+                android:paddingRight="@dimen/dimen_30_dp">
+                <TextView
+                    android:id="@+id/tv_bank_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="农业银行"
+                    android:textSize="17sp"
+                    android:textColor="@color/color_address_black"/>
+                <ImageView
+                    android:id="@+id/iv_delete_bank"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_delete_bank"/>
+            </LinearLayout>
             <TextView
+                android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="户名"
@@ -41,21 +56,23 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/color_text_gray"/>
             <TextView
+                android:id="@+id/tv_bank_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="**** **** **** 2229"
                 android:textSize="29sp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/color_text_gray_two"/>
 
             <TextView
+                android:id="@+id/tv_bank_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="添加日期 2016-05-24 09:34:19"
-                android:textSize="12sp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/color_text_gray"/>
+                android:text="添加日期 2016-05-24 09:34:19"
+                android:textColor="@color/color_text_gray"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

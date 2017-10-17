@@ -13,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:visibility="gone"
         android:background="@drawable/tab_background"
         android:gravity="center_horizontal">
 
@@ -30,6 +31,37 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_list_view"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/ll_no_coupon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="135dp"
+                android:src="@drawable/icon_not_coupon"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="没有可领取优惠券"
+                android:layout_marginTop="35dp"
+                android:textSize="15sp"
+                android:textColor="@color/color_text_gray_two"/>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_coupon_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_food_gray"/>
+    </RelativeLayout>
+
 </LinearLayout>

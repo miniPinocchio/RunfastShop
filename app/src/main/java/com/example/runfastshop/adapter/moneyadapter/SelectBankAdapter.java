@@ -2,6 +2,7 @@ package com.example.runfastshop.adapter.moneyadapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.runfastshop.R;
 import com.example.runfastshop.bean.BankSelectInfo;
+import com.example.runfastshop.bean.CashBankInfo;
 
 import java.util.List;
 
@@ -21,13 +23,13 @@ import java.util.List;
 
 public class SelectBankAdapter extends RecyclerView.Adapter<SelectBankAdapter.SelectBankViewHolder>{
 
-    private List<BankSelectInfo> data;
+    private List<CashBankInfo> data;
 
     private Context context;
 
     private View.OnClickListener listener;
 
-    public SelectBankAdapter(List<BankSelectInfo> data, Context context,View.OnClickListener listener) {
+    public SelectBankAdapter(List<CashBankInfo> data, Context context,View.OnClickListener listener) {
         this.data = data;
         this.context = context;
         this.listener = listener;
@@ -42,11 +44,19 @@ public class SelectBankAdapter extends RecyclerView.Adapter<SelectBankAdapter.Se
 
     @Override
     public void onBindViewHolder(SelectBankViewHolder holder, int position) {
-        BankSelectInfo bankSelectInfo = data.get(position);
+        CashBankInfo bankSelectInfo = data.get(position);
         if (bankSelectInfo != null) {
-            holder.tvBankName.setText(bankSelectInfo.name);
+            if (TextUtils.isEmpty(bankSelectInfo.getAccount())){
+                holder.tvBankName.setText(bankSelectInfo.getBanktype());
+            }else {
+                String account = bankSelectInfo.getAccount();
+                if (account.length() > 4){
+                    account = account.substring(account.length()-4);
+                }
+                holder.tvBankName.setText(bankSelectInfo.getBanktype()+"("+account+")");
+            }
             if (position != (data.size() -1)){
-                if (bankSelectInfo.isSelect){
+                if (bankSelectInfo.isSelect()){
                     holder.ivBankSelect.setVisibility(View.VISIBLE);
                 }else {
                     holder.ivBankSelect.setVisibility(View.GONE);

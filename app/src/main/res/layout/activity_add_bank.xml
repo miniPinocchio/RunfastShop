@@ -20,44 +20,7 @@
         android:textSize="12sp"
         android:textColor="@color/color_text_gray"/>
 
-    <LinearLayout
-        android:id="@+id/layout_select_bank"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@color/color_white"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="选择银行"
-            android:textSize="15sp"
-            android:textColor="@color/color_address_black"/>
-        <TextView
-            android:id="@+id/tv_bank_name"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="请选择银行"
-            android:singleLine="true"
-            android:layout_marginLeft="30dp"
-            android:textColor="@color/color_button_gray"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_right"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="15dp"
-        android:background="@color/color_line_back"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -85,6 +48,40 @@
             android:textColor="@color/color_address_black"
             android:textColorHint="#CCCCCC"
             android:textSize="15sp" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/color_line_back"/>
+    <LinearLayout
+        android:id="@+id/layout_select_bank"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开户银行"
+            android:textSize="15sp"
+            android:textColor="@color/color_address_black"/>
+        <TextView
+            android:id="@+id/tv_bank_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="开户行"
+            android:singleLine="true"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/color_button_gray"
+            />
+
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
