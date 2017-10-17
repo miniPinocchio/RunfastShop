@@ -14,7 +14,7 @@ public class UrlConstant {
     public static final String BaseUrl = BuildConfig.BASE_URL;
 
     public static final String ImageBaseUrl = "http://www.gxptkc.com";
-    public static final String ImageHeadBaseUrl = "http://www.gxptkc.com/";
+    public static final String ImageHeadBaseUrl = "http://120.77.70.27/";
 
 //    public static final String BaseUrl = "http://115.28.39.61:28080/wanglu/";
 

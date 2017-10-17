@@ -208,7 +208,7 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             case R.id.layout_red_packet:
                 break;
             case R.id.layout_cash_coupon:
-                startActivityForResult(new Intent(this, CouponActivity.class).putExtra("order", "startOrder"), 1001);
+                startActivityForResult(new Intent(this, CouponActivity.class).putExtra("price", mPrice.doubleValue()), 1001);
                 break;
             case R.id.layout_flavor:
                 Intent mIntent = new Intent(this, OrderRemarkActivity.class);
@@ -236,7 +236,7 @@ public class ConfirmOrderActivity extends ToolBarActivity implements Callback<St
             Gson gson = new Gson();
             String goodsJson = gson.toJson(mGoodsSellRecordChildrens);
             //TODO  参数含义
-            CustomApplication.getRetrofit().createOrder(businessId, mAddressId, 0, 0,
+            CustomApplication.getRetrofit().createOrder(userInfo.getId(),businessId, mAddressId, 0, 0,
                     countPrice.doubleValue(),
 //                    mSubtract.doubleValue(),
                     0.01,

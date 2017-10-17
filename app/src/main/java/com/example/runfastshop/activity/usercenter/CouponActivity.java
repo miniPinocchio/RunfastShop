@@ -22,6 +22,7 @@ import com.example.runfastshop.config.UserService;
 import com.example.runfastshop.util.CustomToast;
 import com.example.runfastshop.util.GsonUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
 
     private List<CouponBean> mCouponBeanList;
     private CouponsAdapter mAllAdapter;
-    private String order;
+    private double price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
      * 获取优惠券
      */
     private void getNetData() {
-        order = getIntent().getStringExtra("order");
+        price = getIntent().getDoubleExtra("price",0.0);
         User userInfo = UserService.getUserInfo(this);
         if (userInfo == null) {
             return;
@@ -82,11 +83,15 @@ public class CouponActivity extends ToolBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v != null) {
-            if (TextUtils.isEmpty(order)){
+            if (price == 0.0){
                 return;
             }
             Integer position = (Integer) v.getTag();
             CouponBean couponBean = mCouponBeanList.get(position);
+            if (price < couponBean.getFull()){
+                CustomToast.INSTANCE.showToast(this,"未满足优惠券使用条件");
+                return;
+            }
             Intent intent = new Intent();
             intent.putExtra("coupon",couponBean);
             setResult(RESULT_OK,intent);
