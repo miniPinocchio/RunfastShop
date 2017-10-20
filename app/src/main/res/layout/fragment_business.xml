@@ -20,9 +20,9 @@
         app:layout_behavior="@string/scroll_behavior"/>
 
     <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:id="@+id/layout_right"
+        android:layout_width="280dp"
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler2"

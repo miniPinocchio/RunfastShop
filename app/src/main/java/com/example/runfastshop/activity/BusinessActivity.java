@@ -777,16 +777,23 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
                 .setPositiveButton("清空", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        BusinessFragment fragment = (BusinessFragment) mFragments.get(0);
                         for (int i = 0; i < carFoods.size(); i++) {
                             FoodBean fb = carFoods.get(i);
                             fb.setSelectCount(0);
+                            for (int j = 0; j < foodBeens.size(); j++) {
+                                if (fb.getId() == foodBeens.get(j).getId()) {
+                                    foodBeens.get(j).setSelectCount(0);
+                                    fragment.getFoodAdapter().notifyItemChanged(j,0);
+                                }
+                            }
                         }
                         carFoods.clear();
-                        for (int i = 0; i < foodBeens.size(); i++) {
-                            foodBeens.get(i).setSelectCount(0);
+                        if (positionSpec != null) {
+                            addWidgetDetail.setData(((BusinessFragment) mFragments.get(0)).getFoodAdapter(), positionSpec, BusinessActivity.this);
                         }
-                        BusinessFragment fragment = (BusinessFragment) mFragments.get(0);
-                        fragment.getFoodAdapter().notifyDataSetChanged();
+                        tvSpecNum.setText("0");
+                        tvSpecNum.setVisibility(View.GONE);
                         car_badge.setVisibility(View.INVISIBLE);
                         fragment.getTypeAdapter().updateBadge(new HashMap<String, Long>());
                         updateAmount(new BigDecimal(0.0));
@@ -821,7 +828,6 @@ public class BusinessActivity extends ToolBarActivity implements AddWidget.OnAdd
             iv_shop_car.getLocationInWindow(carLoc);
             carLoc[0] = carLoc[0] + shopWidth - view.getWidth() / 2;
         }
-
         Path path = new Path();
         path.moveTo(addLoc[0], addLoc[1]);
         path.quadTo(addLoc[0] - 500, addLoc[1] - 200, carLoc[0], carLoc[1]);

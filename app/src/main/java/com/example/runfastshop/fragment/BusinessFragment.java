@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -64,6 +65,8 @@ public class BusinessFragment extends LazyFragment {
 
     private void initData() {
         RecyclerView recyclerView1 = (RecyclerView) findViewById(R.id.recycler1);
+        FrameLayout layout_right = (FrameLayout) findViewById(R.id.layout_right);
+
         recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
         typeAdapter = new TypeAdapter(types);
         View view = new View(getContext());
@@ -91,9 +94,7 @@ public class BusinessFragment extends LazyFragment {
             }
         });
         recyclerView2 = (RecyclerView) findViewById(R.id.recycler2);
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView2.setLayoutManager(linearLayoutManager);
-        ((DefaultItemAnimator) recyclerView2.getItemAnimator()).setSupportsChangeAnimations(false);
+
     }
 
     private void moveToPosition(int n) {
@@ -118,6 +119,9 @@ public class BusinessFragment extends LazyFragment {
 
     public void setAddClick(AddWidget.OnAddClick onAddClick, View.OnClickListener listener) {
         foodAdapter = new FoodAdapter(foodBeanList, onAddClick,getContext(),listener);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView2.setLayoutManager(linearLayoutManager);
+        ((DefaultItemAnimator) recyclerView2.getItemAnimator()).setSupportsChangeAnimations(false);
         View view = new View(getContext());
         view.setMinimumHeight(ViewUtils.dip2px(getContext(), 50));
         foodAdapter.addFooterView(view);

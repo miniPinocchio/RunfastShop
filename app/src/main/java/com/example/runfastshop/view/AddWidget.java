@@ -23,6 +23,7 @@ public class AddWidget extends FrameLayout {
 	private TextView tv_count;
 	private int position;
 	private long count;
+
 	private BaseQuickAdapter foodAdapter;
 
 	public interface OnAddClick {
@@ -32,7 +33,6 @@ public class AddWidget extends FrameLayout {
 	}
 
 	private OnAddClick onAddClick;
-
 
 	public AddWidget(@NonNull Context context) {
 		super(context);
@@ -48,20 +48,20 @@ public class AddWidget extends FrameLayout {
 			@Override
 			public void onClick(View v) {
 				if (count == 0) {
-//					ViewAnimator.animate(sub)
-//							.translationX(add.getLeft() - sub.getLeft(), 0)
-//							.rotation(360)
-//							.alpha(0, 255)
-//							.duration(300)
-//							.interpolator(new DecelerateInterpolator())
-//							.andAnimate(tv_count)
-//							.translationX(add.getLeft() - tv_count.getLeft(), 0)
-//							.rotation(360)
-//							.alpha(0, 255)
-//							.interpolator(new DecelerateInterpolator())
-//							.duration(300)
-//							.start()
-//					;
+					ViewAnimator.animate(sub)
+							.translationX(add.getLeft() - sub.getLeft(), 0)
+							.rotation(360)
+							.alpha(0, 255)
+							.duration(300)
+							.interpolator(new DecelerateInterpolator())
+							.andAnimate(tv_count)
+							.translationX(add.getLeft() - tv_count.getLeft(), 0)
+							.rotation(360)
+							.alpha(0, 255)
+							.interpolator(new DecelerateInterpolator())
+							.duration(300)
+							.start()
+					;
 					sub.setAlpha(1f);
 					tv_count.setAlpha(1f);
 				}
@@ -82,20 +82,20 @@ public class AddWidget extends FrameLayout {
 					return;
 				}
 				if (count == 1 && foodAdapter instanceof FoodAdapter) {
-//					ViewAnimator.animate(sub)
-//							.translationX(0, add.getLeft() - sub.getLeft())
-//							.rotation(-360)
-//							.alpha(255, 0)
-//							.duration(300)
-//							.interpolator(new AccelerateInterpolator())
-//							.andAnimate(tv_count)
-//							.translationX(0, add.getLeft() - tv_count.getLeft())
-//							.rotation(-360)
-//							.alpha(255, 0)
-//							.interpolator(new AccelerateInterpolator())
-//							.duration(300)
-//							.start()
-//					;
+					ViewAnimator.animate(sub)
+							.translationX(0, add.getLeft() - sub.getLeft())
+							.rotation(-360)
+							.alpha(255, 0)
+							.duration(300)
+							.interpolator(new AccelerateInterpolator())
+							.andAnimate(tv_count)
+							.translationX(0, add.getLeft() - tv_count.getLeft())
+							.rotation(-360)
+							.alpha(255, 0)
+							.interpolator(new AccelerateInterpolator())
+							.duration(300)
+							.start()
+					;
 					sub.setAlpha(0f);
 					tv_count.setAlpha(0f);
 				}

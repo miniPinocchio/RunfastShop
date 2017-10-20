@@ -100,7 +100,7 @@ public class ListContainer extends LinearLayout {
 	}
 
 	public void setAddClick(AddWidget.OnAddClick onAddClick,View.OnClickListener listener) {
-		foodAdapter = new FoodAdapter(foodBeanList, onAddClick,mContext,listener);
+		//foodAdapter = new FoodAdapter(foodBeanList, onAddClick,mContext,listener);
 		View view = new View(mContext);
 		view.setMinimumHeight(ViewUtils.dip2px(mContext, 50));
 		foodAdapter.addFooterView(view);

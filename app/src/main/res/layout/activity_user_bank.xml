@@ -43,7 +43,7 @@
             android:id="@+id/tv_add_bank"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_45_dp"
-            android:background="@color/color_stroke"
+            android:background="@color/color_not_order_black"
             android:text="添加银行卡"
             android:textSize="16sp"
             android:textColor="@color/white"

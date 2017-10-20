@@ -68,45 +68,76 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
 
-        <RelativeLayout
+        <com.example.runfastshop.view.AddWidget
+            android:id="@+id/addwidget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/tv_price">
-            <com.example.runfastshop.view.AddWidget
-                android:id="@+id/addwidget"
+            android:layout_alignTop="@+id/tv_price"
+            android:visibility="gone"
+            />
+        <LinearLayout
+            android:id="@+id/layout_add_widget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_price"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_sub_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="2dp"
                 android:visibility="gone"
+                android:src="@drawable/icon_delete_product"/>
+
+            <TextView
+                android:id="@+id/tv_count_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="1"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/iv_add_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="2dp"
+                android:src="@drawable/icon_add_product"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/layout_spec"
+            android:layout_width="48dp"
+            android:layout_height="26dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_price">
+            <TextView
+                android:id="@+id/tv_spec"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:text="选规格"
+                android:layout_alignParentBottom="true"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="@color/color_white"
+                android:background="@drawable/spec_background"
                 />
-            <RelativeLayout
-                android:id="@+id/layout_spec"
-                android:layout_width="48dp"
-                android:layout_height="26dp"
-                android:layout_centerInParent="true">
-                <TextView
-                    android:id="@+id/tv_spec"
-                    android:layout_width="match_parent"
-                    android:layout_height="22dp"
-                    android:text="选规格"
-                    android:layout_alignParentBottom="true"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    android:textColor="@color/color_white"
-                    android:background="@drawable/spec_background"
-                    />
-                <TextView
-                    android:id="@+id/tv_spec_num"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:text="1"
-                    android:visibility="gone"
-                    android:textSize="10sp"
-                    android:textColor="@color/color_white"
-                    android:gravity="center"
-                    android:layout_alignRight="@id/tv_spec"
-                    android:background="@drawable/circle_red"/>
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_spec_num"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:text="1"
+                android:visibility="gone"
+                android:textSize="10sp"
+                android:textColor="@color/color_white"
+                android:gravity="center"
+                android:layout_alignRight="@id/tv_spec"
+                android:background="@drawable/circle_red"/>
         </RelativeLayout>
 
     </RelativeLayout>

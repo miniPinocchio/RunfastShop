@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:alpha="0"
-        android:padding="2dp"
+        android:padding="5dp"
         android:src="@drawable/icon_delete_product"/>
 
     <TextView
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:padding="2dp"
+        android:padding="5dp"
         android:src="@drawable/icon_add_product"/>
 
 </LinearLayout>

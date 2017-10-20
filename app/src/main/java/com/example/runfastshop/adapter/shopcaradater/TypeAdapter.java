@@ -87,12 +87,12 @@ public class TypeAdapter extends BaseQuickAdapter<TypeBean, BaseViewHolder> {
 			lastItem -= 3;
 		}
 		if (i <= firstItem) {
-			getRecyclerView().scrollToPosition(i);
+			getRecyclerView().smoothScrollToPosition(i);
 		} else if (i <= lastItem) {
 			//当要置顶的项已经在屏幕上显示时不处理
 		} else {
 			//当要置顶的项在当前显示的最后一项的后面时
-			getRecyclerView().scrollToPosition(i);
+			getRecyclerView().smoothScrollToPosition(i);
 			int n = i - linlm.findFirstVisibleItemPosition();
 			if (0 <= n && n < getRecyclerView().getChildCount()) {
 				int top = getRecyclerView().getChildAt(n).getTop();
