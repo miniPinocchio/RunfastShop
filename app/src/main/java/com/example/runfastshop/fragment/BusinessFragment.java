@@ -198,4 +198,10 @@ public class BusinessFragment extends LazyFragment {
     public List<TypeBean>  getTypeBeanList(){
         return types;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sIsScrolling = false;
+    }
 }
