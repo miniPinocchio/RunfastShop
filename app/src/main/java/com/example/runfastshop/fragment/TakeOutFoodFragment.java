@@ -37,6 +37,7 @@ import com.example.runfastshop.adapter.PageScrollAdapter;
 import com.example.runfastshop.application.CustomApplication;
 import com.example.runfastshop.bean.BusinessExercise;
 import com.example.runfastshop.bean.BusinessInfo;
+import com.example.runfastshop.bean.HomeDataItemBean;
 import com.example.runfastshop.bean.mainmiddle.MiddleSort;
 import com.example.runfastshop.bean.mainmiddle.MiddleSorts;
 import com.example.runfastshop.bean.maintop.MapInfo;
@@ -81,15 +82,14 @@ import static com.example.runfastshop.config.IntentConfig.AGENT_ID;
  */
 public class TakeOutFoodFragment extends Fragment implements Callback<String>,
         BGARefreshLayout.BGARefreshLayoutDelegate,
-        View.OnClickListener, PagingScrollHelper.onPageChangeListener,
-        BaseQuickAdapter.RequestLoadMoreListener {
+        View.OnClickListener, PagingScrollHelper.onPageChangeListener, LoadMoreAdapter.LoadMoreApi {
 
 
     Unbinder unbinder;
-    @BindView(R.id.roll_view_pager)
-    RollPagerView pagerView;
-    @BindView(R.id.scrollView)
-    CustomScrollView scrollView;
+//    @BindView(R.id.roll_view_pager)
+//    RollPagerView pagerView;
+//    @BindView(R.id.scrollView)
+//    CustomScrollView scrollView;
     @BindView(R.id.layout_search_location)
     LinearLayout layoutSearchLocation;
     @BindView(R.id.layout_search_input)
@@ -102,34 +102,34 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>,
     TextView tvAddress;
     @BindView(R.id.rl_refresh)
     BGARefreshLayout mRefreshLayout;
-    @BindView(R.id.rv_home_middle)
-    RecyclerView mRvHomeMiddle;
-    @BindView(R.id.rv_home_bottom)
-    RecyclerView mRvHomeBottom;
+//    @BindView(R.id.rv_home_middle)
+//    RecyclerView mRvHomeMiddle;
+//    @BindView(R.id.rv_home_bottom)
+//    RecyclerView mRvHomeBottom;
 
-    private List<BusinessInfo> businessInfos = new ArrayList<>();
+    private List<HomeDataItemBean> businessInfos = new ArrayList<>();
+    private List<HomeDataItemBean> businessNewInfos = new ArrayList<>();
     private int netType;
     private double pointLat;
     private double pointLon;
 
     private int page = 1;
     private LinearLayoutManager linearLayoutManager;
-    private List<TopImage> imgurl;//轮播图地址
-    private List<TopImage1> imgurl1;//轮播图地址
-    private List<MiddleSort> middleurl;//中部模块数据
-    private NormalAdapter mNormalAdapter;
+//    private List<TopImage> imgurl;//轮播图地址
+//    private List<TopImage1> imgurl1;//轮播图地址
+//    private List<MiddleSort> middleurl;//中部模块数据
+    //private NormalAdapter mNormalAdapter;
     private int mAgentId;//代理商id
 
-    private PageScrollAdapter myAdapter;
-    private HorizontalPageLayoutManager horizontalPageLayoutManager;
-    private HorizontalPageLayoutManager horizontalPageLayoutManager1;
-    private PagingScrollHelper scrollHelper;
-    private static final int MROWS = 2;//行数
-    private static final int MCOLUMNS = 4;//列数
-    private BottomPageAdapter mBottomPageAdapter;
+    //private PageScrollAdapter myAdapter;
+    //private HorizontalPageLayoutManager horizontalPageLayoutManager;
+    //private HorizontalPageLayoutManager horizontalPageLayoutManager1;
+    //private PagingScrollHelper scrollHelper;
+   // private static final int MROWS = 2;//行数
+    //private static final int MCOLUMNS = 4;//列数
+   // private BottomPageAdapter mBottomPageAdapter;
     private Intent mIntent;
-    private BaseQuickAdapter mAdapter;
-    private EasyLoadMoreView easyLoadMoreView;
+    private LoadMoreAdapter moreAdapter;
 
 
     public TakeOutFoodFragment() {
@@ -240,17 +240,14 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>,
     }
 
     private void setData() {
-        mAdapter = new NearbyBusinessAdapter(businessInfos);
-        easyLoadMoreView = new EasyLoadMoreView();
-        mAdapter.setLoadMoreView(easyLoadMoreView);
-        mAdapter.setOnLoadMoreListener(this, recyclerView);
-        mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
-
+        NearbyBusinessAdapter mAdapter = new NearbyBusinessAdapter(getActivity(),businessNewInfos);
+        moreAdapter = new LoadMoreAdapter(getActivity(),mAdapter);
+        moreAdapter.setLoadMoreListener(this);
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(moreAdapter);
 
-        ((NearbyBusinessAdapter) mAdapter).setOnItemClickListener(new NearbyBusinessAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new NearbyBusinessAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(BusinessInfo businessInfo, View view) {
                 Intent intent = new Intent(getContext(), BusinessActivity.class);
@@ -263,47 +260,47 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>,
     }
 
     private void setListener() {
-        scrollView.setOnScrollListener(new CustomScrollView.OnScrollListener() {
-            @Override
-            public void onScroll(int scrollY) {
-                int height = pagerView.getHeight();
-                Log.d("scrollY", "scrollY = " + scrollY + ",height =" + height);
-                if (scrollY > height) {
-                    layoutSearchLocation.setVisibility(View.GONE);
-                    layoutSearchInput.setVisibility(View.VISIBLE);
-                } else if (scrollY < 0) {
-                    layoutSearchLocation.setVisibility(View.GONE);
-                    layoutSearchInput.setVisibility(View.GONE);
-                } else {
-                    layoutSearchLocation.setVisibility(View.VISIBLE);
-                    layoutSearchInput.setVisibility(View.GONE);
-                }
-            }
-        });
+//        scrollView.setOnScrollListener(new CustomScrollView.OnScrollListener() {
+//            @Override
+//            public void onScroll(int scrollY) {
+//                int height = pagerView.getHeight();
+//                Log.d("scrollY", "scrollY = " + scrollY + ",height =" + height);
+//                if (scrollY > height) {
+//                    layoutSearchLocation.setVisibility(View.GONE);
+//                    layoutSearchInput.setVisibility(View.VISIBLE);
+//                } else if (scrollY < 0) {
+//                    layoutSearchLocation.setVisibility(View.GONE);
+//                    layoutSearchInput.setVisibility(View.GONE);
+//                } else {
+//                    layoutSearchLocation.setVisibility(View.VISIBLE);
+//                    layoutSearchInput.setVisibility(View.GONE);
+//                }
+//            }
+//        });
     }
 
     private void initData() {
-        //轮播页
-        imgurl = new ArrayList<>();
-        mNormalAdapter = new NormalAdapter(getActivity(), imgurl);
-        pagerView.setAdapter(mNormalAdapter);
+//        //轮播页
+//        imgurl = new ArrayList<>();
+//        mNormalAdapter = new NormalAdapter(getActivity(), imgurl);
+//        pagerView.setAdapter(mNormalAdapter);
 
-        //中部横向滚动
-        middleurl = new ArrayList<>();
-        myAdapter = new PageScrollAdapter(getActivity(), middleurl);
-        mRvHomeMiddle.setAdapter(myAdapter);
-        horizontalPageLayoutManager = new HorizontalPageLayoutManager(MROWS, MCOLUMNS);
-        mRvHomeMiddle.setLayoutManager(horizontalPageLayoutManager);
-        scrollHelper = new PagingScrollHelper();
-        scrollHelper.setUpRecycleView(mRvHomeMiddle);
-        scrollHelper.setOnPageChangeListener(this);
+//        //中部横向滚动
+//        middleurl = new ArrayList<>();
+//        myAdapter = new PageScrollAdapter(getActivity(), middleurl);
+//        mRvHomeMiddle.setAdapter(myAdapter);
+//        horizontalPageLayoutManager = new HorizontalPageLayoutManager(MROWS, MCOLUMNS);
+//        mRvHomeMiddle.setLayoutManager(horizontalPageLayoutManager);
+//        scrollHelper = new PagingScrollHelper();
+//        scrollHelper.setUpRecycleView(mRvHomeMiddle);
+//        scrollHelper.setOnPageChangeListener(this);
 
-        //底部滚动
-        imgurl1 = new ArrayList<>();
-        horizontalPageLayoutManager1 = new HorizontalPageLayoutManager(1, 3);
-        mRvHomeBottom.setLayoutManager(horizontalPageLayoutManager1);
-        mBottomPageAdapter = new BottomPageAdapter(getActivity(), imgurl1);
-        mRvHomeBottom.setAdapter(mBottomPageAdapter);
+//        //底部滚动
+//        imgurl1 = new ArrayList<>();
+//        horizontalPageLayoutManager1 = new HorizontalPageLayoutManager(1, 3);
+//        mRvHomeBottom.setLayoutManager(horizontalPageLayoutManager1);
+//        mBottomPageAdapter = new BottomPageAdapter(getActivity(), imgurl1);
+//        mRvHomeBottom.setAdapter(mBottomPageAdapter);
     }
 
     /**
@@ -419,19 +416,28 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>,
                 }
                 netHomeImage(mAgentId);
             } else if (netType == 2) {
+                if (page == 1) {
+                    businessInfos.clear();
+                    businessNewInfos.clear();
+                    moreAdapter.resetLoadState();
+                }
                 TopImages topImages = GsonUtil.parseJsonWithGson(data, TopImages.class);
                 if (topImages != null && topImages.getRows1().size() > 0) {
+                    HomeDataItemBean itemBean = new HomeDataItemBean();
                     for (TopImage topImage : topImages.getRows1()) {
-                        imgurl.add(topImage);
+                        itemBean.imgurl.add(topImage);
                     }
-                    mNormalAdapter.notifyDataSetChanged();
+                    businessInfos.add(itemBean);
+                    //mNormalAdapter.notifyDataSetChanged();
                 }
 //                LogUtil.e("getRows2", topImages.getRows2().size() + "");
                 if (topImages != null && topImages.getRows2().size() > 0) {
+                    HomeDataItemBean itemBean = new HomeDataItemBean();
                     for (TopImage1 topImage : topImages.getRows2()) {
-                        imgurl1.add(topImage);
+                        itemBean.imgurl1.add(topImage);
                     }
-                    mBottomPageAdapter.notifyDataSetChanged();
+                    businessInfos.add(itemBean);
+                    //mBottomPageAdapter.notifyDataSetChanged();
                 }
 
                 netHomePager(mAgentId);
@@ -439,20 +445,23 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>,
             } else if (netType == 3) {
                 MiddleSorts middleSorts = GsonUtil.parseJsonWithGson(data, MiddleSorts.class);
                 if (middleSorts != null && middleSorts.getRows().size() > 0) {
+                    HomeDataItemBean itemBean = new HomeDataItemBean();
                     for (MiddleSort middle : middleSorts.getRows()) {
-                        middleurl.add(middle);
+                        itemBean.middleurl.add(middle);
                     }
-                    myAdapter.notifyDataSetChanged();
+                    businessInfos.add(itemBean);
+
+                    businessNewInfos.add(businessInfos.get(0));
+                    businessNewInfos.add(businessInfos.get(2));
+                    businessNewInfos.add(businessInfos.get(1));
+                    //myAdapter.notifyDataSetChanged();
                 }
-                page = 1;
                 getNearbyBusiness(pointLon, pointLat, page);
             } else if (netType == 4) {
-                if (page == 1) {
-                    businessInfos.clear();
-                }
+
                 JSONArray bus = object.getJSONArray("rows");
                 if (bus == null || bus.length() <= 0) {
-                    mAdapter.loadMoreEnd();
+                    moreAdapter.loadAllDataCompleted();
                     mRefreshLayout.endRefreshing();
                     return;
                 }
@@ -486,10 +495,12 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>,
                             info.alist.add(exercise);
                         }
                     }
-                    businessInfos.add(info);
+                    HomeDataItemBean itemBean = new HomeDataItemBean();
+                    itemBean.businessInfos = info;
+                    businessNewInfos.add(itemBean);
                 }
                 mRefreshLayout.endRefreshing();
-                mAdapter.loadMoreEnd();
+                moreAdapter.loadCompleted();
                 CustomProgressDialog.stopProgressDialog();
             }
         } catch (JSONException e) {
@@ -499,6 +510,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>,
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        page = 1;
         netPostAddress(pointLon, pointLat);
     }
 
@@ -510,9 +522,12 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>,
     @Override
     public void onClick(View v) {
         Integer positionBusiness = (Integer) v.getTag();
+        if (positionBusiness < 3){
+            return;
+        }
         Intent intent = new Intent(getContext(), BusinessActivity.class);
         intent.setFlags(IntentFlag.MAIN_BOTTOM_PAGE);
-        intent.putExtra("business", businessInfos.get(positionBusiness));
+        intent.putExtra("business", businessInfos.get(positionBusiness).businessInfos);
         startActivity(intent);
     }
 
@@ -527,7 +542,7 @@ public class TakeOutFoodFragment extends Fragment implements Callback<String>,
     }
 
     @Override
-    public void onLoadMoreRequested() {
+    public void loadMore() {
         page += 1;
         getNearbyBusiness(pointLon, pointLat, page);
     }

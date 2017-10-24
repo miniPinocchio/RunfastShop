@@ -52,14 +52,14 @@ public class FoodAdapter extends BaseQuickAdapter<FoodBean, BaseViewHolder> {
 
 		helper.setVisible(R.id.addwidget, item.getIsonly() == 0);
 
-		Glide.with(context)
-				.load( UrlConstant.ImageBaseUrl + item.getIcon())
-				.placeholder(R.drawable.icon_default_head)
-				.error(R.drawable.icon_default_head)
-				.centerCrop()
-				.diskCacheStrategy(DiskCacheStrategy.RESULT)
-				.into((ImageView) helper.getView(R.id.iv_food));
-		//x.image().bind((ImageView) helper.getView(R.id.iv_food), UrlConstant.ImageBaseUrl + item.getIcon(), NetConfig.optionsPagerCache);
+//		Glide.with(context)
+//				.load( UrlConstant.ImageBaseUrl + item.getIcon())
+//				.placeholder(R.drawable.icon_default_head)
+//				.error(R.drawable.icon_default_head)
+//				.centerCrop()
+//				.diskCacheStrategy(DiskCacheStrategy.RESULT)
+//				.into((ImageView) helper.getView(R.id.iv_food));
+		x.image().bind((ImageView) helper.getView(R.id.iv_food), UrlConstant.ImageBaseUrl + item.getIcon(), NetConfig.optionsPagerCache);
 
 		AddWidget addWidget = helper.getView(R.id.addwidget);
 		addWidget.setData(this, helper.getAdapterPosition(), onAddClick);

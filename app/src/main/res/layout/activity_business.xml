@@ -364,8 +364,6 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <include layout="@layout/layout_popup_product"/>
-
     <View
         android:id="@+id/blackview"
         android:layout_width="match_parent"
@@ -463,4 +461,6 @@
             android:layout_marginLeft="52dp"
             android:layout_marginTop="5dp"/>
     </FrameLayout>
+
+    <include layout="@layout/layout_popup_product" />
 </android.support.design.widget.CoordinatorLayout>

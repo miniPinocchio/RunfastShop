@@ -46,6 +46,7 @@ public class BusinessFragment extends LazyFragment {
     private int index;
     public FoodAdapter foodAdapter;
     private boolean sIsScrolling;
+    private boolean idDestroy;
 
 
     public BusinessFragment() {
@@ -133,15 +134,15 @@ public class BusinessFragment extends LazyFragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_DRAGGING || newState == RecyclerView.SCROLL_STATE_SETTLING) {
-                    sIsScrolling = true;
-                    Glide.with(getActivity()).pauseRequests();
-                } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (sIsScrolling == true) {
-                        Glide.with(getActivity()).resumeRequests();
-                    }
-                    sIsScrolling = false;
-                }
+//                if (newState == RecyclerView.SCROLL_STATE_DRAGGING || newState == RecyclerView.SCROLL_STATE_SETTLING) {
+//                    sIsScrolling = true;
+//                    Glide.with(getActivity()).pauseRequests();
+//                } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    if (sIsScrolling && !idDestroy) {
+//                        Glide.with(getActivity()).resumeRequests();
+//                    }
+//                    sIsScrolling = false;
+//                }
             }
 
             @Override
@@ -202,6 +203,6 @@ public class BusinessFragment extends LazyFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        sIsScrolling = false;
+        idDestroy = true;
     }
 }
